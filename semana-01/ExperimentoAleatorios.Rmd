@@ -62,23 +62,39 @@ bolsa1
 bolsa2
 
 pos_b1_item1 <- sample.int(6,1,F)
-#pos_b1_item1
-#bolsa1[pos_b1_item1]
 temp1 <- bolsa1[pos_b1_item1]
 
 pos_b2_item1 <- sample.int(6,1,F)
-#pos_b2_item1
-#bolsa2[pos_b2_item1]
 temp2 <- bolsa2[pos_b2_item1]
 
 bolsa1[pos_b1_item1] <- temp2
 bolsa2[pos_b2_item1] <- temp1
 
-
 print("Bolsas finales")
-
 bolsa1
 bolsa2
 
+```
+
+```{r}
+pos_b2_item1 <- sample.int(6,2,F)
+pos_b2_item1
+```
+
+3.- Lanzar 2 dados y obtener el maximo valor de la cara superior de los dados
+```{r}
+dado1 <- c(1,2,3,4,5,6)
+dado2 <- c(1,2,3,4,5,6)
+resultados <- c(sample(dado1,1), sample(dado2,1))
+resultados
+max(resultados)
+
+```
+```{r}
+NRO_DADOS <- 2
+dado <- c(1,2,3,4,5,6)
+resultados <- sample(dado,NRO_DADOS)
+resultados
+max(resultados)
 ```
 

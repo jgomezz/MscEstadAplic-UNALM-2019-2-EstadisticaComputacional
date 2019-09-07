@@ -1903,7 +1903,7 @@ print(&quot;Bolsas iniciales&quot;)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiclwiIFwiclwiXG4ifQ== -->
 <pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;r&quot; &quot;r&quot;</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zX2IxX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpXG4jcG9zX2IxX2l0ZW0xXG4jYm9sc2ExW3Bvc19iMV9pdGVtMV1cbnRlbXAxIDwtIGJvbHNhMVtwb3NfYjFfaXRlbTFdXG5cbnBvc19iMl9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKVxuI3Bvc19iMl9pdGVtMVxuI2JvbHNhMltwb3NfYjJfaXRlbTFdXG50ZW1wMiA8LSBib2xzYTJbcG9zX2IyX2l0ZW0xXVxuXG5ib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMlxuYm9sc2EyW3Bvc19iMl9pdGVtMV0gPC0gdGVtcDFcblxuXG5wcmludChcIkJvbHNhcyBmaW5hbGVzXCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zX2IxX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpXG4jcG9zX2IxX2l0ZW0xXG4jYm9sc2ExW3Bvc19iMV9pdGVtMV1cbnRlbXAxIDwtIGJvbHNhMVtwb3NfYjFfaXRlbTFdXG5cbnBvc19iMl9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKVxuI3Bvc19iMl9pdGVtMVxuI2JvbHNhMltwb3NfYjJfaXRlbTFdXG50ZW1wMiA8LSBib2xzYTJbcG9zX2IyX2l0ZW0xXVxuXG5ib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMlxuYm9sc2EyW3Bvc19iMl9pdGVtMV0gPC0gdGVtcDFcblxucHJpbnQoXCJCb2xzYXMgZmluYWxlc1wiKVxuYGBgIn0= -->
 <pre class="r"><code>pos_b1_item1 &lt;- sample.int(6,1,F)
 #pos_b1_item1
 #bolsa1[pos_b1_item1]
@@ -1917,7 +1917,6 @@ temp2 &lt;- bolsa2[pos_b2_item1]
 bolsa1[pos_b1_item1] &lt;- temp2
 bolsa2[pos_b2_item1] &lt;- temp1
 
-
 print(&quot;Bolsas finales&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQm9sc2FzIGZpbmFsZXNcIlxuIn0= -->
@@ -1926,20 +1925,68 @@ print(&quot;Bolsas finales&quot;)</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2ExXG5gYGAifQ== -->
 <pre class="r"><code>bolsa1</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiblwiIFwiclwiIFwiblwiXG4ifQ== -->
-<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;n&quot; &quot;r&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiclwiIFwiYlwiIFwiblwiIFwiblwiIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;r&quot; &quot;b&quot; &quot;n&quot; &quot;n&quot; &quot;n&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2EyXG5gYGAifQ== -->
 <pre class="r"><code>bolsa2</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiclwiIFwiblwiXG4ifQ== -->
-<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;r&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiYlwiIFwiclwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;b&quot; &quot;r&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zX2IyX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwyLEYpXG5wb3NfYjJfaXRlbTFcbmBgYCJ9 -->
+<pre class="r"><code>pos_b2_item1 &lt;- sample.int(6,2,F)
+pos_b2_item1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDYgMVxuIn0= -->
+<pre><code>[1] 6 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>3.- Lanzar 2 dados y obtener el maximo valor de la cara superior de los dados</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGFkbzEgPC0gYygxLDIsMyw0LDUsNilcbmRhZG8yIDwtIGMoMSwyLDMsNCw1LDYpXG5yZXN1bHRhZG9zIDwtIGMoc2FtcGxlKGRhZG8xLDEpLCBzYW1wbGUoZGFkbzIsMSkpXG5yZXN1bHRhZG9zXG5gYGAifQ== -->
+<pre class="r"><code>dado1 &lt;- c(1,2,3,4,5,6)
+dado2 &lt;- c(1,2,3,4,5,6)
+resultados &lt;- c(sample(dado1,1), sample(dado2,1))
+resultados</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIgNFxuIn0= -->
+<pre><code>[1] 2 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWF4KHJlc3VsdGFkb3MpXG5gYGAifQ== -->
+<pre class="r"><code>max(resultados)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
+<pre><code>[1] 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTlJPX0RBRE9TIDwtIDJcbmRhZG8gPC0gYygxLDIsMyw0LDUsNilcbnJlc3VsdGFkb3MgPC0gc2FtcGxlKGRhZG8sTlJPX0RBRE9TKVxucmVzdWx0YWRvc1xuYGBgIn0= -->
+<pre class="r"><code>NRO_DADOS &lt;- 2
+dado &lt;- c(1,2,3,4,5,6)
+resultados &lt;- sample(dado,NRO_DADOS)
+resultados</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMgMVxuIn0= -->
+<pre><code>[1] 3 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWF4KHJlc3VsdGFkb3MpXG5gYGAifQ== -->
+<pre class="r"><code>max(resultados)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDNcbiJ9 -->
+<pre><code>[1] 3</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4tIFBydWViYSBkZSBsYW56YW1pZW50byBkZSB1bmEgbW9uZWRhCmBgYHtyfQptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKc2FtcGxlKG1vbmVkYSwgMikKYGBgCgoKYGBge3J9CiMgTGFuemFyIGxhIG1vbmVkYSAxMDAgdmVjZXMKc2FtcGxlKG1vbmVkYSwgMTAwLCBUKQpgYGAKCmBgYHtyfQojIENvbnRhciBsYSBjYW50aWRhZCBkZSB2ZWNlcwp0YWJsZShzYW1wbGUobW9uZWRhLCAxMDAsIFQpKQpgYGAKCmBgYHtyfQojIEN1YW5kbyBhdW1lbnRhIGxhIGNhbnRpZGFkIGRlIHBydWViYXMgCiMgc2UgYWNlcmNhIGFsIHB1bnRvIHRlb3JpY28KdGFibGUoc2FtcGxlKG1vbmVkYSwgMTAwMDAwMDAsIFQpKQpgYGAKCjIuLSBQcnVlYmEgZGUgc2FjYXIgMyBib2xhcyBkZSB1bmEgYm9sc2EgCgpgYGB7cn0KIyBTZSBkZWZpbmUgbGFzIGJvbHNhCmJvbHNhMSA8LSBjKCJiIiwiYiIsImIiLCJuIiwibiIsIm4iKQpib2xzYTIgPC0gYygiYiIsImIiLCJiIiwiciIsInIiLCJyIikKCiMgU2Ugc2FjYSB1bmEgYm9sYSBkZSBjYWRhIGJvbHNhCkNPTl9SRUVNUExBWk8gPC0gRgppdGVtX2IxIDwtIHNhbXBsZShib2xzYTEsIDEsIENPTl9SRUVNUExBWk8pCml0ZW1fYjIgPC0gc2FtcGxlKGJvbHNhMiwgMSwgQ09OX1JFRU1QTEFaTykKCml0ZW1fYjEKaXRlbV9iMgpgYGAKCmBgYHtyfQpib2xzYTEKYm9sc2EyCmBgYAoKYGBge3J9CmJvbHNhMSA8LSBjKGJvbHNhMSwgaXRlbV9iMSkKYm9sc2ExCgpgYGAKYGBge3J9CiMgU2UgZGVmaW5lIGxhcyBib2xzYQpib2xzYTEgPC0gYygiYiIsImIiLCJiIiwibiIsIm4iLCJuIikKYm9sc2EyIDwtIGMoImIiLCJiIiwiYiIsInIiLCJyIiwiciIpCgpwcmludCgiQm9sc2FzIGluaWNpYWxlcyIpCmJvbHNhMQpib2xzYTIKCnBvc19iMV9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKQojcG9zX2IxX2l0ZW0xCiNib2xzYTFbcG9zX2IxX2l0ZW0xXQp0ZW1wMSA8LSBib2xzYTFbcG9zX2IxX2l0ZW0xXQoKcG9zX2IyX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpCiNwb3NfYjJfaXRlbTEKI2JvbHNhMltwb3NfYjJfaXRlbTFdCnRlbXAyIDwtIGJvbHNhMltwb3NfYjJfaXRlbTFdCgpib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMgpib2xzYTJbcG9zX2IyX2l0ZW0xXSA8LSB0ZW1wMQoKCnByaW50KCJCb2xzYXMgZmluYWxlcyIpCgpib2xzYTEKYm9sc2EyCgpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4tIFBydWViYSBkZSBsYW56YW1pZW50byBkZSB1bmEgbW9uZWRhCmBgYHtyfQptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKc2FtcGxlKG1vbmVkYSwgMikKYGBgCgoKYGBge3J9CiMgTGFuemFyIGxhIG1vbmVkYSAxMDAgdmVjZXMKc2FtcGxlKG1vbmVkYSwgMTAwLCBUKQpgYGAKCmBgYHtyfQojIENvbnRhciBsYSBjYW50aWRhZCBkZSB2ZWNlcwp0YWJsZShzYW1wbGUobW9uZWRhLCAxMDAsIFQpKQpgYGAKCmBgYHtyfQojIEN1YW5kbyBhdW1lbnRhIGxhIGNhbnRpZGFkIGRlIHBydWViYXMgCiMgc2UgYWNlcmNhIGFsIHB1bnRvIHRlb3JpY28KdGFibGUoc2FtcGxlKG1vbmVkYSwgMTAwMDAwMDAsIFQpKQpgYGAKCjIuLSBQcnVlYmEgZGUgc2FjYXIgMyBib2xhcyBkZSB1bmEgYm9sc2EgCgpgYGB7cn0KIyBTZSBkZWZpbmUgbGFzIGJvbHNhCmJvbHNhMSA8LSBjKCJiIiwiYiIsImIiLCJuIiwibiIsIm4iKQpib2xzYTIgPC0gYygiYiIsImIiLCJiIiwiciIsInIiLCJyIikKCiMgU2Ugc2FjYSB1bmEgYm9sYSBkZSBjYWRhIGJvbHNhCkNPTl9SRUVNUExBWk8gPC0gRgppdGVtX2IxIDwtIHNhbXBsZShib2xzYTEsIDEsIENPTl9SRUVNUExBWk8pCml0ZW1fYjIgPC0gc2FtcGxlKGJvbHNhMiwgMSwgQ09OX1JFRU1QTEFaTykKCml0ZW1fYjEKaXRlbV9iMgpgYGAKCmBgYHtyfQpib2xzYTEKYm9sc2EyCmBgYAoKYGBge3J9CmJvbHNhMSA8LSBjKGJvbHNhMSwgaXRlbV9iMSkKYm9sc2ExCgpgYGAKYGBge3J9CiMgU2UgZGVmaW5lIGxhcyBib2xzYQpib2xzYTEgPC0gYygiYiIsImIiLCJiIiwibiIsIm4iLCJuIikKYm9sc2EyIDwtIGMoImIiLCJiIiwiYiIsInIiLCJyIiwiciIpCgpwcmludCgiQm9sc2FzIGluaWNpYWxlcyIpCmJvbHNhMQpib2xzYTIKCnBvc19iMV9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKQp0ZW1wMSA8LSBib2xzYTFbcG9zX2IxX2l0ZW0xXQoKcG9zX2IyX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpCnRlbXAyIDwtIGJvbHNhMltwb3NfYjJfaXRlbTFdCgpib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMgpib2xzYTJbcG9zX2IyX2l0ZW0xXSA8LSB0ZW1wMQoKcHJpbnQoIkJvbHNhcyBmaW5hbGVzIikKYm9sc2ExCmJvbHNhMgoKYGBgCgpgYGB7cn0KcG9zX2IyX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwyLEYpCnBvc19iMl9pdGVtMQpgYGAKCjMuLSBMYW56YXIgMiBkYWRvcyB5IG9idGVuZXIgZWwgbWF4aW1vIHZhbG9yIGRlIGxhIGNhcmEgc3VwZXJpb3IgZGUgbG9zIGRhZG9zCmBgYHtyfQpkYWRvMSA8LSBjKDEsMiwzLDQsNSw2KQpkYWRvMiA8LSBjKDEsMiwzLDQsNSw2KQpyZXN1bHRhZG9zIDwtIGMoc2FtcGxlKGRhZG8xLDEpLCBzYW1wbGUoZGFkbzIsMSkpCnJlc3VsdGFkb3MKbWF4KHJlc3VsdGFkb3MpCgpgYGAKYGBge3J9Ck5ST19EQURPUyA8LSAyCmRhZG8gPC0gYygxLDIsMyw0LDUsNikKcmVzdWx0YWRvcyA8LSBzYW1wbGUoZGFkbyxOUk9fREFET1MpCnJlc3VsdGFkb3MKbWF4KHJlc3VsdGFkb3MpCmBgYAoK</div>
 
 
 
