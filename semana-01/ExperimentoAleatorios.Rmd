@@ -85,7 +85,7 @@ pos_b2_item1
 ```{r}
 dado1 <- c(1,2,3,4,5,6)
 dado2 <- c(1,2,3,4,5,6)
-resultados <- c(sample(dado1,1), sample(dado2,1))
+resultados <- c(sample(dado1,1,T), sample(dado2,1,T))
 resultados
 max(resultados)
 

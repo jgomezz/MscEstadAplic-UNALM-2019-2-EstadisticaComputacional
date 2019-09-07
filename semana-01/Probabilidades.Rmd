@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+# mu = 10 , varianza = 4
+MEDIA <- 10
+DESVIACION <- 2  # RAIZ CUADRADA DE 4
+MUESTRAS <-50
+a <- rnorm(MUESTRAS, MEDIA,DESVIACION)
+hist(a)
+
+```
+```{r}
+# mu = 10 , varianza = 4
+MEDIA <- 10
+DESVIACION <- 2  # RAIZ CUADRADA DE 4
+MUESTRAS <- 5000
+a <- rnorm(MUESTRAS, MEDIA,DESVIACION)
+hist(a)
+
+```
+
+```{r}
+
+# mu = 10 , varianza = 4
+MEDIA <- 10
+DESVIACION <- 2  # RAIZ CUADRADA DE 4
+MUESTRAS <- 500000
+a <- rnorm(MUESTRAS, MEDIA,DESVIACION)
+hist(a)
+
+```
+
