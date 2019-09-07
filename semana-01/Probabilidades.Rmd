@@ -33,4 +33,46 @@ a <- rnorm(MUESTRAS, MEDIA,DESVIACION)
 hist(a)
 
 ```
+```{r}
+# Regla de Sturges
+1 + 3.3*log(200000)
+
+```
+
+```{r}
+# Simulacion de Naipes
+# Crea naipe, se crean los vectores de los numeros y de los simbolos.
+num=rep(1:13,4)
+num
+
+# Forma de generar la baraja
+baraja1=c(rep("corazon",13),rep("trebol",13),rep("espada",13),rep("diamante",13))
+baraja1
+
+# Otra forma de generar la baraja
+baraja2=rep(c("corazon","trebol","espada","diamante"),each=13)
+baraja2
+
+# Asigna un indice para cada carta de la barajas
+naipe=cbind(num,baraja2)
+naipe
+```
+```{r}
+#Barajar las cartas
+naipe[sample(1:52,52,F),]
+
+# Se escogen 4 cartas
+g=sample(1:52,4,F)
+
+# El jugador 1 coge sus 4 cartas
+Jugador1=naipe[g,]
+
+# Se calcula el nuevo juego de naipe
+naipe2= naipe[-g,]
+
+# El jugador 2 coge sus 4 cartas
+Jugador2=naipe2[sample(1:48,4,F),]
+
+
+```
 
