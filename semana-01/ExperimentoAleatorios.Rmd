@@ -1,0 +1,43 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+1.- Prueba de lanzamiento de una moneda
+```{r}
+moneda <- c("cara","sello")
+sample(moneda, 2)
+```
+
+
+```{r}
+# Lanzar la moneda 100 veces
+sample(moneda, 100, T)
+```
+
+```{r}
+# Contar la cantidad de veces
+table(sample(moneda, 100, T))
+```
+
+```{r}
+# Cuando aumenta la cantidad de pruebas 
+# se acerca al punto teorico
+table(sample(moneda, 10000000, T))
+```
+
+2.- Prueba de sacar 3 bolas de una bolsa 
+
+```{r}
+# Se define las bolsa
+bolsa1 <- c("b","b","b","n","n","n")
+bolsa2 <- c("b","b","b","r","r","r")
+
+```
+
+```{r}
+# Se saca una bola de cada bolsa
+sample(bolsa1, 1)
+sample(bolsa2, 1)
+```
+
