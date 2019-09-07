@@ -33,11 +33,52 @@ table(sample(moneda, 10000000, T))
 bolsa1 <- c("b","b","b","n","n","n")
 bolsa2 <- c("b","b","b","r","r","r")
 
+# Se saca una bola de cada bolsa
+CON_REEMPLAZO <- F
+item_b1 <- sample(bolsa1, 1, CON_REEMPLAZO)
+item_b2 <- sample(bolsa2, 1, CON_REEMPLAZO)
+
+item_b1
+item_b2
 ```
 
 ```{r}
-# Se saca una bola de cada bolsa
-sample(bolsa1, 1)
-sample(bolsa2, 1)
+bolsa1
+bolsa2
+```
+
+```{r}
+bolsa1 <- c(bolsa1, item_b1)
+bolsa1
+
+```
+```{r}
+# Se define las bolsa
+bolsa1 <- c("b","b","b","n","n","n")
+bolsa2 <- c("b","b","b","r","r","r")
+
+print("Bolsas iniciales")
+bolsa1
+bolsa2
+
+pos_b1_item1 <- sample.int(6,1,F)
+#pos_b1_item1
+#bolsa1[pos_b1_item1]
+temp1 <- bolsa1[pos_b1_item1]
+
+pos_b2_item1 <- sample.int(6,1,F)
+#pos_b2_item1
+#bolsa2[pos_b2_item1]
+temp2 <- bolsa2[pos_b2_item1]
+
+bolsa1[pos_b1_item1] <- temp2
+bolsa2[pos_b2_item1] <- temp1
+
+
+print("Bolsas finales")
+
+bolsa1
+bolsa2
+
 ```
 

@@ -1807,10 +1807,10 @@ sample(moneda, 100, T)</code></pre>
 <pre class="r"><code># Contar la cantidad de veces
 table(sample(moneda, 100, T))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4gY2FyYSBzZWxsbyBcbiAgIDQ5ICAgIDUxIFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gY2FyYSBzZWxsbyBcbiAgIDU4ICAgIDQyIFxuIn0= -->
 <pre><code>
  cara sello 
-   49    51 </code></pre>
+   58    42 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1821,35 +1821,33 @@ table(sample(moneda, 100, T))</code></pre>
 # se acerca al punto teorico
 table(sample(moneda, 10000000, T))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4gICBjYXJhICAgc2VsbG8gXG40OTk4Nzk5IDUwMDEyMDEgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICBjYXJhICAgc2VsbG8gXG40OTk4ODIzIDUwMDExNzcgXG4ifQ== -->
 <pre><code>
    cara   sello 
-4998799 5001201 </code></pre>
+4998823 5001177 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>2.- Prueba de sacar 3 bolas de una bolsa</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZSBkZWZpbmUgbGFzIGJvbHNhXG5ib2xzYTEgPC0gYyhcImJcIixcImJcIixcImJcIixcIm5cIixcIm5cIixcIm5cIilcbmJvbHNhMiA8LSBjKFwiYlwiLFwiYlwiLFwiYlwiLFwiclwiLFwiclwiLFwiclwiKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZSBkZWZpbmUgbGFzIGJvbHNhXG5ib2xzYTEgPC0gYyhcImJcIixcImJcIixcImJcIixcIm5cIixcIm5cIixcIm5cIilcbmJvbHNhMiA8LSBjKFwiYlwiLFwiYlwiLFwiYlwiLFwiclwiLFwiclwiLFwiclwiKVxuXG4jIFNlIHNhY2EgdW5hIGJvbGEgZGUgY2FkYSBib2xzYVxuQ09OX1JFRU1QTEFaTyA8LSBGXG5pdGVtX2IxIDwtIHNhbXBsZShib2xzYTEsIDEsIENPTl9SRUVNUExBWk8pXG5pdGVtX2IyIDwtIHNhbXBsZShib2xzYTIsIDEsIENPTl9SRUVNUExBWk8pXG5cbml0ZW1fYjFcbmBgYCJ9 -->
 <pre class="r"><code># Se define las bolsa
 bolsa1 &lt;- c(&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;n&quot;,&quot;n&quot;,&quot;n&quot;)
 bolsa2 &lt;- c(&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;r&quot;,&quot;r&quot;,&quot;r&quot;)
-</code></pre>
+
+# Se saca una bola de cada bolsa
+CON_REEMPLAZO &lt;- F
+item_b1 &lt;- sample(bolsa1, 1, CON_REEMPLAZO)
+item_b2 &lt;- sample(bolsa2, 1, CON_REEMPLAZO)
+
+item_b1</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZSBzYWNhIHVuYSBib2xhIGRlIGNhZGEgYm9sc2FcbnNhbXBsZShib2xzYTEsIDEpXG5gYGAifQ== -->
-<pre class="r"><code># Se saca una bola de cada bolsa
-sample(bolsa1, 1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiXG4ifQ== -->
-<pre><code>[1] &quot;b&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;n&quot;</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FtcGxlKGJvbHNhMiwgMSlcbmBgYCJ9 -->
-<pre class="r"><code>sample(bolsa2, 1)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaXRlbV9iMlxuYGBgIn0= -->
+<pre class="r"><code>item_b2</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiclwiXG4ifQ== -->
 <pre><code>[1] &quot;r&quot;</code></pre>
@@ -1857,8 +1855,91 @@ sample(bolsa1, 1)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2ExXG5gYGAifQ== -->
+<pre class="r"><code>bolsa1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiblwiIFwiblwiIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;n&quot; &quot;n&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2EyXG5gYGAifQ== -->
+<pre class="r"><code>bolsa2</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiclwiIFwiclwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;r&quot; &quot;r&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2ExIDwtIGMoYm9sc2ExLCBpdGVtX2IxKVxuYm9sc2ExXG5gYGAifQ== -->
+<pre class="r"><code>bolsa1 &lt;- c(bolsa1, item_b1)
+bolsa1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiblwiIFwiblwiIFwiblwiIFwiYlwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;n&quot; &quot;n&quot; &quot;n&quot; &quot;b&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZSBkZWZpbmUgbGFzIGJvbHNhXG5ib2xzYTEgPC0gYyhcImJcIixcImJcIixcImJcIixcIm5cIixcIm5cIixcIm5cIilcbmJvbHNhMiA8LSBjKFwiYlwiLFwiYlwiLFwiYlwiLFwiclwiLFwiclwiLFwiclwiKVxuXG5wcmludChcIkJvbHNhcyBpbmljaWFsZXNcIilcbmBgYCJ9 -->
+<pre class="r"><code># Se define las bolsa
+bolsa1 &lt;- c(&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;n&quot;,&quot;n&quot;,&quot;n&quot;)
+bolsa2 &lt;- c(&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;r&quot;,&quot;r&quot;,&quot;r&quot;)
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4tIFBydWViYSBkZSBsYW56YW1pZW50byBkZSB1bmEgbW9uZWRhCmBgYHtyfQptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKc2FtcGxlKG1vbmVkYSwgMikKYGBgCgoKYGBge3J9CiMgTGFuemFyIGxhIG1vbmVkYSAxMDAgdmVjZXMKc2FtcGxlKG1vbmVkYSwgMTAwLCBUKQpgYGAKCmBgYHtyfQojIENvbnRhciBsYSBjYW50aWRhZCBkZSB2ZWNlcwp0YWJsZShzYW1wbGUobW9uZWRhLCAxMDAsIFQpKQpgYGAKCmBgYHtyfQojIEN1YW5kbyBhdW1lbnRhIGxhIGNhbnRpZGFkIGRlIHBydWViYXMgCiMgc2UgYWNlcmNhIGFsIHB1bnRvIHRlb3JpY28KdGFibGUoc2FtcGxlKG1vbmVkYSwgMTAwMDAwMDAsIFQpKQpgYGAKCjIuLSBQcnVlYmEgZGUgc2FjYXIgMyBib2xhcyBkZSB1bmEgYm9sc2EgCgpgYGB7cn0KIyBTZSBkZWZpbmUgbGFzIGJvbHNhCmJvbHNhMSA8LSBjKCJiIiwiYiIsImIiLCJuIiwibiIsIm4iKQpib2xzYTIgPC0gYygiYiIsImIiLCJiIiwiciIsInIiLCJyIikKCmBgYAoKYGBge3J9CiMgU2Ugc2FjYSB1bmEgYm9sYSBkZSBjYWRhIGJvbHNhCnNhbXBsZShib2xzYTEsIDEpCnNhbXBsZShib2xzYTIsIDEpCmBgYAoK</div>
+print(&quot;Bolsas iniciales&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQm9sc2FzIGluaWNpYWxlc1wiXG4ifQ== -->
+<pre><code>[1] &quot;Bolsas iniciales&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2ExXG5gYGAifQ== -->
+<pre class="r"><code>bolsa1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiblwiIFwiblwiIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;n&quot; &quot;n&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2EyXG5gYGAifQ== -->
+<pre class="r"><code>bolsa2</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiclwiIFwiclwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;r&quot; &quot;r&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zX2IxX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpXG4jcG9zX2IxX2l0ZW0xXG4jYm9sc2ExW3Bvc19iMV9pdGVtMV1cbnRlbXAxIDwtIGJvbHNhMVtwb3NfYjFfaXRlbTFdXG5cbnBvc19iMl9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKVxuI3Bvc19iMl9pdGVtMVxuI2JvbHNhMltwb3NfYjJfaXRlbTFdXG50ZW1wMiA8LSBib2xzYTJbcG9zX2IyX2l0ZW0xXVxuXG5ib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMlxuYm9sc2EyW3Bvc19iMl9pdGVtMV0gPC0gdGVtcDFcblxuXG5wcmludChcIkJvbHNhcyBmaW5hbGVzXCIpXG5gYGAifQ== -->
+<pre class="r"><code>pos_b1_item1 &lt;- sample.int(6,1,F)
+#pos_b1_item1
+#bolsa1[pos_b1_item1]
+temp1 &lt;- bolsa1[pos_b1_item1]
+
+pos_b2_item1 &lt;- sample.int(6,1,F)
+#pos_b2_item1
+#bolsa2[pos_b2_item1]
+temp2 &lt;- bolsa2[pos_b2_item1]
+
+bolsa1[pos_b1_item1] &lt;- temp2
+bolsa2[pos_b2_item1] &lt;- temp1
+
+
+print(&quot;Bolsas finales&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQm9sc2FzIGZpbmFsZXNcIlxuIn0= -->
+<pre><code>[1] &quot;Bolsas finales&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2ExXG5gYGAifQ== -->
+<pre class="r"><code>bolsa1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiblwiIFwiclwiIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;n&quot; &quot;r&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9sc2EyXG5gYGAifQ== -->
+<pre class="r"><code>bolsa2</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiIFwiYlwiIFwiYlwiIFwiclwiIFwiclwiIFwiblwiXG4ifQ== -->
+<pre><code>[1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;r&quot; &quot;r&quot; &quot;n&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4tIFBydWViYSBkZSBsYW56YW1pZW50byBkZSB1bmEgbW9uZWRhCmBgYHtyfQptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKc2FtcGxlKG1vbmVkYSwgMikKYGBgCgoKYGBge3J9CiMgTGFuemFyIGxhIG1vbmVkYSAxMDAgdmVjZXMKc2FtcGxlKG1vbmVkYSwgMTAwLCBUKQpgYGAKCmBgYHtyfQojIENvbnRhciBsYSBjYW50aWRhZCBkZSB2ZWNlcwp0YWJsZShzYW1wbGUobW9uZWRhLCAxMDAsIFQpKQpgYGAKCmBgYHtyfQojIEN1YW5kbyBhdW1lbnRhIGxhIGNhbnRpZGFkIGRlIHBydWViYXMgCiMgc2UgYWNlcmNhIGFsIHB1bnRvIHRlb3JpY28KdGFibGUoc2FtcGxlKG1vbmVkYSwgMTAwMDAwMDAsIFQpKQpgYGAKCjIuLSBQcnVlYmEgZGUgc2FjYXIgMyBib2xhcyBkZSB1bmEgYm9sc2EgCgpgYGB7cn0KIyBTZSBkZWZpbmUgbGFzIGJvbHNhCmJvbHNhMSA8LSBjKCJiIiwiYiIsImIiLCJuIiwibiIsIm4iKQpib2xzYTIgPC0gYygiYiIsImIiLCJiIiwiciIsInIiLCJyIikKCiMgU2Ugc2FjYSB1bmEgYm9sYSBkZSBjYWRhIGJvbHNhCkNPTl9SRUVNUExBWk8gPC0gRgppdGVtX2IxIDwtIHNhbXBsZShib2xzYTEsIDEsIENPTl9SRUVNUExBWk8pCml0ZW1fYjIgPC0gc2FtcGxlKGJvbHNhMiwgMSwgQ09OX1JFRU1QTEFaTykKCml0ZW1fYjEKaXRlbV9iMgpgYGAKCmBgYHtyfQpib2xzYTEKYm9sc2EyCmBgYAoKYGBge3J9CmJvbHNhMSA8LSBjKGJvbHNhMSwgaXRlbV9iMSkKYm9sc2ExCgpgYGAKYGBge3J9CiMgU2UgZGVmaW5lIGxhcyBib2xzYQpib2xzYTEgPC0gYygiYiIsImIiLCJiIiwibiIsIm4iLCJuIikKYm9sc2EyIDwtIGMoImIiLCJiIiwiYiIsInIiLCJyIiwiciIpCgpwcmludCgiQm9sc2FzIGluaWNpYWxlcyIpCmJvbHNhMQpib2xzYTIKCnBvc19iMV9pdGVtMSA8LSBzYW1wbGUuaW50KDYsMSxGKQojcG9zX2IxX2l0ZW0xCiNib2xzYTFbcG9zX2IxX2l0ZW0xXQp0ZW1wMSA8LSBib2xzYTFbcG9zX2IxX2l0ZW0xXQoKcG9zX2IyX2l0ZW0xIDwtIHNhbXBsZS5pbnQoNiwxLEYpCiNwb3NfYjJfaXRlbTEKI2JvbHNhMltwb3NfYjJfaXRlbTFdCnRlbXAyIDwtIGJvbHNhMltwb3NfYjJfaXRlbTFdCgpib2xzYTFbcG9zX2IxX2l0ZW0xXSA8LSB0ZW1wMgpib2xzYTJbcG9zX2IyX2l0ZW0xXSA8LSB0ZW1wMQoKCnByaW50KCJCb2xzYXMgZmluYWxlcyIpCgpib2xzYTEKYm9sc2EyCgpgYGAKCg==</div>
 
 
 
