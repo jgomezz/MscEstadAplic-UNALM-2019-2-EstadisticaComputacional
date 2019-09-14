@@ -255,6 +255,15 @@ Ejemplo 2 : Un cazador tiene 5 balas para matar a un tigre, suponiendo que p=0.8
 Probabilidad de que el TIGRE GANE   :  0.2 ^ 5
 Probabilidad de que el CAZADOR GANE :  1 -  0.2 ^ 5
 
+X | P(x)
+--------
+0 | 0.8
+1 | 0.16
+2 | 0.032
+3 | 0.0064
+4 | 0.00128
+5 | 0.000256
+
 
 ```{r}
 # Obtiene la cantidad de veces que se repite la prueba hasta obtener el exito
@@ -263,18 +272,38 @@ rgeom(1,0.8)
 
 # Si por ejemplo sale 2, entonces el Cazador mato al Tigre en el 3 tiro
 ```
-
 ```{r}
-table(rgeom(10000, 0.8))
+r <- 100000 # numero de ensayos
+table(rgeom(r, 0.8)) / r
 ```
 
-
-
-
-
+# Distribucion Exponencial, se usa para medir tiempo de vida
 
 ```{r}
 
 ```
 
+```{r}
+normal2=function(n,mu,sigma)
+{
+x=rep(0,n)
+y=rep(0,n)
+for(i in 1:n)
+{
+ u1=runif(1, min=0,max=1)
+ u2= runif(1, min=0,max=1)
+ R=sqrt(-2*log(u1))
+ Theta=2*pi*u2
+ x[i]=R*cos(Theta)
+ y[i]=R*sin(Theta)
+A=mu+sigma*x
+B=mu+sigma*y
+}
+return(list(A=A,B=B))
+}
+
+normalmuestra=normal2(1000,54,10)
+hist(normalmuestra[[1]])
+
+```
 
