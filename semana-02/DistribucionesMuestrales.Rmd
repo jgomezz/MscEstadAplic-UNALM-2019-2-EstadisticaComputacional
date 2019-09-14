@@ -140,19 +140,29 @@ binomial1 <- function(n,r,theta) {
         resultados[i,j]=1  
       else 
   resultados[i,j]=0
-  print(resultados)
+  #print(resultados)
   
   #vector=apply(resultados,1,sum)  # 1 suma filas
   vector=apply(resultados,2,sum)  # 2 suma columnas
-  print(vector)
+  #print(vector)
   
   prob <- table(vector)/r
   print(prob)
-    
   
 }
 
-binomial1(6,50,0.85)
+n <-  6 # tamanho de muestra
+r <- 50 # numero de repeticiones
+PROB_EXITO <- 0.85
+
+binomial1(n,r,PROB_EXITO)
+
+```
+```{r}
+n <-  6 # tamanho de muestra
+r <- 50000 # numero de repeticiones
+PROB_EXITO <- 0.85
+binomial1(n,r,PROB_EXITO)
 
 ```
 
