@@ -1877,9 +1877,83 @@ table(muestra)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<div id="distribucion-binomial-generaliza-el-bernoulli" class="section level1">
+<h1>Distribucion Binomial –&gt; Generaliza el Bernoulli</h1>
+<p>Tu decision debe tener 2 opciones, ejemplo: de una caja de mangos, tu estableces si lo compras o no lo compras</p>
+<p>n = 6 mangos p : probabilidad de que el mango este en condiciones optimas. En caso no es el complemento p = 0.85</p>
+<p>Cuenta la variable X y encuentra un valor de 0, lo cual significa que todos estan malogrados, por lo tanto X te indica la cantidad de mangos que estan en condiciones optimas en una muestra de tamaño n</p>
+<p>X: 0, 1, 2, 3, 4, 5, 6</p>
+<pre><code>      6      2     4</code></pre>
+<p>P(X=2) = ( ) 0.85 * 0.15 2</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBVc2Ftb3MgbGEgZnVuY2lvbiBkZSBiZXJudWxsaVxuXG5cblxuXG5tdWVzdHJhIDwtIGJlcm5vdWxsaSg2LDAuMTUpXG50YWJsZShtdWVzdHJhKVxuYGBgIn0= -->
+<pre class="r"><code># Usamos la funcion de bernulli
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGlzdHJpYnVjacOzbiBCZXJub3VsbGkKYGBge3J9CgojIExhbnphciBsYSBtb25lZGEKTiA8LSA1MDAwICMgQ2FudGlkYWQgZGUgbGFuemFtaWVudG9zCm1vbmVkYSA8LSBjKCJjYXJhIiwic2VsbG8iKQpyZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCkKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIDAuNSkKcHJpbnQoZXJyb3IpCgojIEVzdGEgZGVudHJvIGRlbCBlcnJvciBlc3BlcmFkbz8KZXJyb3IgPCBFbWluCgpgYGAKU2UgcHVlZGUgY2FyZ2FyIGxhIHBydWViYSBhc2lnbmFuZG9sZSBwZXNvIGEgbGFzIHByb2JhYmlsaWRhZGVzCiJDYXJnYW5kbyBlbCBleHBlcmltZW50byIKCmBgYHtyfQoKIyBMYW56YXIgbGEgbW9uZWRhCk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvcwptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKCiMgU2UgY29sb2NhIGxhcyBwcm9iYWJpbGlkYWRlcyBlbiB1biBhcnJlZ2xvClBST0JfQ0FSR0FEQVMgPC0gYygwLjYsMC40KSAgIyAwLjYgcGFyYSAiY2FyYSIgJiAwLjQgcGFyYSAic2VsbG8iCnJlc3VsdGFkbyA8LSBzYW1wbGUobW9uZWRhLCBOLCBULCBwcm9iID0gUFJPQl9DQVJHQURBUykKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIFBST0JfQ0FSR0FEQVMpCnByaW50KGVycm9yKQoKIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/CmVycm9yIDwgRW1pbgpgYGAKYGBge3J9CgojIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyCiMgRG9uZGUgdGhldGEgZXMgbGEgcHJvYmFiaWxpZGFkIGRlIGV4aXRvCmJlcm5vdWxsaSA8LSBmdW5jdGlvbihuLHRoZXRhKSB7CiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgCiAgcmVzdWx0YWRvcz1yZXAoMCxuKQogIGZvciAoaSBpbiAxOm4pIAogICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgCiAgICAgIHJlc3VsdGFkb3NbaV09MQogICAgZWxzZSAKICAgICAgcmVzdWx0YWRvc1tpXT0wCiAgcmV0dXJuKHJlc3VsdGFkb3MpIAp9CgoKIyBMYSBwcm9iYWJpaWRhZCBkZSBxdWUgc2FsZ2EgU2VsbG8gZXMgMC40CiMgRWwgIjAiIGVzIENhcmEgCm11ZXN0cmEgPC0gYmVybm91bGxpKDEwLDAuNCkKdGFibGUobXVlc3RyYSkKCmBgYAoK</div>
+
+
+
+muestra &lt;- bernoulli(6,0.15)
+table(muestra)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibXVlc3RyYVxuMCAxIFxuNSAxIFxuIn0= -->
+<pre><code>muestra
+0 1 
+5 1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="x-px" class="section level2">
+<h2>X | P(x)</h2>
+<p>0 | 1 | 2 | 3 | 4 | 5 | 6 |</p>
+<p>Calculamos las probabilidades teoricas</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xpYnJhcnkoXCJndG9vbHNcIilcblxuUFJPQl9FWElUTyAgIDwtIDAuODVcblBST0JfRlJBQ0FTTyA8LSAwLjE1XG5cbm4gPC0gNlxuc3VtIDwtMFxuZm9yICh4IGluIDA6Nikge1xuICBwIDwtIGNob29zZShuLHgpKlBST0JfRVhJVE9eeCpQUk9CX0ZSQUNBU09eKG4teClcbiAgcHJpbnQocClcbiAgc3VtIDwtIHN1bSArIHBcbn1cbmBgYCJ9 -->
+<pre class="r"><code>#library(&quot;gtools&quot;)
+
+PROB_EXITO   &lt;- 0.85
+PROB_FRACASO &lt;- 0.15
+
+n &lt;- 6
+sum &lt;-0
+for (x in 0:6) {
+  p &lt;- choose(n,x)*PROB_EXITO^x*PROB_FRACASO^(n-x)
+  print(p)
+  sum &lt;- sum + p
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEuMTM5MDYyZS0wNVxuWzFdIDAuMDAwMzg3MjgxMlxuWzFdIDAuMDA1NDg2NDg0XG5bMV0gMC4wNDE0NTM0NFxuWzFdIDAuMTc2MTc3MVxuWzFdIDAuMzk5MzM0OFxuWzFdIDAuMzc3MTQ5NVxuIn0= -->
+<pre><code>[1] 1.139062e-05
+[1] 0.0003872812
+[1] 0.005486484
+[1] 0.04145344
+[1] 0.1761771
+[1] 0.3993348
+[1] 0.3771495</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoc3VtKVxuYGBgIn0= -->
+<pre class="r"><code>print(sum)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDFcbiJ9 -->
+<pre><code>[1] 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2Nob29zZSg2LDIpKlBST0JfRVhJVE9eMipQUk9CX0ZSQUNBU09eNlxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>#choose(6,2)*PROB_EXITO^2*PROB_FRACASO^6
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Procedemos a realizar la simulacion</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGlzdHJpYnVjacOzbiBCZXJub3VsbGkKYGBge3J9CgojIExhbnphciBsYSBtb25lZGEKTiA8LSA1MDAwICMgQ2FudGlkYWQgZGUgbGFuemFtaWVudG9zCm1vbmVkYSA8LSBjKCJjYXJhIiwic2VsbG8iKQpyZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCkKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIDAuNSkKcHJpbnQoZXJyb3IpCgojIEVzdGEgZGVudHJvIGRlbCBlcnJvciBlc3BlcmFkbz8KZXJyb3IgPCBFbWluCgpgYGAKU2UgcHVlZGUgY2FyZ2FyIGxhIHBydWViYSBhc2lnbmFuZG9sZSBwZXNvIGEgbGFzIHByb2JhYmlsaWRhZGVzCiJDYXJnYW5kbyBlbCBleHBlcmltZW50byIKCmBgYHtyfQoKIyBMYW56YXIgbGEgbW9uZWRhCk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvcwptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKCiMgU2UgY29sb2NhIGxhcyBwcm9iYWJpbGlkYWRlcyBlbiB1biBhcnJlZ2xvClBST0JfQ0FSR0FEQVMgPC0gYygwLjYsMC40KSAgIyAwLjYgcGFyYSAiY2FyYSIgJiAwLjQgcGFyYSAic2VsbG8iCnJlc3VsdGFkbyA8LSBzYW1wbGUobW9uZWRhLCBOLCBULCBwcm9iID0gUFJPQl9DQVJHQURBUykKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIFBST0JfQ0FSR0FEQVMpCnByaW50KGVycm9yKQoKIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/CmVycm9yIDwgRW1pbgpgYGAKYGBge3J9CgojIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyCiMgRG9uZGUgdGhldGEgZXMgbGEgcHJvYmFiaWxpZGFkIGRlIGV4aXRvCmJlcm5vdWxsaSA8LSBmdW5jdGlvbihuLHRoZXRhKSB7CiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgCiAgcmVzdWx0YWRvcz1yZXAoMCxuKQogIGZvciAoaSBpbiAxOm4pIAogICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgCiAgICAgIHJlc3VsdGFkb3NbaV09MQogICAgZWxzZSAKICAgICAgcmVzdWx0YWRvc1tpXT0wCiAgcmV0dXJuKHJlc3VsdGFkb3MpIAp9CgoKIyBMYSBwcm9iYWJpaWRhZCBkZSBxdWUgc2FsZ2EgU2VsbG8gZXMgMC40CiMgRWwgIjAiIGVzIENhcmEgCm11ZXN0cmEgPC0gYmVybm91bGxpKDEwLDAuNCkKdGFibGUobXVlc3RyYSkKCmBgYAoKIyBEaXN0cmlidWNpb24gQmlub21pYWwgLS0+IEdlbmVyYWxpemEgZWwgQmVybm91bGxpCgpUdSBkZWNpc2lvbiBkZWJlIHRlbmVyIDIgb3BjaW9uZXMsIGVqZW1wbG86IGRlIHVuYSBjYWphIGRlIG1hbmdvcywgdHUgZXN0YWJsZWNlcyBzaSAgbG8gY29tcHJhcyBvIG5vIGxvIGNvbXByYXMKCm4gPSA2IG1hbmdvcwpwIDogcHJvYmFiaWxpZGFkIGRlIHF1ZSBlbCBtYW5nbyBlc3RlIGVuIGNvbmRpY2lvbmVzIG9wdGltYXMuIEVuIGNhc28gbm8gZXMgZWwgY29tcGxlbWVudG8KcCA9IDAuODUgCgpDdWVudGEgbGEgdmFyaWFibGUgWCB5IGVuY3VlbnRyYSB1biB2YWxvciBkZSAwLCBsbyBjdWFsIHNpZ25pZmljYSBxdWUgdG9kb3MgZXN0YW4gbWFsb2dyYWRvcywgcG9yIGxvIHRhbnRvIFggdGUgaW5kaWNhIGxhIGNhbnRpZGFkIGRlIG1hbmdvcyBxdWUgZXN0YW4gZW4gY29uZGljaW9uZXMgb3B0aW1hcyBlbiB1bmEgbXVlc3RyYSBkZSB0YW1hw7FvIG4KClg6IDAsIDEsIDIsIDMsIDQsIDUsIDYKCiAgICAgICAgICA2ICAgICAgMiAgICAgNApQKFg9MikgPSAoICkgMC44NSAqIDAuMTUKICAgICAgICAgIDIKCmBgYHtyfQojIFVzYW1vcyBsYSBmdW5jaW9uIGRlIGJlcm51bGxpCm11ZXN0cmEgPC0gYmVybm91bGxpKDYsMC4xNSkKdGFibGUobXVlc3RyYSkKYGBgCgpYIHwgUCh4KQotLS0tLS0tCjAgfCAKMSB8IAoyIHwgCjMgfCAKNCB8IAo1IHwgCjYgfCAKCkNhbGN1bGFtb3MgbGFzIHByb2JhYmlsaWRhZGVzIHRlb3JpY2FzCmBgYHtyfQpQUk9CX0VYSVRPICAgPC0gMC44NQpQUk9CX0ZSQUNBU08gPC0gMC4xNQoKbiA8LSA2CnN1bSA8LTAKZm9yICh4IGluIDA6NikgewogIHAgPC0gY2hvb3NlKG4seCkqUFJPQl9FWElUT154KlBST0JfRlJBQ0FTT14obi14KQogIHByaW50KHApCiAgc3VtIDwtIHN1bSArIHAKfQojIFN1bWF0b3JpYSBkZSB0b2RhcyBsYXMgcHJvYmFiaWxpZGFkZXMKcHJpbnQoc3VtKQoKI2Nob29zZSg2LDIpKlBST0JfRVhJVE9eMipQUk9CX0ZSQUNBU09eNgoKCmBgYApQcm9jZWRlbW9zIGEgcmVhbGl6YXIgbGEgc2ltdWxhY2lvbgoKYGBge3J9CgpgYGAKCgoK</div>
 
 
 

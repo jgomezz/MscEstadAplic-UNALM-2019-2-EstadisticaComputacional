@@ -72,3 +72,62 @@ table(muestra)
 
 ```
 
+# Distribucion Binomial --> Generaliza el Bernoulli
+
+Tu decision debe tener 2 opciones, ejemplo: de una caja de mangos, tu estableces si  lo compras o no lo compras
+
+n = 6 mangos
+p : probabilidad de que el mango este en condiciones optimas. En caso no es el complemento
+p = 0.85 
+
+Cuenta la variable X y encuentra un valor de 0, lo cual significa que todos estan malogrados, por lo tanto X te indica la cantidad de mangos que estan en condiciones optimas en una muestra de tamaño n
+
+X: 0, 1, 2, 3, 4, 5, 6
+
+          6      2     4
+P(X=2) = ( ) 0.85 * 0.15
+          2
+
+```{r}
+# Usamos la funcion de bernulli
+muestra <- bernoulli(6,0.15)
+table(muestra)
+```
+
+X | P(x)
+-------
+0 | 
+1 | 
+2 | 
+3 | 
+4 | 
+5 | 
+6 | 
+
+Calculamos las probabilidades teoricas
+```{r}
+PROB_EXITO   <- 0.85
+PROB_FRACASO <- 0.15
+
+n <- 6
+sum <-0
+for (x in 0:6) {
+  p <- choose(n,x)*PROB_EXITO^x*PROB_FRACASO^(n-x)
+  print(p)
+  sum <- sum + p
+}
+# Sumatoria de todas las probabilidades
+print(sum)
+
+#choose(6,2)*PROB_EXITO^2*PROB_FRACASO^6
+
+
+```
+Procedemos a realizar la simulacion
+
+```{r}
+
+```
+
+
+
