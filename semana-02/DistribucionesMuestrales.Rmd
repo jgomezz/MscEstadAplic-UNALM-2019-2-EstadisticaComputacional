@@ -257,9 +257,16 @@ Probabilidad de que el CAZADOR GANE :  1 -  0.2 ^ 5
 
 
 ```{r}
+# Obtiene la cantidad de veces que se repite la prueba hasta obtener el exito
 
+rgeom(1,0.8)
+
+# Si por ejemplo sale 2, entonces el Cazador mato al Tigre en el 3 tiro
 ```
 
+```{r}
+table(rgeom(10000, 0.8))
+```
 
 
 
