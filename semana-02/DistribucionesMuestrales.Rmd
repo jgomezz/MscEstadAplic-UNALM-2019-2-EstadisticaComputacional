@@ -49,4 +49,26 @@ print(error)
 # Esta dentro del error esperado?
 error < Emin
 ```
+```{r}
+
+# Donde n es la cantidad de datos a simular
+# Donde theta es la probabilidad de exito
+bernoulli <- function(n,theta) {
+  uniformes=runif(n, min=0, max=1) # Mantenemos una linea constante 
+  resultados=rep(0,n)
+  for (i in 1:n) 
+    if (uniformes[i]>=1-theta) 
+      resultados[i]=1
+    else 
+      resultados[i]=0
+  return(resultados) 
+}
+
+
+# La probabiidad de que salga Sello es 0.4
+# El "0" es Cara 
+muestra <- bernoulli(10,0.4)
+table(muestra)
+
+```
 
