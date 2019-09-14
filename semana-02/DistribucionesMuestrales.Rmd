@@ -198,16 +198,76 @@ binomial2 <-function(n,r,theta) {
   for (i in 1:r)
     x[i]<-sum(bernoulli(n,theta))
   
-  print(x)
+  #print(x)
   
   prob = table(x)/r
   print(prob)
   
 }
 
-binomial2(6,50,0.85)
+binomial2(6,50000,0.85)
 
 ```
 
+```{r}
+# Usando librerias de R
+rbinom(100,6,0.85)
+# Sale
+```
+
+```{r}
+# Valores estimados de las probabilidades
+r <-100000
+mangos <- rbinom(r,6,0.85)
+prob_estimada <- table(mangos)/r
+print(prob_estimada)
+
+```
+```{r}
+# Valores teoricos de probabilidades
+prob_teorica <- dbinom(0:6,6, 0.85)
+print(prob_teorica)
+```
+Falta calcular el error
+```{r}
+
+```
+
+
+#Distribucion Geometrica, se realiza los experimentos hasta que sea exitoso
+Ejemplo 1 : Cuando estas tratando de abrir la puerta de un conjunto de llaves, pruebas hasta que encuentres la llave correcta
+
+Ejemplo 2 : Un cazador tiene 5 balas para matar a un tigre, suponiendo que p=0.8 de probabilidad de exito y q=0.2 probabilidad de fracaso, entonces la situacion final del experimento sera :
+
+
+---- 0.8  ( Si acerto)
+ |
+ !---- 0.2 ( No acerto) ----- 0.8  ( Si acerto)
+                         |
+                         !---- 0.2 ( No acerto) ----- 0.8  ( Si acerto)
+                                                 |
+                                                 !---- 0.2 ( No acerto) ----- 0.8  ( Si acerto)
+                                                                          |
+                                                                          !---- 0.2 ( No acerto) ----- 0.8  ( Si acerto)
+                                                                                                   |
+                                                                                                   !----- 0.2 ( No acerto)
+
+Probabilidad de que el TIGRE GANE   :  0.2 ^ 5
+Probabilidad de que el CAZADOR GANE :  1 -  0.2 ^ 5
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+```{r}
+
+```
 
 
