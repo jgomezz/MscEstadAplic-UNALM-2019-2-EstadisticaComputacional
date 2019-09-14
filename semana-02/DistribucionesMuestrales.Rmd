@@ -123,6 +123,27 @@ print(sum)
 
 
 ```
+
+```{r}
+prob_teoricas <-function(n,r) {
+  
+  PROB_EXITO   <- 0.85
+  PROB_FRACASO <- 0.15
+
+  x <- rep(0,n)
+  
+  for (i in 0:n)
+    x[i]<-sum(bernoulli(r,theta))
+    x[i] <- choose(n,x)*PROB_EXITO^x*PROB_FRACASO^(n-x)
+  
+  return(x)
+}
+
+
+
+```
+
+
 Procedemos a realizar la simulacion
 
 ```{r}
@@ -174,13 +195,17 @@ binomial1(n,r,PROB_EXITO)
 binomial2 <-function(n,r,theta) {
   x <- rep(0,n)
   
-  for (i in 1:n)
-    x[i]<-sum(bernoulli(r,theta))
+  for (i in 1:r)
+    x[i]<-sum(bernoulli(n,theta))
   
   print(x)
+  
+  prob = table(x)/r
+  print(prob)
+  
 }
 
-#binomial2(6,2,0.85)
+binomial2(6,50,0.85)
 
 ```
 
