@@ -126,6 +126,51 @@ print(sum)
 Procedemos a realizar la simulacion
 
 ```{r}
+#Funcion para generar numeros pseudoaleatorios 
+# de una distribucion Binomial con parametros r y theta (primera forma)
+# r : numero de repeticiones
+binomial1 <- function(n,r,theta) {
+  
+  U=matrix(runif(n*r),n,r)
+  
+  resultados=matrix(0,n,r)
+  for (i in 1:n)
+    for (j in 1:r)
+      if (U[i,j]<=theta)
+        resultados[i,j]=1  
+      else 
+  resultados[i,j]=0
+  print(resultados)
+  
+  #vector=apply(resultados,1,sum)  # 1 suma filas
+  vector=apply(resultados,2,sum)  # 2 suma columnas
+  print(vector)
+  
+  prob <- table(vector)/r
+  print(prob)
+    
+  
+}
+
+binomial1(6,50,0.85)
+
+```
+
+```{r}
+# Funcion para generar numeros pseudoaleatorios 
+# de una distribucion Binomial con parametros 
+# r y theta (segunda forma)
+# r : numero de repeticiones
+binomial2 <-function(n,r,theta) {
+  x <- rep(0,n)
+  
+  for (i in 1:n)
+    x[i]<-sum(bernoulli(r,theta))
+  
+  print(x)
+}
+
+#binomial2(6,2,0.85)
 
 ```
 

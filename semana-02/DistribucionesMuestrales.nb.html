@@ -1781,10 +1781,10 @@ resultado &lt;- sample(moneda, N, T)
 prob &lt;- table(resultado)/N
 print(prob)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuMC41MDEyIDAuNDk4OCBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbjAuNDk0IDAuNTA2IFxuIn0= -->
 <pre><code>resultado
-  cara  sello 
-0.5012 0.4988 </code></pre>
+ cara sello 
+0.494 0.506 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhciBlbCBlcnJvclxuRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGVcbmVycm9yID0gKHByb2IgLSAwLjUpXG5wcmludChlcnJvcilcbmBgYCJ9 -->
 <pre class="r"><code># Calcular el error
@@ -1792,19 +1792,19 @@ Emin &lt;- 0.0001 # Error aceptable
 error = (prob - 0.5)
 print(error)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gICBjYXJhICAgc2VsbG8gXG4gMC4wMDEyIC0wLjAwMTIgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuLTAuMDA2ICAwLjAwNiBcbiJ9 -->
 <pre><code>resultado
-   cara   sello 
- 0.0012 -0.0012 </code></pre>
+  cara  sello 
+-0.006  0.006 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/XG5lcnJvciA8IEVtaW5cbmBgYCJ9 -->
 <pre class="r"><code># Esta dentro del error esperado?
 error &lt; Emin</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbkZBTFNFICBUUlVFIFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbiBUUlVFIEZBTFNFIFxuIn0= -->
 <pre><code>resultado
  cara sello 
-FALSE  TRUE </code></pre>
+ TRUE FALSE </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1825,10 +1825,10 @@ resultado &lt;- sample(moneda, N, T, prob = PROB_CARGADAS)
 prob &lt;- table(resultado)/N
 print(prob)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbjAuNTk4IDAuNDAyIFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuMC41OTY2IDAuNDAzNCBcbiJ9 -->
 <pre><code>resultado
- cara sello 
-0.598 0.402 </code></pre>
+  cara  sello 
+0.5966 0.4034 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhciBlbCBlcnJvclxuRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGVcbmVycm9yID0gKHByb2IgLSBQUk9CX0NBUkdBREFTKVxucHJpbnQoZXJyb3IpXG5gYGAifQ== -->
 <pre class="r"><code># Calcular el error
@@ -1836,10 +1836,10 @@ Emin &lt;- 0.0001 # Error aceptable
 error = (prob - PROB_CARGADAS)
 print(error)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuLTAuMDAyICAwLjAwMiBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gICBjYXJhICAgc2VsbG8gXG4tMC4wMDM0ICAwLjAwMzQgXG4ifQ== -->
 <pre><code>resultado
-  cara  sello 
--0.002  0.002 </code></pre>
+   cara   sello 
+-0.0034  0.0034 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/XG5lcnJvciA8IEVtaW5cbmBgYCJ9 -->
 <pre class="r"><code># Esta dentro del error esperado?
@@ -1852,7 +1852,7 @@ error &lt; Emin</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyXG4jIERvbmRlIHRoZXRhIGVzIGxhIHByb2JhYmlsaWRhZCBkZSBleGl0b1xuYmVybm91bGxpIDwtIGZ1bmN0aW9uKG4sdGhldGEpIHtcbiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgXG4gIHJlc3VsdGFkb3M9cmVwKDAsbilcbiAgZm9yIChpIGluIDE6bikgXG4gICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgXG4gICAgICByZXN1bHRhZG9zW2ldPTFcbiAgICBlbHNlIFxuICAgICAgcmVzdWx0YWRvc1tpXT0wXG4gIHJldHVybihyZXN1bHRhZG9zKSBcbn1cblxubXVlc3RyYSA8LSBiZXJub3VsbGkoMTAsMC40KVxudGFibGUobXVlc3RyYSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyXG4jIERvbmRlIHRoZXRhIGVzIGxhIHByb2JhYmlsaWRhZCBkZSBleGl0b1xuYmVybm91bGxpIDwtIGZ1bmN0aW9uKG4sdGhldGEpIHtcbiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgXG4gIHJlc3VsdGFkb3M9cmVwKDAsbilcbiAgZm9yIChpIGluIDE6bikgXG4gICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgXG4gICAgICByZXN1bHRhZG9zW2ldPTFcbiAgICBlbHNlIFxuICAgICAgcmVzdWx0YWRvc1tpXT0wXG4gIHJldHVybihyZXN1bHRhZG9zKSBcbn1cblxuXG4jIExhIHByb2JhYmlpZGFkIGRlIHF1ZSBzYWxnYSBTZWxsbyBlcyAwLjRcbiMgRWwgXCIwXCIgZXMgQ2FyYSBcbm11ZXN0cmEgPC0gYmVybm91bGxpKDEwLDAuNClcbnRhYmxlKG11ZXN0cmEpXG5gYGAifQ== -->
 <pre class="r"><code>
 # Donde n es la cantidad de datos a simular
 # Donde theta es la probabilidad de exito
@@ -1867,13 +1867,16 @@ bernoulli &lt;- function(n,theta) {
   return(resultados) 
 }
 
+
+# La probabiidad de que salga Sello es 0.4
+# El &quot;0&quot; es Cara 
 muestra &lt;- bernoulli(10,0.4)
 table(muestra)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibXVlc3RyYVxuMCAxIFxuOCAyIFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoibXVlc3RyYVxuMCAxIFxuNSA1IFxuIn0= -->
 <pre><code>muestra
 0 1 
-8 2 </code></pre>
+5 5 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1887,19 +1890,15 @@ table(muestra)</code></pre>
 <p>P(X=2) = ( ) 0.85 * 0.15 2</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBVc2Ftb3MgbGEgZnVuY2lvbiBkZSBiZXJudWxsaVxuXG5cblxuXG5tdWVzdHJhIDwtIGJlcm5vdWxsaSg2LDAuMTUpXG50YWJsZShtdWVzdHJhKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBVc2Ftb3MgbGEgZnVuY2lvbiBkZSBiZXJudWxsaVxubXVlc3RyYSA8LSBiZXJub3VsbGkoNiwwLjE1KVxudGFibGUobXVlc3RyYSlcbmBgYCJ9 -->
 <pre class="r"><code># Usamos la funcion de bernulli
-
-
-
-
 muestra &lt;- bernoulli(6,0.15)
 table(muestra)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibXVlc3RyYVxuMCAxIFxuNSAxIFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoibXVlc3RyYVxuMCAxIFxuNCAyIFxuIn0= -->
 <pre><code>muestra
 0 1 
-5 1 </code></pre>
+4 2 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1909,10 +1908,8 @@ table(muestra)</code></pre>
 <p>Calculamos las probabilidades teoricas</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xpYnJhcnkoXCJndG9vbHNcIilcblxuUFJPQl9FWElUTyAgIDwtIDAuODVcblBST0JfRlJBQ0FTTyA8LSAwLjE1XG5cbm4gPC0gNlxuc3VtIDwtMFxuZm9yICh4IGluIDA6Nikge1xuICBwIDwtIGNob29zZShuLHgpKlBST0JfRVhJVE9eeCpQUk9CX0ZSQUNBU09eKG4teClcbiAgcHJpbnQocClcbiAgc3VtIDwtIHN1bSArIHBcbn1cbmBgYCJ9 -->
-<pre class="r"><code>#library(&quot;gtools&quot;)
-
-PROB_EXITO   &lt;- 0.85
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUFJPQl9FWElUTyAgIDwtIDAuODVcblBST0JfRlJBQ0FTTyA8LSAwLjE1XG5cbm4gPC0gNlxuc3VtIDwtMFxuZm9yICh4IGluIDA6Nikge1xuICBwIDwtIGNob29zZShuLHgpKlBST0JfRVhJVE9eeCpQUk9CX0ZSQUNBU09eKG4teClcbiAgcHJpbnQocClcbiAgc3VtIDwtIHN1bSArIHBcbn1cbmBgYCJ9 -->
+<pre class="r"><code>PROB_EXITO   &lt;- 0.85
 PROB_FRACASO &lt;- 0.15
 
 n &lt;- 6
@@ -1932,8 +1929,9 @@ for (x in 0:6) {
 [1] 0.3993348
 [1] 0.3771495</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoc3VtKVxuYGBgIn0= -->
-<pre class="r"><code>print(sum)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdW1hdG9yaWEgZGUgdG9kYXMgbGFzIHByb2JhYmlsaWRhZGVzXG5wcmludChzdW0pXG5gYGAifQ== -->
+<pre class="r"><code># Sumatoria de todas las probabilidades
+print(sum)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDFcbiJ9 -->
 <pre><code>[1] 1</code></pre>
@@ -1947,13 +1945,90 @@ for (x in 0:6) {
 <p>Procedemos a realizar la simulacion</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0Z1bmNpb24gcGFyYSBnZW5lcmFyIG51bWVyb3MgcHNldWRvYWxlYXRvcmlvcyBcbiMgZGUgdW5hIGRpc3RyaWJ1Y2lvbiBCaW5vbWlhbCBjb24gcGFyYW1ldHJvcyByIHkgdGhldGEgKHByaW1lcmEgZm9ybWEpXG4jIHIgOiBudW1lcm8gZGUgcmVwZXRpY2lvbmVzXG5iaW5vbWlhbDEgPC0gZnVuY3Rpb24obixyLHRoZXRhKSB7XG4gIFxuICBVPW1hdHJpeChydW5pZihuKnIpLG4scilcbiAgXG4gIHJlc3VsdGFkb3M9bWF0cml4KDAsbixyKVxuICBmb3IgKGkgaW4gMTpuKVxuICAgIGZvciAoaiBpbiAxOnIpXG4gICAgICBpZiAoVVtpLGpdPD10aGV0YSlcbiAgICAgICAgcmVzdWx0YWRvc1tpLGpdPTEgIFxuICAgICAgZWxzZSBcbiAgcmVzdWx0YWRvc1tpLGpdPTBcbiAgcHJpbnQocmVzdWx0YWRvcylcbiAgXG4gICN2ZWN0b3I9YXBwbHkocmVzdWx0YWRvcywxLHN1bSkgICMgMSBzdW1hIGZpbGFzXG4gIHZlY3Rvcj1hcHBseShyZXN1bHRhZG9zLDIsc3VtKSAgIyAyIHN1bWEgY29sdW1uYXNcbiAgcHJpbnQodmVjdG9yKVxuICBcbiAgcHJvYiA8LSB0YWJsZSh2ZWN0b3IpL3JcbiAgcHJpbnQocHJvYilcbiAgICBcbiAgXG59XG5cbmJpbm9taWFsMSg2LDUwLDAuODUpXG5gYGAifQ== -->
+<pre class="r"><code>#Funcion para generar numeros pseudoaleatorios 
+# de una distribucion Binomial con parametros r y theta (primera forma)
+# r : numero de repeticiones
+binomial1 &lt;- function(n,r,theta) {
+  
+  U=matrix(runif(n*r),n,r)
+  
+  resultados=matrix(0,n,r)
+  for (i in 1:n)
+    for (j in 1:r)
+      if (U[i,j]&lt;=theta)
+        resultados[i,j]=1  
+      else 
+  resultados[i,j]=0
+  print(resultados)
+  
+  #vector=apply(resultados,1,sum)  # 1 suma filas
+  vector=apply(resultados,2,sum)  # 2 suma columnas
+  print(vector)
+  
+  prob &lt;- table(vector)/r
+  print(prob)
+    
+  
+}
+
+binomial1(6,50,0.85)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICBbLDFdIFssMl0gWywzXSBbLDRdIFssNV0gWyw2XSBbLDddIFssOF0gWyw5XSBbLDEwXSBbLDExXSBbLDEyXSBbLDEzXSBbLDE0XSBbLDE1XSBbLDE2XSBbLDE3XSBbLDE4XSBbLDE5XSBbLDIwXVxuWzEsXSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzIsXSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzMsXSAgICAxICAgIDAgICAgMSAgICAxICAgIDEgICAgMCAgICAxICAgIDEgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMCAgICAgMVxuWzQsXSAgICAxICAgIDAgICAgMSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMFxuWzUsXSAgICAwICAgIDEgICAgMSAgICAxICAgIDAgICAgMSAgICAxICAgIDAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzYsXSAgICAxICAgIDEgICAgMSAgICAxICAgIDEgICAgMCAgICAxICAgIDEgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMVxuICAgICBbLDIxXSBbLDIyXSBbLDIzXSBbLDI0XSBbLDI1XSBbLDI2XSBbLDI3XSBbLDI4XSBbLDI5XSBbLDMwXSBbLDMxXSBbLDMyXSBbLDMzXSBbLDM0XSBbLDM1XSBbLDM2XSBbLDM3XSBbLDM4XVxuWzEsXSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMFxuWzIsXSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzMsXSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMVxuWzQsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMCAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMVxuWzUsXSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMCAgICAgMCAgICAgMSAgICAgMSAgICAgMVxuWzYsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMVxuICAgICBbLDM5XSBbLDQwXSBbLDQxXSBbLDQyXSBbLDQzXSBbLDQ0XSBbLDQ1XSBbLDQ2XSBbLDQ3XSBbLDQ4XSBbLDQ5XSBbLDUwXVxuWzEsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzIsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzMsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzQsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMVxuWzUsXSAgICAgMCAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuWzYsXSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMSAgICAgMCAgICAgMSAgICAgMSAgICAgMSAgICAgMVxuIFsxXSA1IDQgNiA2IDUgNCA2IDUgNiA1IDUgNiA2IDYgNSA1IDUgNiAzIDUgNiAzIDUgNiA1IDQgNSA2IDYgNiA2IDQgNCA1IDQgMyA2IDUgNSA2IDYgNSA1IDUgNSAzIDYgNSA2IDZcbnZlY3RvclxuICAgMyAgICA0ICAgIDUgICAgNiBcbjAuMDggMC4xMiAwLjQwIDAuNDAgXG4ifQ== -->
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+[1,]    1    1    1    1    1    1    1    1    1     1     1     1     1     1     0     1     1     1     1     1
+[2,]    1    1    1    1    1    1    1    1    1     0     1     1     1     1     1     0     1     1     1     1
+[3,]    1    0    1    1    1    0    1    1    1     1     1     1     1     1     1     1     0     1     0     1
+[4,]    1    0    1    1    1    1    1    1    1     1     1     1     1     1     1     1     1     1     0     0
+[5,]    0    1    1    1    0    1    1    0    1     1     0     1     1     1     1     1     1     1     1     1
+[6,]    1    1    1    1    1    0    1    1    1     1     1     1     1     1     1     1     1     1     0     1
+     [,21] [,22] [,23] [,24] [,25] [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37] [,38]
+[1,]     1     0     1     1     1     0     1     1     1     1     1     1     1     1     0     1     1     0
+[2,]     1     0     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+[3,]     1     1     0     1     1     1     1     1     1     1     1     1     1     1     1     0     1     1
+[4,]     1     1     1     1     1     0     0     1     1     1     1     0     0     1     1     0     1     1
+[5,]     1     0     1     1     1     1     1     1     1     1     1     1     0     0     0     1     1     1
+[6,]     1     1     1     1     0     1     1     1     1     1     1     0     1     1     1     0     1     1
+     [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50]
+[1,]     1     1     1     1     1     1     0     1     1     1     1     1
+[2,]     1     1     1     1     0     1     1     0     1     1     1     1
+[3,]     1     1     1     1     1     1     1     0     1     1     1     1
+[4,]     1     1     1     1     1     1     1     1     1     0     1     1
+[5,]     0     1     1     0     1     0     1     1     1     1     1     1
+[6,]     1     1     1     1     1     1     1     0     1     1     1     1
+ [1] 5 4 6 6 5 4 6 5 6 5 5 6 6 6 5 5 5 6 3 5 6 3 5 6 5 4 5 6 6 6 6 4 4 5 4 3 6 5 5 6 6 5 5 5 5 3 6 5 6 6
+vector
+   3    4    5    6 
+0.08 0.12 0.40 0.40 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBGdW5jaW9uIHBhcmEgZ2VuZXJhciBudW1lcm9zIHBzZXVkb2FsZWF0b3Jpb3MgXG4jIGRlIHVuYSBkaXN0cmlidWNpb24gQmlub21pYWwgY29uIHBhcmFtZXRyb3MgXG4jIHIgeSB0aGV0YSAoc2VndW5kYSBmb3JtYSlcbiMgciA6IG51bWVybyBkZSByZXBldGljaW9uZXNcbmJpbm9taWFsMiA8LWZ1bmN0aW9uKG4scix0aGV0YSkge1xuICB4IDwtIHJlcCgwLG4pXG4gIFxuICBmb3IgKGkgaW4gMTpuKVxuICAgIHhbaV08LXN1bShiZXJub3VsbGkocix0aGV0YSkpXG4gIFxuICBwcmludCh4KVxufVxuXG4jYmlub21pYWwyKDYsMiwwLjg1KVxuXG5gYGAifQ== -->
+<pre class="r"><code># Funcion para generar numeros pseudoaleatorios 
+# de una distribucion Binomial con parametros 
+# r y theta (segunda forma)
+# r : numero de repeticiones
+binomial2 &lt;-function(n,r,theta) {
+  x &lt;- rep(0,n)
+  
+  for (i in 1:n)
+    x[i]&lt;-sum(bernoulli(r,theta))
+  
+  print(x)
+}
+
+#binomial2(6,2,0.85)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGlzdHJpYnVjacOzbiBCZXJub3VsbGkKYGBge3J9CgojIExhbnphciBsYSBtb25lZGEKTiA8LSA1MDAwICMgQ2FudGlkYWQgZGUgbGFuemFtaWVudG9zCm1vbmVkYSA8LSBjKCJjYXJhIiwic2VsbG8iKQpyZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCkKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIDAuNSkKcHJpbnQoZXJyb3IpCgojIEVzdGEgZGVudHJvIGRlbCBlcnJvciBlc3BlcmFkbz8KZXJyb3IgPCBFbWluCgpgYGAKU2UgcHVlZGUgY2FyZ2FyIGxhIHBydWViYSBhc2lnbmFuZG9sZSBwZXNvIGEgbGFzIHByb2JhYmlsaWRhZGVzCiJDYXJnYW5kbyBlbCBleHBlcmltZW50byIKCmBgYHtyfQoKIyBMYW56YXIgbGEgbW9uZWRhCk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvcwptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKCiMgU2UgY29sb2NhIGxhcyBwcm9iYWJpbGlkYWRlcyBlbiB1biBhcnJlZ2xvClBST0JfQ0FSR0FEQVMgPC0gYygwLjYsMC40KSAgIyAwLjYgcGFyYSAiY2FyYSIgJiAwLjQgcGFyYSAic2VsbG8iCnJlc3VsdGFkbyA8LSBzYW1wbGUobW9uZWRhLCBOLCBULCBwcm9iID0gUFJPQl9DQVJHQURBUykKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIFBST0JfQ0FSR0FEQVMpCnByaW50KGVycm9yKQoKIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/CmVycm9yIDwgRW1pbgpgYGAKYGBge3J9CgojIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyCiMgRG9uZGUgdGhldGEgZXMgbGEgcHJvYmFiaWxpZGFkIGRlIGV4aXRvCmJlcm5vdWxsaSA8LSBmdW5jdGlvbihuLHRoZXRhKSB7CiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgCiAgcmVzdWx0YWRvcz1yZXAoMCxuKQogIGZvciAoaSBpbiAxOm4pIAogICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgCiAgICAgIHJlc3VsdGFkb3NbaV09MQogICAgZWxzZSAKICAgICAgcmVzdWx0YWRvc1tpXT0wCiAgcmV0dXJuKHJlc3VsdGFkb3MpIAp9CgoKIyBMYSBwcm9iYWJpaWRhZCBkZSBxdWUgc2FsZ2EgU2VsbG8gZXMgMC40CiMgRWwgIjAiIGVzIENhcmEgCm11ZXN0cmEgPC0gYmVybm91bGxpKDEwLDAuNCkKdGFibGUobXVlc3RyYSkKCmBgYAoKIyBEaXN0cmlidWNpb24gQmlub21pYWwgLS0+IEdlbmVyYWxpemEgZWwgQmVybm91bGxpCgpUdSBkZWNpc2lvbiBkZWJlIHRlbmVyIDIgb3BjaW9uZXMsIGVqZW1wbG86IGRlIHVuYSBjYWphIGRlIG1hbmdvcywgdHUgZXN0YWJsZWNlcyBzaSAgbG8gY29tcHJhcyBvIG5vIGxvIGNvbXByYXMKCm4gPSA2IG1hbmdvcwpwIDogcHJvYmFiaWxpZGFkIGRlIHF1ZSBlbCBtYW5nbyBlc3RlIGVuIGNvbmRpY2lvbmVzIG9wdGltYXMuIEVuIGNhc28gbm8gZXMgZWwgY29tcGxlbWVudG8KcCA9IDAuODUgCgpDdWVudGEgbGEgdmFyaWFibGUgWCB5IGVuY3VlbnRyYSB1biB2YWxvciBkZSAwLCBsbyBjdWFsIHNpZ25pZmljYSBxdWUgdG9kb3MgZXN0YW4gbWFsb2dyYWRvcywgcG9yIGxvIHRhbnRvIFggdGUgaW5kaWNhIGxhIGNhbnRpZGFkIGRlIG1hbmdvcyBxdWUgZXN0YW4gZW4gY29uZGljaW9uZXMgb3B0aW1hcyBlbiB1bmEgbXVlc3RyYSBkZSB0YW1hw7FvIG4KClg6IDAsIDEsIDIsIDMsIDQsIDUsIDYKCiAgICAgICAgICA2ICAgICAgMiAgICAgNApQKFg9MikgPSAoICkgMC44NSAqIDAuMTUKICAgICAgICAgIDIKCmBgYHtyfQojIFVzYW1vcyBsYSBmdW5jaW9uIGRlIGJlcm51bGxpCm11ZXN0cmEgPC0gYmVybm91bGxpKDYsMC4xNSkKdGFibGUobXVlc3RyYSkKYGBgCgpYIHwgUCh4KQotLS0tLS0tCjAgfCAKMSB8IAoyIHwgCjMgfCAKNCB8IAo1IHwgCjYgfCAKCkNhbGN1bGFtb3MgbGFzIHByb2JhYmlsaWRhZGVzIHRlb3JpY2FzCmBgYHtyfQpQUk9CX0VYSVRPICAgPC0gMC44NQpQUk9CX0ZSQUNBU08gPC0gMC4xNQoKbiA8LSA2CnN1bSA8LTAKZm9yICh4IGluIDA6NikgewogIHAgPC0gY2hvb3NlKG4seCkqUFJPQl9FWElUT154KlBST0JfRlJBQ0FTT14obi14KQogIHByaW50KHApCiAgc3VtIDwtIHN1bSArIHAKfQojIFN1bWF0b3JpYSBkZSB0b2RhcyBsYXMgcHJvYmFiaWxpZGFkZXMKcHJpbnQoc3VtKQoKI2Nob29zZSg2LDIpKlBST0JfRVhJVE9eMipQUk9CX0ZSQUNBU09eNgoKCmBgYApQcm9jZWRlbW9zIGEgcmVhbGl6YXIgbGEgc2ltdWxhY2lvbgoKYGBge3J9CgpgYGAKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGlzdHJpYnVjacOzbiBCZXJub3VsbGkKYGBge3J9CgojIExhbnphciBsYSBtb25lZGEKTiA8LSA1MDAwICMgQ2FudGlkYWQgZGUgbGFuemFtaWVudG9zCm1vbmVkYSA8LSBjKCJjYXJhIiwic2VsbG8iKQpyZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCkKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIDAuNSkKcHJpbnQoZXJyb3IpCgojIEVzdGEgZGVudHJvIGRlbCBlcnJvciBlc3BlcmFkbz8KZXJyb3IgPCBFbWluCgpgYGAKU2UgcHVlZGUgY2FyZ2FyIGxhIHBydWViYSBhc2lnbmFuZG9sZSBwZXNvIGEgbGFzIHByb2JhYmlsaWRhZGVzCiJDYXJnYW5kbyBlbCBleHBlcmltZW50byIKCmBgYHtyfQoKIyBMYW56YXIgbGEgbW9uZWRhCk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvcwptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKCiMgU2UgY29sb2NhIGxhcyBwcm9iYWJpbGlkYWRlcyBlbiB1biBhcnJlZ2xvClBST0JfQ0FSR0FEQVMgPC0gYygwLjYsMC40KSAgIyAwLjYgcGFyYSAiY2FyYSIgJiAwLjQgcGFyYSAic2VsbG8iCnJlc3VsdGFkbyA8LSBzYW1wbGUobW9uZWRhLCBOLCBULCBwcm9iID0gUFJPQl9DQVJHQURBUykKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIFBST0JfQ0FSR0FEQVMpCnByaW50KGVycm9yKQoKIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/CmVycm9yIDwgRW1pbgpgYGAKYGBge3J9CgojIERvbmRlIG4gZXMgbGEgY2FudGlkYWQgZGUgZGF0b3MgYSBzaW11bGFyCiMgRG9uZGUgdGhldGEgZXMgbGEgcHJvYmFiaWxpZGFkIGRlIGV4aXRvCmJlcm5vdWxsaSA8LSBmdW5jdGlvbihuLHRoZXRhKSB7CiAgdW5pZm9ybWVzPXJ1bmlmKG4sIG1pbj0wLCBtYXg9MSkgIyBNYW50ZW5lbW9zIHVuYSBsaW5lYSBjb25zdGFudGUgCiAgcmVzdWx0YWRvcz1yZXAoMCxuKQogIGZvciAoaSBpbiAxOm4pIAogICAgaWYgKHVuaWZvcm1lc1tpXT49MS10aGV0YSkgCiAgICAgIHJlc3VsdGFkb3NbaV09MQogICAgZWxzZSAKICAgICAgcmVzdWx0YWRvc1tpXT0wCiAgcmV0dXJuKHJlc3VsdGFkb3MpIAp9CgoKIyBMYSBwcm9iYWJpaWRhZCBkZSBxdWUgc2FsZ2EgU2VsbG8gZXMgMC40CiMgRWwgIjAiIGVzIENhcmEgCm11ZXN0cmEgPC0gYmVybm91bGxpKDEwLDAuNCkKdGFibGUobXVlc3RyYSkKCmBgYAoKIyBEaXN0cmlidWNpb24gQmlub21pYWwgLS0+IEdlbmVyYWxpemEgZWwgQmVybm91bGxpCgpUdSBkZWNpc2lvbiBkZWJlIHRlbmVyIDIgb3BjaW9uZXMsIGVqZW1wbG86IGRlIHVuYSBjYWphIGRlIG1hbmdvcywgdHUgZXN0YWJsZWNlcyBzaSAgbG8gY29tcHJhcyBvIG5vIGxvIGNvbXByYXMKCm4gPSA2IG1hbmdvcwpwIDogcHJvYmFiaWxpZGFkIGRlIHF1ZSBlbCBtYW5nbyBlc3RlIGVuIGNvbmRpY2lvbmVzIG9wdGltYXMuIEVuIGNhc28gbm8gZXMgZWwgY29tcGxlbWVudG8KcCA9IDAuODUgCgpDdWVudGEgbGEgdmFyaWFibGUgWCB5IGVuY3VlbnRyYSB1biB2YWxvciBkZSAwLCBsbyBjdWFsIHNpZ25pZmljYSBxdWUgdG9kb3MgZXN0YW4gbWFsb2dyYWRvcywgcG9yIGxvIHRhbnRvIFggdGUgaW5kaWNhIGxhIGNhbnRpZGFkIGRlIG1hbmdvcyBxdWUgZXN0YW4gZW4gY29uZGljaW9uZXMgb3B0aW1hcyBlbiB1bmEgbXVlc3RyYSBkZSB0YW1hw7FvIG4KClg6IDAsIDEsIDIsIDMsIDQsIDUsIDYKCiAgICAgICAgICA2ICAgICAgMiAgICAgNApQKFg9MikgPSAoICkgMC44NSAqIDAuMTUKICAgICAgICAgIDIKCmBgYHtyfQojIFVzYW1vcyBsYSBmdW5jaW9uIGRlIGJlcm51bGxpCm11ZXN0cmEgPC0gYmVybm91bGxpKDYsMC4xNSkKdGFibGUobXVlc3RyYSkKYGBgCgpYIHwgUCh4KQotLS0tLS0tCjAgfCAKMSB8IAoyIHwgCjMgfCAKNCB8IAo1IHwgCjYgfCAKCkNhbGN1bGFtb3MgbGFzIHByb2JhYmlsaWRhZGVzIHRlb3JpY2FzCmBgYHtyfQpQUk9CX0VYSVRPICAgPC0gMC44NQpQUk9CX0ZSQUNBU08gPC0gMC4xNQoKbiA8LSA2CnN1bSA8LTAKZm9yICh4IGluIDA6NikgewogIHAgPC0gY2hvb3NlKG4seCkqUFJPQl9FWElUT154KlBST0JfRlJBQ0FTT14obi14KQogIHByaW50KHApCiAgc3VtIDwtIHN1bSArIHAKfQojIFN1bWF0b3JpYSBkZSB0b2RhcyBsYXMgcHJvYmFiaWxpZGFkZXMKcHJpbnQoc3VtKQoKI2Nob29zZSg2LDIpKlBST0JfRVhJVE9eMipQUk9CX0ZSQUNBU09eNgoKCmBgYApQcm9jZWRlbW9zIGEgcmVhbGl6YXIgbGEgc2ltdWxhY2lvbgoKYGBge3J9CiNGdW5jaW9uIHBhcmEgZ2VuZXJhciBudW1lcm9zIHBzZXVkb2FsZWF0b3Jpb3MgCiMgZGUgdW5hIGRpc3RyaWJ1Y2lvbiBCaW5vbWlhbCBjb24gcGFyYW1ldHJvcyByIHkgdGhldGEgKHByaW1lcmEgZm9ybWEpCiMgciA6IG51bWVybyBkZSByZXBldGljaW9uZXMKYmlub21pYWwxIDwtIGZ1bmN0aW9uKG4scix0aGV0YSkgewogIAogIFU9bWF0cml4KHJ1bmlmKG4qciksbixyKQogIAogIHJlc3VsdGFkb3M9bWF0cml4KDAsbixyKQogIGZvciAoaSBpbiAxOm4pCiAgICBmb3IgKGogaW4gMTpyKQogICAgICBpZiAoVVtpLGpdPD10aGV0YSkKICAgICAgICByZXN1bHRhZG9zW2ksal09MSAgCiAgICAgIGVsc2UgCiAgcmVzdWx0YWRvc1tpLGpdPTAKICBwcmludChyZXN1bHRhZG9zKQogIAogICN2ZWN0b3I9YXBwbHkocmVzdWx0YWRvcywxLHN1bSkgICMgMSBzdW1hIGZpbGFzCiAgdmVjdG9yPWFwcGx5KHJlc3VsdGFkb3MsMixzdW0pICAjIDIgc3VtYSBjb2x1bW5hcwogIHByaW50KHZlY3RvcikKICAKICBwcm9iIDwtIHRhYmxlKHZlY3RvcikvcgogIHByaW50KHByb2IpCiAgICAKICAKfQoKYmlub21pYWwxKDYsNTAsMC44NSkKCmBgYAoKYGBge3J9CiMgRnVuY2lvbiBwYXJhIGdlbmVyYXIgbnVtZXJvcyBwc2V1ZG9hbGVhdG9yaW9zIAojIGRlIHVuYSBkaXN0cmlidWNpb24gQmlub21pYWwgY29uIHBhcmFtZXRyb3MgCiMgciB5IHRoZXRhIChzZWd1bmRhIGZvcm1hKQojIHIgOiBudW1lcm8gZGUgcmVwZXRpY2lvbmVzCmJpbm9taWFsMiA8LWZ1bmN0aW9uKG4scix0aGV0YSkgewogIHggPC0gcmVwKDAsbikKICAKICBmb3IgKGkgaW4gMTpuKQogICAgeFtpXTwtc3VtKGJlcm5vdWxsaShyLHRoZXRhKSkKICAKICBwcmludCh4KQp9CgojYmlub21pYWwyKDYsMiwwLjg1KQoKYGBgCgoKCg==</div>
 
 
 
