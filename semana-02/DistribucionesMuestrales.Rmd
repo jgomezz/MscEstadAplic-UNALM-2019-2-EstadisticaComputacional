@@ -284,22 +284,21 @@ table(rgeom(r, 0.8)) / r
 ```
 
 ```{r}
-normal2=function(n,mu,sigma)
-{
-x=rep(0,n)
-y=rep(0,n)
-for(i in 1:n)
-{
- u1=runif(1, min=0,max=1)
- u2= runif(1, min=0,max=1)
- R=sqrt(-2*log(u1))
- Theta=2*pi*u2
- x[i]=R*cos(Theta)
- y[i]=R*sin(Theta)
-A=mu+sigma*x
-B=mu+sigma*y
-}
-return(list(A=A,B=B))
+normal2=function(n,mu,sigma){
+  x=rep(0,n)
+  y=rep(0,n)
+  for(i in 1:n){
+    u1=runif(1, min=0,max=1)
+    u2= runif(1, min=0,max=1)
+    R=sqrt(-2*log(u1))
+    Theta=2*pi*u2
+    x[i]=R*cos(Theta)
+    y[i]=R*sin(Theta)
+    A=mu+sigma*x
+    B=mu+sigma*y
+  }
+  
+  return(list(A=A,B=B))
 }
 
 normalmuestra=normal2(1000,54,10)
