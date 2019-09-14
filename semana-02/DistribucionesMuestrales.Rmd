@@ -3,9 +3,50 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+Distribución Bernoulli
+```{r}
+
+# Lanzar la moneda
+N <- 5000 # Cantidad de lanzamientos
+moneda <- c("cara","sello")
+resultado <- sample(moneda, N, T)
+
+# Calculo de la probabilidad
+prob <- table(resultado)/N
+print(prob)
+
+# Calcular el error
+Emin <- 0.0001 # Error aceptable
+error = (prob - 0.5)
+print(error)
+
+# Esta dentro del error esperado?
+error < Emin
+
+```
+Se puede cargar la prueba asignandole peso a las probabilidades
+"Cargando el experimento"
 
 ```{r}
-plot(cars)
-```
 
+# Lanzar la moneda
+N <- 5000 # Cantidad de lanzamientos
+moneda <- c("cara","sello")
+
+# Se coloca las probabilidades en un arreglo
+PROB_CARGADAS <- c(0.6,0.4)  # 0.6 para "cara" & 0.4 para "sello"
+resultado <- sample(moneda, N, T, prob = PROB_CARGADAS)
+
+# Calculo de la probabilidad
+prob <- table(resultado)/N
+print(prob)
+
+# Calcular el error
+Emin <- 0.0001 # Error aceptable
+error = (prob - PROB_CARGADAS)
+print(error)
+
+# Esta dentro del error esperado?
+error < Emin
+```
 

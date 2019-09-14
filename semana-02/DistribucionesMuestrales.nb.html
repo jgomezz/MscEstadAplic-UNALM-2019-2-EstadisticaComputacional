@@ -1767,16 +1767,94 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<p>Distribución Bernoulli</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIExhbnphciBsYSBtb25lZGFcbk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvc1xubW9uZWRhIDwtIGMoXCJjYXJhXCIsXCJzZWxsb1wiKVxucmVzdWx0YWRvIDwtIHNhbXBsZShtb25lZGEsIE4sIFQpXG5cbiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWRcbnByb2IgPC0gdGFibGUocmVzdWx0YWRvKS9OXG5wcmludChwcm9iKVxuYGBgIn0= -->
+<pre class="r"><code>
+# Lanzar la moneda
+N &lt;- 5000 # Cantidad de lanzamientos
+moneda &lt;- c(&quot;cara&quot;,&quot;sello&quot;)
+resultado &lt;- sample(moneda, N, T)
+
+# Calculo de la probabilidad
+prob &lt;- table(resultado)/N
+print(prob)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuMC41MDEyIDAuNDk4OCBcbiJ9 -->
+<pre><code>resultado
+  cara  sello 
+0.5012 0.4988 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhciBlbCBlcnJvclxuRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGVcbmVycm9yID0gKHByb2IgLSAwLjUpXG5wcmludChlcnJvcilcbmBgYCJ9 -->
+<pre class="r"><code># Calcular el error
+Emin &lt;- 0.0001 # Error aceptable
+error = (prob - 0.5)
+print(error)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gICBjYXJhICAgc2VsbG8gXG4gMC4wMDEyIC0wLjAwMTIgXG4ifQ== -->
+<pre><code>resultado
+   cara   sello 
+ 0.0012 -0.0012 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/XG5lcnJvciA8IEVtaW5cbmBgYCJ9 -->
+<pre class="r"><code># Esta dentro del error esperado?
+error &lt; Emin</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbkZBTFNFICBUUlVFIFxuIn0= -->
+<pre><code>resultado
+ cara sello 
+FALSE  TRUE </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Se puede cargar la prueba asignandole peso a las probabilidades “Cargando el experimento”</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIExhbnphciBsYSBtb25lZGFcbk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvc1xubW9uZWRhIDwtIGMoXCJjYXJhXCIsXCJzZWxsb1wiKVxuXG4jIFNlIGNvbG9jYSBsYXMgcHJvYmFiaWxpZGFkZXMgZW4gdW4gYXJyZWdsb1xuUFJPQl9DQVJHQURBUyA8LSBjKDAuNiwwLjQpICAjIDAuNiBwYXJhIFwiY2FyYVwiICYgMC40IHBhcmEgXCJzZWxsb1wiXG5yZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCwgcHJvYiA9IFBST0JfQ0FSR0FEQVMpXG5cbiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWRcbnByb2IgPC0gdGFibGUocmVzdWx0YWRvKS9OXG5wcmludChwcm9iKVxuYGBgIn0= -->
+<pre class="r"><code>
+# Lanzar la moneda
+N &lt;- 5000 # Cantidad de lanzamientos
+moneda &lt;- c(&quot;cara&quot;,&quot;sello&quot;)
+
+# Se coloca las probabilidades en un arreglo
+PROB_CARGADAS &lt;- c(0.6,0.4)  # 0.6 para &quot;cara&quot; &amp; 0.4 para &quot;sello&quot;
+resultado &lt;- sample(moneda, N, T, prob = PROB_CARGADAS)
+
+# Calculo de la probabilidad
+prob &lt;- table(resultado)/N
+print(prob)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbjAuNTk4IDAuNDAyIFxuIn0= -->
+<pre><code>resultado
+ cara sello 
+0.598 0.402 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhciBlbCBlcnJvclxuRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGVcbmVycm9yID0gKHByb2IgLSBQUk9CX0NBUkdBREFTKVxucHJpbnQoZXJyb3IpXG5gYGAifQ== -->
+<pre class="r"><code># Calcular el error
+Emin &lt;- 0.0001 # Error aceptable
+error = (prob - PROB_CARGADAS)
+print(error)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gIGNhcmEgIHNlbGxvIFxuLTAuMDAyICAwLjAwMiBcbiJ9 -->
+<pre><code>resultado
+  cara  sello 
+-0.002  0.002 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/XG5lcnJvciA8IEVtaW5cbmBgYCJ9 -->
+<pre class="r"><code># Esta dentro del error esperado?
+error &lt; Emin</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicmVzdWx0YWRvXG4gY2FyYSBzZWxsbyBcbiBUUlVFIEZBTFNFIFxuIn0= -->
+<pre><code>resultado
+ cara sello 
+ TRUE FALSE </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQpwbG90KGNhcnMpCmBgYAoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRGlzdHJpYnVjacOzbiBCZXJub3VsbGkKYGBge3J9CgojIExhbnphciBsYSBtb25lZGEKTiA8LSA1MDAwICMgQ2FudGlkYWQgZGUgbGFuemFtaWVudG9zCm1vbmVkYSA8LSBjKCJjYXJhIiwic2VsbG8iKQpyZXN1bHRhZG8gPC0gc2FtcGxlKG1vbmVkYSwgTiwgVCkKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIDAuNSkKcHJpbnQoZXJyb3IpCgojIEVzdGEgZGVudHJvIGRlbCBlcnJvciBlc3BlcmFkbz8KZXJyb3IgPCBFbWluCgpgYGAKU2UgcHVlZGUgY2FyZ2FyIGxhIHBydWViYSBhc2lnbmFuZG9sZSBwZXNvIGEgbGFzIHByb2JhYmlsaWRhZGVzCiJDYXJnYW5kbyBlbCBleHBlcmltZW50byIKCmBgYHtyfQoKIyBMYW56YXIgbGEgbW9uZWRhCk4gPC0gNTAwMCAjIENhbnRpZGFkIGRlIGxhbnphbWllbnRvcwptb25lZGEgPC0gYygiY2FyYSIsInNlbGxvIikKCiMgU2UgY29sb2NhIGxhcyBwcm9iYWJpbGlkYWRlcyBlbiB1biBhcnJlZ2xvClBST0JfQ0FSR0FEQVMgPC0gYygwLjYsMC40KSAgIyAwLjYgcGFyYSAiY2FyYSIgJiAwLjQgcGFyYSAic2VsbG8iCnJlc3VsdGFkbyA8LSBzYW1wbGUobW9uZWRhLCBOLCBULCBwcm9iID0gUFJPQl9DQVJHQURBUykKCiMgQ2FsY3VsbyBkZSBsYSBwcm9iYWJpbGlkYWQKcHJvYiA8LSB0YWJsZShyZXN1bHRhZG8pL04KcHJpbnQocHJvYikKCiMgQ2FsY3VsYXIgZWwgZXJyb3IKRW1pbiA8LSAwLjAwMDEgIyBFcnJvciBhY2VwdGFibGUKZXJyb3IgPSAocHJvYiAtIFBST0JfQ0FSR0FEQVMpCnByaW50KGVycm9yKQoKIyBFc3RhIGRlbnRybyBkZWwgZXJyb3IgZXNwZXJhZG8/CmVycm9yIDwgRW1pbgpgYGAKCg==</div>
 
 
 
