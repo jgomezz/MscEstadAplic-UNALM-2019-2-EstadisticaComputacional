@@ -44,15 +44,19 @@ hist(a)
 # Crea naipe, se crean los vectores de los numeros y de los simbolos.
 num=rep(1:13,4)
 num
-
+```
+```{r}
 # Forma de generar la baraja
 baraja1=c(rep("corazon",13),rep("trebol",13),rep("espada",13),rep("diamante",13))
 baraja1
-
+```
+```{r}
 # Otra forma de generar la baraja
 baraja2=rep(c("corazon","trebol","espada","diamante"),each=13)
 baraja2
+```
 
+```{r}
 # Asigna un indice para cada carta de la barajas
 naipe=cbind(num,baraja2)
 naipe
@@ -60,19 +64,23 @@ naipe
 ```{r}
 #Barajar las cartas
 naipe[sample(1:52,52,F),]
-
+```
+```{r}
 # Se escogen 4 cartas
 g=sample(1:52,4,F)
 
 # El jugador 1 coge sus 4 cartas
 Jugador1=naipe[g,]
+Jugador1
+```
 
+
+```{r}
 # Se calcula el nuevo juego de naipe
-naipe2= naipe[-g,]
+naipe2 = naipe[-g,]
 
 # El jugador 2 coge sus 4 cartas
 Jugador2=naipe2[sample(1:48,4,F),]
-
-
+Jugador2
 ```
 

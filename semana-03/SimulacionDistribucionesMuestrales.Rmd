@@ -28,15 +28,20 @@ simulacion1 <- function(datos,n,m) {
                                            # almacena en la fila "i"
   print(muestras)
   
-  mediasm=apply(muestras,1,mean) # 
+  mediasm=apply(muestras,1,mean) # Calcula la media para cada fila (1)
   
-  mediaxbar=mean(mediasm)
-  varxbar=var(mediasm)*((m-1)/m)
-  medias=c(mu,mediaxbar)
-  varianzas=c(resul,varxbar)
+  mediaxbar=mean(mediasm)        # Calcula la medias de las medias
+  
+  varxbar=var(mediasm)*((m-1)/m) # Calcula la varianza de las estimadas
+  
+  medias=c(mu,mediaxbar)        # mu es el valor teorico y mediaxbar es el estimado
+  varianzas=c(resul,varxbar)    # resul es el valor teorico y varxbar es el estimado
+  
   print(medias)
   print(varianzas)
+  
   par(mfrow = c(1, 2))
+  
   hist(datos)
   hist(mediasm)
 }
@@ -44,6 +49,64 @@ simulacion1 <- function(datos,n,m) {
 # Ejecucion de la simulacion
 #simulacion1(poblacion2, 100, 50)
 
-simulacion1(poblacion2, 10, 5)
+simulacion1(poblacion2, 8, 5)
 
 ```
+```{r}
+# n1 y n2 tamanhos
+# m : numero de repeticiones
+simulacion2=function(datos1,datos2,n1,n2,m){
+    N1=length(datos1)
+    N2=length(datos2)
+    mu1=mean(datos1)
+    mu2=mean(datos2)
+    mu=mu1-mu2
+    
+    sigma21 = var(datos1)*((N1-1)/N1)
+    sigma22 = var(datos2)*((N2-1)/N2)
+    resul = sigma21/n1 + sigma22/n2  # varianza ponderada
+    
+    # diferencia de muestras
+    difer=rep(0,m)
+    
+    for (i in 1:m){
+      muestras1=sample(datos1,n1,replace=T)
+      muestras2=sample(datos2,n2,replace=T)
+      #d=mean(muestras1)-mean(muestras2)
+      #difer[i] = mean(d)
+      difer[i] = mean(muestras1)-mean(muestras2)
+    }
+    
+    mediasm = mean(difer)
+    varxbar = var(difer)*((m-1)/m)
+    medias = c(mu,mediasm)
+    varianzas = c(resul,varxbar)
+    
+    print(medias)
+    print(varianzas)
+    hist(difer)
+}
+```
+
+```{r}
+women # ya existe esta matriz
+```
+
+```{r}
+
+# women[,1] : height (tamanho)
+# women[,2] : weight (peso)
+
+# No tiene sentido esta ejecucion
+simulacion2(women[,1], women[,2],59,54,100)  
+```
+```{r}
+women1 <- women[1:8,1]
+women2 <- women[9:15,1]
+
+simulacion2(women1, women2, 59, 54, 100)  
+```
+```{r}
+sample(c("car","sello"),20, replace=T)
+```
+

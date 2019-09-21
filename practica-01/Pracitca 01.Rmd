@@ -1,0 +1,90 @@
+---
+title: "Practica 01"
+output: word_document
+author: Jaime Gomez
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 02
+
+```{r}
+
+# Primera caja
+p1 <- 7/10
+q1 <- 3/10
+
+# Segunda caja
+p2 <- 12/15
+q2 <- 3/15
+
+# Tercera caja
+p3 <- 16/20
+q3 <- 4/20
+
+
+caja1 <- c(rep("naranja_buena",7), rep("naranja_mala",3))
+caja2 <- c(rep("mandarina_buena",12), rep("mandarina_mala",3))
+caja3 <- c(rep("palta_buena",16), rep("palta_mala",4))
+
+experimento <- function(caja1, caja2, caja3){
+  
+  m_caja1 <- sample(caja1,5)
+  c_caja1 <- table(m_caja1)
+  #c_caja1["naranja_mala"]
+    
+  m_caja2 <- sample(caja2,5)
+  c_caja2 <- table(m_caja2)
+  #c_caja2["mandarina_mala"]
+  
+  m_caja3 <- sample(caja3,5)
+  c_caja3 <- table(m_caja3)
+  #c_caja3["palta_mala"]
+  
+  nro_frutas_malas <- c(c_caja1["naranja_mala"],
+                        c_caja2["mandarina_mala"],c_caja3["palta_mala"])
+
+  frutas <- c("naranja","mandarina","palta")
+  
+  resultado <- data.frame(frutas, nro_frutas_malas)
+  
+}
+
+# 1er ensayo
+print(experimento(caja1, caja2, caja3))
+# 2do ensayo
+print(experimento(caja1, caja2, caja3))
+```
+
+## Pregunta 03
+```{r}
+
+datos <- c(16.4, 17.2, 16.4, 13.5, 14.2, 13.4, 15.6, 12.3, 14.3, 14.8, 13.8, 16.4, 17.2, 16.4, 13.5, 14.2, 15.8, 14.3, 13.7, 12.5, 13.6, 16.9,  17.2, 14.5, 13.7, 16.1, 17.9, 16.9, 13.2,  16.9, 13.6, 14.2, 13.4, 15.2, 12.1, 14.5, 14.7, 13.2, 16.3, 17.7, 16.9, 13.9, 14.4, 13.5, 15.1, 12.2, 14.4, 14.9, 13.7, 16.4, 17.1, 16.4, 13.3, 14.2, 13.7, 14.5, 13.6, 16.2, 17.8, 16.9, 13.8,  15.6, 12.3, 14.8, 14.7, 13.0, 16.7 )
+
+
+# Se saca una bola de cada bolsa
+CON_REEMPLAZO <- T
+
+
+calcularRango <- function(datos, n, r){
+  muestra <- sample(datos, 15, r)
+  #print(muestra)
+  #print(max(muestra))
+  #print(min(muestra))
+  return (max(muestra) - min(muestra) )
+  
+}
+
+for( i in 1:4 ){
+  print("Ejecucion : ")
+  print(i)
+  print("Rango :")
+  print(calcularRango(datos, 15, CON_REEMPLAZO))
+}
+
+
+```
+
+
