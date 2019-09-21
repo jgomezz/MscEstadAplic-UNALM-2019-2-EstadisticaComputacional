@@ -1,0 +1,49 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Simulacion distribucion muestral de la media
+poblacion1=rnorm(1000) # simula datos de una distribucion normal 
+poblacion2=rexp(1000)  # simula datos de una distribucion exponencial
+
+# datos : poblacion
+# n : tamanho de la muestra
+# m : numero de muestras
+simulacion1 <- function(datos,n,m) {
+
+  N=length(datos) # tamanho de la poblacion
+  mu=mean(datos)  # calcula 
+  sigma2=var(datos)*((N-1)/N)  # (N-1)/N : Factor de correcion
+  resul=sigma2/n  # varianza de la media
+  
+  muestras=matrix(0,m,n) # m fila (muestras) y n columnas (datos de la muestra)
+  
+  print(muestras)
+  
+  # realiza "m" muestras
+  for (i in 1:m)
+    muestras[i,]=sample(datos,n,replace=T) # muestras con reemplazo y lo 
+                                           # almacena en la fila "i"
+  print(muestras)
+  
+  mediasm=apply(muestras,1,mean) # 
+  
+  mediaxbar=mean(mediasm)
+  varxbar=var(mediasm)*((m-1)/m)
+  medias=c(mu,mediaxbar)
+  varianzas=c(resul,varxbar)
+  print(medias)
+  print(varianzas)
+  par(mfrow = c(1, 2))
+  hist(datos)
+  hist(mediasm)
+}
+
+# Ejecucion de la simulacion
+#simulacion1(poblacion2, 100, 50)
+
+simulacion1(poblacion2, 10, 5)
+
+```
