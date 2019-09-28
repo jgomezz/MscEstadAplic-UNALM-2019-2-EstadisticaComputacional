@@ -71,11 +71,11 @@ boostrap_coef_asimetria <-function(muestra_base, b) {
   
   for (i in 1:b) {
     muestra <- sample(muestra_base,len,replace=T)
-    media_i =  mean(muestra)
-    sd_i =  sd(muestra)
+    media =  mean(muestra)
+    sd =  sd(muestra)
     sum = 0;
     for ( j in 1:len)
-      sum = sum + ((muestra[j]-media_i)/sd_i)^3
+      sum = sum + ((muestra[j]-media)/sd)^3
     # Skewness
     estimador[i] = (len/((len-1)*(len-2)))*sum
   }
@@ -90,8 +90,113 @@ boostrap_coef_asimetria <-function(muestra_base, b) {
 
 
 ```{r}
+datos <- iris[,1]
+b <- 100
+boostrap_coef_asimetria(datos,b)
 
-boostrap_coef_asimetria(iris[,1],100)
+```
 
+```{r}
+# funcion de boostrap para calcular la mediana
+boostrap_coef_asimetria_forma2 <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    media =  mean(muestra)
+    sd =  sd(muestra)
+    # Skewness
+    estimador[i] = (len/((len-1)*(len-2)))*sum(((muestra-media)/sd)^3)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+```
+
+```{r}
+datos <- iris[,1]
+b <- 100
+boostrap_coef_asimetria_forma2(datos,b)
+```
+```{r}
+library(e1071)
+
+
+# funcion de boostrap para calcular la mediana
+boostrap_coef_asimetria_forma3 <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    # Skewness
+    estimador[i] = skewness(muestra)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+```
+
+```{r}
+datos <- iris[,1]
+b <- 100
+boostrap_coef_asimetria_forma3(datos,b)
+```
+```{r}
+# funcion de boostrap para calcular la mediana
+boostrap_coef_asimetria_forma4 <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    estimador[i] = calc_skewness(muestra)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+
+# Calcula el estimador de skewness
+calc_skewness <-function(muestra) {
+  
+  n =  length(muestra)
+  media =  mean(muestra)
+  sd =  sd(muestra)
+  sk  = (n/((n-1)*(n-2)))*sum(((muestra-media)/sd)^3)
+  
+  return(sk)
+}
+
+
+```
+
+```{r}
+datos <- iris[,1]
+b <- 100
+boostrap_coef_asimetria_forma4(datos,b)
 ```
 
