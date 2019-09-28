@@ -99,4 +99,71 @@ boostrap2mediana(muestra_base,b)
 b <- 10000    # nro. de muestras con reemplazo 
 boostrap2mediana(muestra_base,b)
 ```
+# Boostrap - rango intercuartilico
+
+```{r}
+# funcion de boostrap para calcular el rango intercuartilico
+boostrapIQR_1 <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    #print(muestra)
+    #print(median(muestra))
+    T_i = IQR(muestra)  # El estimador es T
+    estimador[i] = T_i
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+```
+
+```{r}
+b <- 100    # nro. de muestras con reemplazo 
+boostrapIQR_1(muestra_base,b)
+```
+```{r}
+b <- 10000    # nro. de muestras con reemplazo 
+boostrapIQR_1(muestra_base,b)
+```
+```{r}
+# funcion de boostrap para calcular el rango intercuartilico 
+boostrapIQR <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    #print(muestra)
+    #print(median(muestra))
+    T_i = quantile(muestra,0.72) - quantile(muestra,0.41)  # El estimador es T
+    estimador[i] = T_i
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+```
+
+```{r}
+b <- 100    # nro. de muestras con reemplazo 
+muestra_base <- iris[,1]
+print(muestra_base)
+boostrapIQR(muestra_base,b)
+```
 
