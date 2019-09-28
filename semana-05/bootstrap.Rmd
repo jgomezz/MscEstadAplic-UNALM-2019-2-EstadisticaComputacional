@@ -1,0 +1,36 @@
+---
+title: "Boostrap"
+output: html_notebook
+---
+
+
+# Boostrap
+
+- De una muestra base se escogen "b" muestras con reemplazo de tamaño igual a la muestra base.
+- De cada muestra se calcula la mediana , el estimador T es dos veces la mediana
+- El estimado final es el promedio de todas las medianas
+```{r}
+
+muestra_base <- c(5,7,8,9,15,14)
+
+b <- 10 # nro. de muestras con reemplazo 
+
+# arreglo de medianas
+medianas=rep(0,b)
+
+#print(medianas)
+
+for (i in 1:b) {
+  len <- length(muestra_base)
+  muestra <- sample(muestra_base,len,replace=T)
+  #print(muestra)
+  #print(median(muestra))
+  T_i = 2*median(muestra)  # El estimador es T
+  medianas[i] = T_i
+}
+#print("Vector de estimadores :" +medianas)
+mean(medianas)
+sd(medianas)
+```
+
+
