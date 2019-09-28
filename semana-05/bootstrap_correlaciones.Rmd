@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Boostrap de correlaciones
+
+```{r}
+#Estimador bootstrap para la el coeficiente de correlacion
+
+bootstrap3=function(datos,B,X,Y) {
+
+  n=dim(datos)[1]
+  estimac=rep(0,B)
+  
+  for (i in 1:B){
+    indices=sample(1:n,n,T)
+    estimac[i]=cor(datos[indices,X],datos[indices,Y])
+  }
+  
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+  hist(estimac)
+  
+  return(list(estimador=estboot,eestandar=eeboot))
+}
+
+
+```
+
+```{r}
+bootstrap3(rock,100,1,4)
+
+```
+```{r}
+#Estimador bootstrap para la el coeficiente de razon
+
+bootstraprazon=function(datos,B,X,Y) {
+  
+  n=dim(datos)[1]
+  estimac=rep(0,B)
+  
+  for (i in 1:B){
+    indices=sample(1:n,n,T)
+    estimac[i]=mean(datos[indices,Y])/mean(datos[indices,X])
+  }
+  
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+  hist(estimac)
+  
+  return(list(estimador=estboot,eestandar=eeboot))
+}
+
+
+```
+
+```{r}
+bootstraprazon(rock,100,1,4)
+```
+
+```{r}
+# funcion de boostrap para calcular la mediana
+boostrap_coef_asimetria <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    media_i =  mean(muestra)
+    sd_i =  sd(muestra)
+    sum = 0;
+    for ( j in 1:len)
+      sum = sum + ((muestra[j]-media_i)/sd_i)^3
+    # Skewness
+    estimador[i] = (len/((len-1)*(len-2)))*sum
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+```
+
+
+
+```{r}
+
+boostrap_coef_asimetria(iris[,1],100)
+
+```
+
