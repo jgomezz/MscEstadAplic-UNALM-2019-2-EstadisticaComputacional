@@ -3,34 +3,100 @@ title: "Boostrap"
 output: html_notebook
 ---
 
+# Boostrap - media
 
-# Boostrap
+```{r}
+# funcion de boostrap para calcular la mediana
+boostrap_media <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    #print(muestra)
+    #print(median(muestra))
+    T_i = mean(muestra)  # El estimador es T
+    estimador[i] = T_i
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+```
+
+```{r}
+muestra_base <- c(5,7,8,9,15,14)
+
+b <- 100    # nro. de muestras con reemplazo 
+boostrap_media(muestra_base,b)
+```
+
+```{r}
+muestra_base <- c(5,7,8,9,15,14)
+
+b <- 1000    # nro. de muestras con reemplazo 
+boostrap_media(muestra_base,b)
+```
+```{r}
+muestra_base <- c(5,7,8,9,15,14)
+
+b <- 10000    # nro. de muestras con reemplazo 
+boostrap_media(muestra_base,b)
+```
+
+
+# Boostrap - mediana
 
 - De una muestra base se escogen "b" muestras con reemplazo de tamaño igual a la muestra base.
 - De cada muestra se calcula la mediana , el estimador T es dos veces la mediana
 - El estimado final es el promedio de todas las medianas
 ```{r}
 
-muestra_base <- c(5,7,8,9,15,14)
-
-b <- 10 # nro. de muestras con reemplazo 
-
-# arreglo de medianas
-medianas=rep(0,b)
-
-#print(medianas)
-
-for (i in 1:b) {
+# funcion de boostrap para calcular la mediana
+boostrap2mediana <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
   len <- length(muestra_base)
-  muestra <- sample(muestra_base,len,replace=T)
-  #print(muestra)
-  #print(median(muestra))
-  T_i = 2*median(muestra)  # El estimador es T
-  medianas[i] = T_i
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    #print(muestra)
+    #print(median(muestra))
+    T_i = 2*median(muestra)  # El estimador es T
+    estimador[i] = T_i
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
 }
-#print("Vector de estimadores :" +medianas)
-mean(medianas)
-sd(medianas)
+
 ```
 
+```{r}
+muestra_base <- c(5,7,8,9,15,14)
+
+b <- 100    # nro. de muestras con reemplazo 
+boostrap2mediana(muestra_base,b)
+```
+
+```{r}
+b <- 1000    # nro. de muestras con reemplazo 
+boostrap2mediana(muestra_base,b)
+```
+
+```{r}
+b <- 10000    # nro. de muestras con reemplazo 
+boostrap2mediana(muestra_base,b)
+```
 
