@@ -1,0 +1,239 @@
+---
+title: "Trabajo 1 - Estadística Computacional"
+output: html_notebook
+author : "Jaime Gomez Marin"
+---
+
+
+1).- Simule en R,  lanzar dos dados juntos dos veces, calcular la probabilidad de qué.
+
+Parte a) = {la suma sea 15}
+
+Compare los valores estimados del experimento con el valor teórico. Analice el experimento aumentando las repeticiones. 
+
+```{r}
+
+# Calculando las probabilidaddes teoricas
+cal_prob_teorica <- function() {
+  
+  omega = c(1,2,3,4,5,6)
+  n = length(omega)
+  omega4 =  rep(0, n*n*n*n )
+  
+  # Se calcula el espacio muestral 
+  m = 1
+  for( i in 1:n) 
+    for ( j in 1:n ) 
+      for ( k in 1:n ) 
+        for ( l in 1:n ) {
+          omega4[m] = omega[i] + omega[j] + omega[k] + omega[l] 
+          m = m + 1
+        }
+  
+  # Se imprime el espacio muestral
+  #print(omega4)
+  return(data.frame(table(omega4)/n^4))
+}
+
+  
+# Calculando las probabilidades teoricas de la suma de los dados
+df = cal_prob_teorica()
+
+# omega4 es un factor, conversion a numero : as.numeric(as.character(df$omega4))
+# la suma de los 2 lanzamientos deben ser igual a 15
+func = df[as.numeric(as.character(df$omega4)) == 15,]
+
+# Probabilidades de que la suma de los 2 primeros dados del primer lanzamiento 
+# mas la suma de los dados del segundo lanzamiento sea 15 es:
+sum(func$Freq)
+
+```
+
+```{r}
+
+# Calculando las probabilidaddes experimentales
+cal_prob_experimentales <- function(m_veces ) {
+  
+    lanzamiento1 <- sample(1:6, m_veces , T) + sample(1:6, m_veces , T)
+    lanzamiento2 <- sample(1:6, m_veces , T) + sample(1:6, m_veces , T)
+
+    omega4 =  rep(0, m_veces)
+    omega4 = lanzamiento1 + lanzamiento2
+ 
+    return(data.frame(table(omega4)/m_veces))
+}
+
+# Cantidad de ensayos 
+m = 100000 # Numero de ensayos
+df = cal_prob_experimentales(m)
+
+# omega4 es un factor, conversion a numero : as.numeric(as.character(df$omega4))
+# la suma de los 2 lanzamientos deben ser igual a 15
+func = df[as.numeric(as.character(df$omega4)) == 15,]
+
+# Probabilidades de que la suma de los 2 primeros dados del primer lanzamiento 
+# mas la suma de los 2 dados del segundo lanzamiento sea 15 es:
+sum(func$Freq)
+
+```
+
+
+Paret b) {la suma del primer lanzamiento supere al segundo en más de 5}
+
+Compare los valores estimados del experimento con el valor teórico. Analice el experimento aumentando las repeticiones. 
+
+```{r}
+
+# Calculando las probabilidaddes teoricas de diferencia de dados
+cal_prob_teorica_diferencia_dados <- function() {
+  
+  omega = c(1,2,3,4,5,6)
+  n = length(omega)
+  omega4 =  rep(0, n*n*n*n )
+  
+  # Se calcula el espacio muestral 
+  m = 1
+  for( i in 1:n) 
+    for ( j in 1:n ) 
+      for ( k in 1:n ) 
+        for ( l in 1:n ) {
+          omega4[m] = omega[i] + omega[j] - ( omega[k] + omega[l] ) 
+          m = m + 1
+        }
+  
+  # Se imprime el espacio muestral
+  #print(omega4)
+  
+  return(data.frame(table(omega4)/n^4))
+}
+
+# Calculando las probabilidades teoricas en diferencia de dados
+df = cal_prob_teorica_diferencia_dados()
+
+# omega4 es un factor, conversion a numero : as.numeric(as.character(df$omega4))
+# la diferencia del primer lanzamianto y 2do lanzamiento debe ser 5
+func = df[as.numeric(as.character(df$omega4)) > 5,]
+
+# Probabilidades de que la suma de los 2 primeros dados del primer lanzamiento sea mayor a 5 
+# en la suma de los dados del primer lanzamiento es:
+sum(func$Freq)
+
+```
+
+```{r}
+
+# Calculando las probabilidaddes con la diferencia de dados
+cal_prob_experimentales_diferencia <- function(m_veces ) {
+  
+    lanzamiento1 <- sample(1:6, m_veces , T) + sample(1:6, m_veces , T)
+    lanzamiento2 <- sample(1:6, m_veces , T) + sample(1:6, m_veces , T)
+
+    omega4 =  rep(0, m_veces)
+    omega4 = lanzamiento1 - lanzamiento2
+ 
+    return(data.frame(table(omega4)/m_veces))
+}
+
+m = 1000 # Numero de ensayos
+# Calculando las probabilidades de ensayos en diferencia de dados
+df = cal_prob_experimentales_diferencia(m)
+
+# omega4 es un factor, conversion a numero : as.numeric(as.character(df$omega4))
+# la diferencia del primer lanzamianto y 2do lanzamiento debe ser 5
+func = df[as.numeric(as.character(df$omega4)) > 5,]
+
+# Probabilidades de que la suma de los 2 primeros dados del primer lanzamiento sea mayor a 5 
+# en la suma de los dados del primer lanzamiento es:
+sum(func$Freq)
+
+```
+
+2).- Con la finalidad de evaluar el rendimiento de dos máquinas maniobradas por dos empleados se está verificando los resultados obtenidos en el último turno. La primera máquina produce piezas metálicas con una taza de buena producción del 96% y la segunda maquina produce piezas con una taza de mala producción del 4.5%. El evaluador tomara grupos de 20 piezas en la primera máquina y verificara el número de piezas defectuosas. En la segunda maquina tomara las piezas una a una hasta encontrar una pieza defectuosa. Haga un programa que simule ambas evaluaciones utilizando la distribución apropiada, pruebe además una de las propiedades (media o varianza) de dicha distribución.  
+
+
+a) Simulando las primera maquina : distribucion binomial 
+
+```{r}
+
+# funcion de boostrap para calcular la media de una distribucion binomial
+boostrap_distr_binomial <-function(b, len_lote, p) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  #
+  for (i in 1:b) {
+    muestra <- rbinom(n=len_lote, size = len_lote, prob = p )
+    # Skewness
+    estimador[i] = mean(muestra)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  #hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+nro_sim = 100 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+p = 0.96 # probabilidad de encontrar una pieza en buen estado
+
+boostrap_distr_binomial(nro_sim, lote, p)
+
+
+nro_sim = 1000 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+p = 0.96 # probabilidad de encontrar una pieza en buen estado
+
+boostrap_distr_binomial(nro_sim, lote, p)
+
+
+nro_sim = 10000 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+p = 0.96 # probabilidad de encontrar una pieza en buen estado
+
+boostrap_distr_binomial(nro_sim, lote, p)
+
+```
+Al aumentar el numero de ensayos la media comienza a converger
+
+b) Simulando las segunda maquina : distribucion geometrica 
+
+```{r}
+
+# funcion de boostrap para calcular la media de una distribucion geonetrica
+boostrap_distr_geometrica <-function(b, len_lote, theta) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  #
+  for (i in 1:b) {
+    muestra <- rgeom(n=len_lote, theta)
+    # Skewness
+    estimador[i] = var(muestra)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  #hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+nro_sim = 100 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+theta = 0.045 # probabilidad de encontrar una pieza defectuosa
+boostrap_distr_geometrica(nro_sim, lote, theta)
+
+nro_sim = 1000 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+theta = 0.045 # probabilidad de encontrar una pieza defectuosa
+boostrap_distr_geometrica(nro_sim, lote, theta)
+
+nro_sim = 10000 # Numero de simulaciones
+lote = 20 # Tamanho del lote
+theta = 0.045 # probabilidad de encontrar una pieza defectuosa
+boostrap_distr_geometrica(nro_sim, lote, theta)
+
+```
+Al aumentar la cantidad de simulaciones, la varianza comienza a converger
