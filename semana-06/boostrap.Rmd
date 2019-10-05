@@ -128,6 +128,7 @@ bootstrap_estimador_sesgo_corregido= function(datos,B,X,Y) {
   sesgo = estboot-estimador_razon(datos,1:dim(datos)[1],X,Y)     # Sesgo 
   ecor = 2*estimador_razon(datos,1:dim(datos)[1],X,Y) - estboot # Estimacion corregida
 
+  #hist(estimac)
     
   return(list(estimador=estboot,eestandar=eeboot,sesgob=sesgo,ecor=ecor,estimac = estimac))
 
@@ -180,5 +181,20 @@ indice = 1:dim(datos)[1]
 #datos[indice,1]
 
 #dim(datos)[1]
+```
+
+
+```{r}
+
+'''
+Simulacion de datos usando el modelo logistico
+Arboles de clasificaciones
+
+ANTES DE LA PRACTICA 3 DAR EL TEMA
+
+
+Introducir en un modelo BOOSTRACT
+'''
+
 ```
 
