@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+# Estimador bootstrap para un estadistico univariado
+
+```{r}
+#Estimador bootstrap para un estadistico univariado
+
+bootstrap2=function(muestra_base,B,fun,...) {
+
+  n = length(muestra_base)
+  estimac = rep(0,B)
+  
+  for (i in 1:B)
+    estimac[i] = fun(sample(muestra_base,n,T),...)
+  
+  estboot = mean(estimac)
+  eeboot = sd(estimac)
+  
+  sesgo = estboot-fun(muestra_base,...)
+  ecor = 2*fun(muestra_base,...) - estboot
+  
+  #hist(estimac)
+  
+  return(list(estimador=estboot,eestandar=eeboot,sesgob=sesgo,ecor=ecor,estimac = estimac))
+}
+
+# 
+B = 100                    # Numero de repeticiones
+muestra_base = rock[,1]    # Muestra base
+tipo_estimador = quantile  # Tipo de estimador
+bs = bootstrap2(muestra_base,B,tipo_estimador,0.4)
+
+bs
+```
+```{r}
+hist(bs$estimac)
+
+```
+```{r}
+B = 100                    # Numero de repeticiones
+muestra_base = rock[,1]    # Muestra base
+tipo_estimador = median    # Tipo de estimador
+bs = bootstrap2(rock[,1],B,tipo_estimador)
+bs
+```
+
+```{r}
+#Numero de muestras bootstrap para un valor de B
+nmb1=function(datos,B,r,fun,...){
+  
+  ee=rep(0,r)
+  
+  for (i in 1:r)
+    ee[i]=bootstrap2(datos,B,fun,...)$eestandar
+
+  cv=sd(ee)/abs(mean(ee))  # Coeficiente de variabilidad
+  
+  print(cv)
+
+}
+
+nmb1(rock[,1],10,100,quantile,0.4)
+nmb1(rock[,1],50,100,quantile,0.4)
+nmb1(rock[,1],100,100,quantile,0.4)
+system.time(nmb1(rock[,1],100,100,quantile,0.4))[3]
+
+```
+
