@@ -17,11 +17,15 @@ bootstrap2=function(muestra_base,B,fun,...) {
   for (i in 1:B)
     estimac[i] = fun(sample(muestra_base,n,T),...)
   
-  estboot = mean(estimac)
+  estboot = mean(estimac)   # Estimacion Bootstrap
   eeboot = sd(estimac)
   
-  sesgo = estboot-fun(muestra_base,...)
-  ecor = 2*fun(muestra_base,...) - estboot
+  #print("----")
+  #print(fun(muestra_base,...))
+  #print("----")
+  
+  sesgo = estboot-fun(muestra_base,...)    # Sesgo 
+  ecor = 2*fun(muestra_base,...) - estboot # Estimacion corregida
   
   #hist(estimac)
   
@@ -49,6 +53,15 @@ bs
 ```
 
 ```{r}
+B = 100                    # Numero de repeticiones
+muestra_base = rock[,1]    # Muestra base
+tipo_estimador = mean    # Tipo de estimador
+bs = bootstrap2(rock[,1],B,tipo_estimador)
+bs
+```
+
+
+```{r}
 #Numero de muestras bootstrap para un valor de B
 nmb1=function(datos,B,r,fun,...){
   
@@ -64,9 +77,108 @@ nmb1=function(datos,B,r,fun,...){
 }
 
 nmb1(rock[,1],10,100,quantile,0.4)
+
+```
+
+```{r}
 nmb1(rock[,1],50,100,quantile,0.4)
+
+```
+
+
+```{r}
 nmb1(rock[,1],100,100,quantile,0.4)
+
+```
+
+```{r}
 system.time(nmb1(rock[,1],100,100,quantile,0.4))[3]
 
+```
+
+
+```{r}
+
+colesterol = c(224,237,213,207,221,202,231,220,218,215)
+
+nmb1(colesterol,50,1500,quantile,0.4)
+
+
+```
+
+
+```{r}
+#Estimador bootstrap para la el coeficiente de correlacion
+
+bootstrap_estimador_sesgo_corregido= function(datos,B,X,Y) {
+
+  n=dim(datos)[1]
+  estimac=rep(0,B)
+  
+  for (i in 1:B){
+    indices=sample(1:n,n,T)
+    estimac[i]=estimador_razon(datos,indices,X,Y)
+    
+  }
+  
+  
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+
+  sesgo = estboot-estimador_razon(datos,1:dim(datos)[1],X,Y)     # Sesgo 
+  ecor = 2*estimador_razon(datos,1:dim(datos)[1],X,Y) - estboot # Estimacion corregida
+
+    
+  return(list(estimador=estboot,eestandar=eeboot,sesgob=sesgo,ecor=ecor,estimac = estimac))
+
+}
+
+
+# Calculo de estimados de la razon
+estimador_razon = function(datos,indice,X,Y) {
+ 
+  mean_y = mean(datos[indice,Y]) 
+  mean_x = mean(datos[indice,X])
+  
+  return(mean_y/mean_x)
+
+}
+
+```
+
+
+
+
+```{r}
+
+B = 100                    # Numero de repeticiones
+
+x = c(138,93,61,179,48,37,29,23,30,2)
+y = c(143,104,69,260,75,63,50,48,111,50)
+
+datos = cbind(y,x)
+
+bootstrap_estimador_sesgo_corregido(datos,B,2,1)
+
+
+```
+
+
+```{r}
+datos[,1]
+```
+
+
+```{r}
+x = c(138,93,61,179,48,37,29,23,30,2)
+y = c(143,104,69,260,75,63,50,48,111,50)
+
+datos = cbind(y,x)
+#indice = c(1,3,4)
+indice = 1:dim(datos)[1]
+#indice
+#datos[indice,1]
+
+#dim(datos)[1]
 ```
 
