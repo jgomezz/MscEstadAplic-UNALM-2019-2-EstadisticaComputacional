@@ -1,0 +1,167 @@
+---
+title: "Tarea 2 : Estadistica Computacional"
+output: html_notebook
+author: "Jaime Gomez Marin"
+---
+
+
+1.- Si el peso del ganado vacuno de una raza se distribuye según una Normal con media 600 kilo y desviación estándar de 35 simule los pesos de 400 de estos ganados, simule y grafique un histograma con los datos.  
+
+```{r}
+mu = 600
+sigma = 35
+n = 400
+```
+
+
+```{r}
+# Primera forma para simular la distribucion normal 
+dist_normal_1 <- function(n1, mu1, sigma1) {
+  x = rep(0,n1)
+  for(i in 1:n1) {
+    u1 = runif(12, min=0,max=1)
+    x[i] = (sum(u1)-6)
+  }
+  y = mu1 + sigma1*x
+  return(y)
+}
+  
+dnormal_1 = dist_normal_2(n, mu, sigma)
+hist(dnormal_1 , xlab="Peso de ganado (Kg)", ylab ="Frecuencia",
+     main="Distribución Normal Simulada")
+```
+
+```{r}
+
+# Segunda forma para simular la distribucion normal 
+dist_normal_2 <- function(n1, mu1, sigma1) {
+  x = rep(0,n1)
+  y = rep(0,n1)
+  for(i in 1:n1){
+    u1 = runif(1, min=0,max=1)
+    u2 = runif(1, min=0,max=1)
+    r = sqrt(-2*log(u1))
+    theta = 2*pi*u2
+    x[i] = r*cos(theta)
+    y[i] = r*sin(theta)
+    X = mu1 + sigma1*x
+    Y = mu1 + sigma1*y
+  }
+  
+  return(data.frame(X,Y))
+  
+}
+  
+dnormal_2 = dist_normal_2(n, mu, sigma)
+hist(dnormal_2$X , xlab="Peso de ganado (Kg)", ylab ="Frecuencia",
+     main="Distribución Normal Simulada")
+
+```
+
+2.- Presente un contexto para simular 100 datos con las funciones  rlogis y rweibull (defina los parámetros según el contexto que elija). 
+
+Distribución Logistica
+----------------------
+Ejemplo : Se tiene ganado vacuno con un parametro de posición de 10 y un parametor de scale =2, generar 100 numero pseudo aleatorios con este principio
+```{r}
+n = 100
+rlog = rlogis(n,10,2)
+hist(rlog)
+plot(rlog)
+
+```
+
+Distribución Weibull
+--------------------
+
+Ejemplo : El tiempo de via X en horas de un artefacto en el taller de mecanica tiene una distribución de Weibull con alpha igual a 0,01 y con beta igual a 2 . Se desea simular 100 observaciones
+```{r}
+n = 100
+rw = rweibull(n, 0.01, 2)
+hist(rw)
+plot(rw)
+```
+
+
+
+3.- Haga un programa que estime el coeficiente A=3(P75-P25)/4 y su desviación estándar, utilizando muestras con reemplazo de tamaño G, pruebe , utilice los datos iris en la variable  Sepal.Length y especie Virginica.
+
+a.  Muestre los resultados para G = 50, 100, 2000 , 10000 
+```{r}
+# funcion de boostrap para calcular A
+boostrapA <-function(muestra_base, b) {
+  
+  # arreglo de estimador
+  estimador=rep(0,b)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:b) {
+    muestra <- sample(muestra_base,len,replace=T)
+    estimador[i] <-  3*(quantile(muestra,0.75)-quantile(muestra,0.25))/4
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  #hist(estimador)
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+library(datasets)
+library(dplyr)
+data(iris)
+names(iris) <- tolower(names(iris))
+virginica <- filter(iris, species == "virginica")
+head(virginica)
+```
+G = 50
+```{r}
+boostrapA(virginica$sepal.length, 50)
+```
+G = 100,  , 
+```{r}
+boostrapA(virginica$sepal.length, 100)
+```
+G = 2000
+```{r}
+boostrapA(virginica$sepal.length, 2000)
+```
+G = 10000
+```{r}
+boostrapA(virginica$sepal.length, 10000)
+```
+
+b. Modifique el programa para determinar el tamaño de muestras bootstrap necesario considerando 200 repeticiones. Grafique los CV calculados. 
+
+```{r}
+#Numero de muestras bootstrap para un valor de B
+nmb1=function(datos,B,r){
+  
+  ee=rep(0,r)
+  
+  for (i in 1:r)
+    ee[i]=boostrapA(datos,B)$eestandar
+
+  cv=sd(ee)/abs(mean(ee))  # Coeficiente de variabilidad
+  
+  print(cv)
+  
+  return(cv)
+}
+```
+
+
+```{r}
+nro_rep = 200 # 200 
+cvs = rep(0,4) 
+B = c(50,100,2000,10000)
+
+for ( i in 1:4) {
+  cvs[i] = nmb1(virginica$sepal.length,B[i],nro_rep)
+}
+```
+
+```{r}
+plot(B,cvs)
+```
