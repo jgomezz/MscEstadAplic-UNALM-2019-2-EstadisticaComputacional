@@ -1,0 +1,131 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+
+# Calculo de boostrap
+calc_boostrap <-function(muestra_base, B) {
+  
+  # arreglo de estimador
+  estimador=rep(0,B)
+  
+  # longitud de la muestra
+  len <- length(muestra_base)
+  
+  for (i in 1:B) {
+    muestra <- sample(muestra_base,len,replace=T)
+    estimador[i] <-  quantile(muestra,0.80)-quantile(muestra,0.20)
+  }
+  
+  estboot <- mean(estimador)
+  eeboot <- sd(estimador)
+  
+  return( list(estimador=estboot , eestandar=eeboot))
+}
+
+```
+
+
+
+```{r}
+
+# Repeticiones de muestras boostrap
+nro_muestras_bootstrap <- function(datos,B,r){
+  
+  ee=rep(0,r)
+  
+  for (i in 1:r)
+    ee[i] = calc_boostrap(datos,B)$eestandar
+
+  cv=sd(ee)/abs(mean(ee))  # Coeficiente de variabilidad
+  
+  print(cv)
+  
+  return(cv)
+}
+
+
+```
+
+```{r}
+
+datos=rnorm(350,80,1.5)
+nro_rep = 50 # repeticiones
+#B = c(30,35,40,45,50,55,60)
+B = seq(20,60,2)
+cvs = rep(0,length(B)) 
+
+for ( i in 1:length(B))
+  cvs[i] = nro_muestras_bootstrap(datos,B[i],nro_rep)
+
+
+
+```
+
+
+```{r}
+plot(B,cvs)
+```
+
+Pregunta 3
+
+
+```{r}
+# Estimador bootstrap para RB
+bootstrap_rb <- function(datos,B) {
+
+  n=dim(datos)[1]
+  estimac=rep(0,B)
+  
+  for (i in 1:B){
+    indices=sample(1:n,n,T)
+    estimac[i]=estimador_rb(datos,indices)
+    
+  }
+  
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+
+  #hist(estimac)
+  
+  #return(list(estimador=estboot,eestandar=eeboot,estimac = estimac))
+
+  return(list(estimador=estboot,eestandar=eeboot))
+
+}
+
+
+# Calculo de estimados de rb
+estimador_rb = function(datos,indice) {
+ 
+  mean_y = mean(datos[indice,1])   # Y siempre va a estar en la columna 1
+  mean_x = mean(datos[indice,2])   # X siempre va a estar en la columna 2
+  
+  estimador = (mean_x*mean_x-1)/(mean_y*mean_y+2) 
+  
+  return(estimador)
+
+}
+
+```
+
+
+
+
+```{r}
+
+B = 100                    # Numero de muestras bootstrap
+x = c(7.85, 8.20, 7.90, 7.50, 7.90, 6.65, 7.80, 8.40, 7.70, 7.80, 7.60, 7.60, 8.20, 8.10, 8.10) 
+y = c(8.00, 7.25, 7.60, 8.35, 8.00, 6.70, 7.10, 7.80, 7.70, 7.20, 6.40, 6.30, 8.40, 7.90, 7.30)
+
+datos = cbind(y,x)
+
+bootstrap_rb(datos,B)
+
+
+
+```
+

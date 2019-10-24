@@ -1,0 +1,258 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+# Intervalo de Confianza para muestras de tamanho menores o iguales a 30
+
+$$
+  LI = \mu - t_{(1-\frac{\alpha}{2}, n -1)}*\frac{S}{\sqrt{n}}
+$$
+$$
+  LS = \mu + t_{(1-\frac{\alpha}{2}, n -1)}*\frac{S}{\sqrt{n}}
+$$
+
+```{r}
+
+# Para poblaciones con n <= 30
+# Calcular el intervalo de confianza
+# mestra :  la muestra
+# nconf : nivel de confianza
+ic_media <- function(muestra, nconf = 0.95){
+
+  # El alpha es el complemento del nivel de confianza
+  alpha = 1 - nconf 
+  n = length(muestra)
+  s = sd(muestra)  # desviacion estandard
+  mu = mean(muestra) 
+  me = qt(1-alpha/2, n-1) * s / sqrt(n) 
+  print(mu - me)
+  print(mu + me)
+  
+}
+
+```
+
+
+
+```{r}
+muestra = c(10.5, 8.6, 7.4 , 6.7, 9.1, 11.2 , 12, 10 )
+ic_media(muestra)
+# x : Diametro de las botellas (cm)
+```
+
+Cuando un 95 % de confianza se puede afirmar que la 
+media poblacion del diametro de la botella esta entre  7.9  y 10.97
+
+
+# Intervalo de Confianza para muestras de tamanho mayores a 30
+
+$$
+  LI = \mu - Z_{(1-\frac{\alpha}{2})}*\frac{S}{\sqrt{n}}
+$$
+$$
+  LS = \mu + Z_{(1-\frac{\alpha}{2})}*\frac{S}{\sqrt{n}}
+$$
+Falta implementar
+```{r}
+
+
+```
+
+
+# metodo estandar.
+
+la siguiente función calcula la curtosis de un vector x
+
+
+```{r}
+curtosis <- function(x) {
+  curtosis <- sum(((x-mean(x))/sd(x))^4)/(length(x)-1) - 3 
+  curtosis 
+}
+```
+
+
+La siguiente función calcula el intervalo de confianza para la curtosis a través del método estandar. 
+
+```{r}
+
+curtosisicb=function(datos,q,b,alpha) {
+  
+  #q es la columna de la data que se va a trabajar
+  #b es el numero de muestra bootstrap 
+  #alpha es el nivel significacion de 0 a 1
+  n = dim(datos)[1]
+  curtosisbvec = rep(0,b)
+  
+  for (i in 1:b){
+    data = 1:n
+    mcr = sample(data,n,T) 
+    datosb = datos[mcr,q]
+    curtosisbvec[i] = curtosis(datosb)  # Para calcular con otra estadistico 
+                                        # el cambio se realiza en la "curtosis"
+  }
+  
+  meanb = mean(curtosisbvec)
+  sdb = sd(curtosisbvec)
+  lis = meanb - qnorm(1-alpha/2)*sdb 
+  lss = meanb + qnorm(1-alpha/2)*sdb 
+  print(lis)
+  print(lss)
+  anchoi = lss - lis
+  print(anchoi)
+  
+}
+
+```
+
+La funcion curtosis esta hecha para un vector
+
+```{r}
+curtosisicb(iris,1,100,0.05)
+```
+
+```{r}
+curtosisicb(iris,1,1000,0.05)
+```
+
+## Método de los Percentiles
+
+El calculos de los percentiles puede ser aplicacion con la funcion de distribucion Z
+No importa que la funcion de distribucion sea simetrica o no.
+
+la siguiente función calcula la curtosis de un vector x
+
+```{r}
+curtosis <- function(x) {
+  curtosis <- sum(((x-mean(x))/sd(x))^4)/(length(x)-1) - 3 
+  curtosis 
+}
+```
+
+La siguiente funcion calcula el intervalo de confianza para
+la curtosis a travez del metodo percentiles. 
+
+```{r}
+
+# q es la columna de la data que se va a trabajar
+# b es el numero de muestra bootstrap 
+# alpha es el nivel significacion de 0 a 1
+curtosisicbp = function(datos, q, b, alpha){
+  
+  n = dim(datos)[1]
+  curtosisbvec = rep(0,b)
+  
+  # En el for toma la muestras Bootstrap
+  for (i in 1:b){
+    data = 1:n
+    mcr = sample(data,n,T)  # toma la reemplazo de la muestra
+                            # devuelve los indices seleccionados
+    datosb = datos[mcr,q]   # Obtener las filas de los indices  
+                            # en la columna q
+    curtosisbvec[i] = curtosis(datosb) # Si se cambia la mediana
+                                       # Calcula el IC basado en la mediana 
+                                       # usando el metodo de percentiles
+  }
+
+  hist(curtosisbvec)
+  curtosisvec = sort(curtosisbvec) # Ordena, pero no es necesario
+  lis=quantile(curtosisvec,alpha/2)
+  lss=quantile(curtosisvec,1-alpha/2)
+  print(lis)
+  print(lss)
+  anchoi = as.numeric(lss-lis)
+  print(anchoi)
+}
+
+```
+
+ejemplo del calculo del IC para la curtosis 
+en la base de datos IRIS,columna 1 , 
+con 100 muestras bootstrap y con nivel de significancia de 0.05
+
+Calcula 100 veces la curtosis
+```{r}
+curtosisicbp(iris,1,100,0.10)
+```
+
+## Limites para el Coeficiente de Determinacion
+```{r}
+
+
+
+```
+
+
+# Método bootstrapping estudentizado
+
+Centralizar la variable, estudentizando
+$$
+   
+   Z = \frac{x - \mu}{\sigma}
+   
+$$
+
+la siguiente funcion calcula la curtosis de un vector x
+
+```{r}
+curtosis <- function(x) {
+  curtosis <- sum(((x-mean(x))/sd(x))^4)/(length(x)-1) - 3 
+  curtosis 
+}
+
+```
+
+
+La siguiente función calcula el intervalo de confianza para
+la curtosis a través del método estudentizado.
+```{r} 
+
+#q es la columna de la data que se va a trabajar
+#b es el numero de muestra bootstrap 
+#alpha es el nivel significacion de 0 a 1
+curtosisicstud=function(datos,q,b,alpha){
+
+  n=dim(datos)[1]
+  curtosisbvec=rep(0,b)
+  
+  for (i in 1:b){
+    data=1:n
+    mcr=sample(data,n,T) 
+    datosb=datos[mcr,q]
+    curtosisbvec[i]=curtosis(datosb)
+  }
+  
+  escurtosisb=sd(curtosisbvec)
+  testud=rep(0,b)  # Inicializa el estudentizado
+  curtorig=curtosis(datos[,q])
+  
+  # No se necesita el for: VERIFICAR
+  for (j in 1:b)
+    testud[j]=(curtosisbvec[j]-curtorig)/escurtosisb  # La curtosis de los vectores
+  
+  stestud=sort(testud)
+  lis=curtorig+quantile(stestud,alpha/2)*escurtosisb 
+  lss=curtorig+quantile(stestud,1-alpha/2)*escurtosisb 
+  print(lis)
+  print(lss)
+  anchoi=as.numeric(lss-lis)
+  print(anchoi)
+}
+
+```
+
+
+
+
+
+ejemplo del calculo del IC para la curtosis 
+en la base de datos IRIS,columna 1 , 
+con 100 muestras bootstrap y con nivel de significancia de 0.05
+```{r}
+curtosisicstud(iris,1,100,0.10)
+
+```
+
