@@ -1,0 +1,141 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Metodo Estandar.
+---------------
+
+la siguiente función calcula la curtosis de un vector x
+
+```{r}
+curtosis <- function(x) {
+  curtosis <- sum(((x-mean(x))/sd(x))^4)/(length(x)-1) - 3 
+  return(curtosis) 
+}
+
+```
+
+La siguiente función calcula el intervalo de confianza para
+la curtosis a través del método estandar. 
+
+```{r}
+curtosisicb=function(datos,q,b,alpha) {
+  
+    #q es la columna de la data que se va a trabajar
+    #b es el numero de muestra bootstrap 
+    #alpha es el nivel significacion de 0 a 1
+  n=dim(datos)[1]
+  curtosisbvec=rep(0,b)
+  for (i in 1:b){
+    data=1:n
+    mcr=sample(data,n,T) 
+    datosb=datos[mcr,q]
+    curtosisbvec[i]=curtosis(datosb)
+  }
+  meanb=mean(curtosisbvec)
+  sdb=sd(curtosisbvec)
+  lis=meanb-qnorm(1-alpha/2)*sdb 
+  lss=meanb+qnorm(1-alpha/2)*sdb 
+  print(lis)
+  print(lss)
+  anchoi=lss-lis
+  print(anchoi)
+}
+
+```
+
+ejemplo del cálculo del IC para la curtosis 
+en la base de datos IRIS,columna 1 , 
+con 100 muestras bootstrap y con nivel de significancia de 0.05
+```{r}
+curtosisicb(iris,1,100,0.05)
+```
+
+
+SEGUNDA PARTE
+-------------
+
+#Bootstraping Doble (anidado)
+
+La siguiente funcion calcula la curtosis de un vector x
+
+```{r}
+# Calcula la curtosis
+# Tiene un vector de entrada 
+
+curtosis <- function(x) {
+  curtosis <- sum(((x-mean(x))/sd(x))^4)/(length(x)-1) - 3 
+  return(curtosis) 
+}
+```
+
+
+#Bootstrap es una prueba no parametrica, se aplica cuando no tienes homogenidad de varianza.
+
+
+La siguiente funcion calcula el intervalo de confianza para
+la curtosis a travez del metodo   Bootstraping Doble (anidado)
+
+La idea es calcular el error estandar de la curtosis de la segunda etapa. 
+```{r}
+curtosisicboble=function(datos,q,b1,b2,alpha) {
+  # q es la columna de la data que se va a trabajar
+  # b1 es el numero de muestra bootstrap
+  # b2 es el numero de muestra bootstrap en la segunda etapa
+  # alpha es el nivel significacion de 0 a 1
+  
+  n=dim(datos)[1]          # cantidad de datos
+  curtosisbvecb1=rep(0,b1) # vector para el b1
+  escurtosisb=rep(0,b1)
+
+  for (i in 1:b1){
+    data = 1:n
+    mcr = sample(data,n,T) 
+    datosb = datos[mcr,q]
+    curtosisbvecb1[i] = curtosis(datosb)
+    curtosisbvecb2 = rep(0,b2)
+    for (k in 1:b2) {
+      datosb2 = sample(datosb,n,T) 
+      curtosisbvecb2[k] = curtosis(datosb2)
+    }
+    escurtosisb[i] = sd(curtosisbvecb2)
+  }
+  
+  print(curtosisbvecb1)
+  print(escurtosisb)
+  
+  testud = rep(0,b1)   # t estudentizado , se hace para cada unos de la p muestras boostrap
+  curtorig = curtosis(datos[,q])
+  print(curtorig)
+  
+  # Se puede hacer como vector
+  #for (i in 1:b1) 
+  #  testud[i] = (curtosisbvecb1[i]-curtorig)/ escurtosisb[i]
+  
+  testud = (curtosisbvecb1-curtorig)/escurtosisb
+  
+  escurtosisb = sd(curtosisbvecb1)
+  stestud = sort(testud)  # no es necesario ordenarlo cuando usas los quantiles.
+  
+  lis = curtorig + quantile(testud,alpha/2)*escurtosisb  # escurtosisb : Error estandar de la muestra boostrap de la primera etapa
+  lss = curtorig + quantile(testud,1-alpha/2)*escurtosisb 
+  
+  print(lis)
+  print(lss)
+
+}
+
+```
+
+
+```{r}
+curtosisicboble (iris,1,100,30,0.10)
+
+```
+
+```{r}
+curtosisicboble (iris,1,100,30,0.10)
+
+```
+
