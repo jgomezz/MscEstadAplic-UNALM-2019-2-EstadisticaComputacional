@@ -1,0 +1,172 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Algoritmo de bootstrap en las observaciones
+
+# Modelo lineal
+```{r}
+
+datos = as.matrix(rock)
+
+modelo_lineal  <- lm(datos[,4]~datos[,-4])
+
+summary(modelo_lineal)
+
+```
+```{r}
+modelo_lineal$coefficients
+```
+
+
+```{r}
+############################################
+#APLICACION DE BOOTSTRAP A LAS OBSERVACIONES
+############################################
+boot.obser=function(datos,B,Y){
+  
+  datos = as.matrix(datos)  # datos tengan estructura de matriz
+  
+  n = dim(datos)[1]       # obtiene cantidad de lineas  
+  
+  c = ncol(datos)         # obtiene cantidad de columnas
+  
+  betas = matrix(0,B,c)   # matriz de 0, para cada muestra de boostrap le va asignar una fila
+  
+  # print(betas)
+  
+  for (i in 1:B){
+  
+    indices = sample(1:n,n,T) # obtiene los indices con reemplazos
+    
+    betas[i,] = lm(datos[indices,Y]~datos[indices,-Y])$coe # es un vector donde estan los coeficientes
+  }
+  
+  bootbetas = apply(betas,2,mean)  # Promedio por columnas
+  
+  eebotbet = apply(betas,2,sd) # Desviacion estandar por columnas
+  
+  return (list(bootb=bootbetas,eebootb=eebotbet,datosbetas=betas))
+}
+```
+
+
+```{r}
+rock
+```
+```{r}
+index_salida <- 4 # []
+nro_muestras_bootstrap <- 50
+bootstrap_datos <- boot.obser(rock,nro_muestras_bootstrap,index_salida)
+
+```
+
+```{r}
+hist(bootstrap_datos$datosbetas[,1])
+```
+```{r}
+
+hist(bootstrap_datos$datosbetas[,2])
+```
+```{r}
+
+hist(bootstrap_datos$datosbetas[,3])
+```
+```{r}
+
+hist(bootstrap_datos$datosbetas[,4])
+```
+
+```{r}
+
+index_salida <- 4 # []
+nro_muestras_bootstrap <- 200
+bootstrap_datos <- boot.obser(rock,nro_muestras_bootstrap,index_salida)
+
+```
+
+
+```{r}
+hist(bootstrap_datos$datosbetas[,1])
+```
+
+```{r}
+hist(bootstrap_datos$datosbetas[,2])
+```
+
+```{r}
+hist(bootstrap_datos$datosbetas[,3])
+```
+
+```{r}
+hist(bootstrap_datos$datosbetas[,4])
+```
+
+
+
+
+# Aplicación de bootstrap en los errores
+
+```{r}
+#######################################
+#APLICACION DE BOOTSTRAP A LOS RESIDUOS
+#######################################
+boot.res=function(datos,B,Y){
+
+  datos=as.matrix(datos)
+  
+  n=nrow(datos)
+  
+  c=ncol(datos)
+  
+  betas=matrix(0,B,c)
+  
+  resid=lm(datos[,Y]~datos[,-Y])$res
+  
+  for (i in 1:B) 
+  
+      betas[i,]=lm(datos[,Y]+sample(resid,n,T)~datos[,-Y])$coe
+  
+  bootbetas=apply(betas,2,mean)
+  
+  eebotbet=apply(betas,2,sd)
+  
+  return(list(bootb=bootbetas,eebootb=eebotbet,datosbetas=betas))
+
+}
+
+```
+
+
+```{r}
+
+boot.res(rock,50,4)
+
+```
+```{r}
+
+boot.res(rock,200,4)
+
+```
+
+```{r}
+datos = as.matrix(rock)
+
+modelo_lineal_2  <- lm(datos[,4]~datos[,-4])
+
+summary(modelo_lineal_2)
+
+```
+##### Se observa que las variable "shape" es no significativa, por lo tanto debe ser retirada del modelo
+
+```{r}
+
+rock2 <- rock[,-2] 
+
+boot.res(rock2,50,3)
+
+```
+
+
+
