@@ -1,50 +1,137 @@
 ---
-title: "Trabajo 4"
-output: word_document
-author: Jaime Gomez Marin
+title: "Trabajo 4 - Estadìstica Computacional"
+output: html_document
+author: Jaime Gómez Marín
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# 1.- Calcular los intervalos de confianza para los coeficientes de regresión por el método percentiles y por el método Estudentizado para los datos Women ,al  97% de confianza. Use B =150. 
 
-
-#######################################
-#APLICACION DE BOOTSTRAP A LOS RESIDUOS
-#######################################
-
-```{r pressure, echo=FALSE}
-
-boot.res=function(datos,B,Y){
-
-  datos=as.matrix(datos)
-  
-  n=nrow(datos)
-  
-  c=ncol(datos)
-  
-  betas=matrix(0,B,c)
-  
-  resid=lm(datos[,Y]~datos[,-Y])$res
-  
-  for (i in 1:B) 
-  
-      betas[i,]=lm(datos[,Y]+sample(resid,n,T)~datos[,-Y])$coe
-  
-  bootbetas=apply(betas,2,mean)
-  
-  eebotbet=apply(betas,2,sd)
-  
-  return(list(bootb=bootbetas,eebootb=eebotbet,datosbetas=betas))
-
-}
+## Observaciones de la altura ( height) y peso ( weight) de mujeres americanas entre los 30 y 39 años
+```{r}
+head(women)
 ```
+### Variable independiente : height (altura)
+
+### Variable dependiente : weight (peso)
+
+```{r}
+datos = as.matrix(women)
+modelo_lineal  <- lm(women[,2]~women[,-2])
+summary(modelo_lineal)
+modelo_lineal$coefficients
+```
+### Aplicando el método de regresión lineal se observa que el $\beta_0$ y el beta $\beta_1$ es -87-51667 y 3.45 respectivamente
+
+# 1.- Calcular los intervalos de confianza para los coeficientes de regresión por el método percentiles y por el método Estudentizado para los datos Women ,al  97% de confianza. Use B = 150. 
+
+
+## ######################################################################
+## INTERVALOS DE CONFIANZA PARA LOS BETAS DE BOOTSTRAP A LAS OBSERVACIONES 
+## METODO DE PERCENTILES
+## ######################################################################
+
+```{r}
+ic.mp.boot.obser = function(datos,B,Y,nivel){
+  datos = as.matrix(datos)
+  alfa = 1-0.01*nivel
+  n = dim(datos)[1]
+  c = ncol(datos)
+  betas = matrix(0,B,c)
+  for (i in 1:B){
+    indices = sample(1:n,n,T)
+    betas[i,] = lm(datos[indices,Y]~datos[indices,-Y])$coe
+  }
+  LI = apply(betas,2,quantile,alfa/2)
+  LS = apply(betas,2,quantile,1-alfa/2)
+  limites = cbind(LI,LS)
+  return(list(limites = limites))
+}
+
+index_salida <- 2 # []
+nro_muestras_bootstrap <- 150
+nivel <- 97
+bootstrap_datos <- ic.mp.boot.obser(women,nro_muestras_bootstrap,index_salida, nivel)
+bootstrap_datos$limites
+```
+### Empleando el método de percentiles con Bootstrap con un nivel de significancia de 0.97, se tiene que:
+### El intervalo de confianza para el $\beta_0$ es entre [-105.96600, -73.176113]
+### El intervalo de confianza para el $\beta_1$ es entre [3.21458,   3.730327]
+
+## ######################################################################
+## INTERVALOS DE CONFIANZA PARA LOS BETAS DE BOOTSTRAP A LAS OBSERVACIONES
+## METODO DE ESTUDENTIZADO
+## ######################################################################
+```{r}
+ic.me.boot.obser = function(datos,B,Y,nivel) {
+  datos = as.matrix(datos)
+  alfa = 1-0.01*nivel
+  n = dim(datos)[1]
+  c = ncol(datos)
+  coefi = lm(datos[,Y]~datos[,-Y])$coe
+  betas = matrix(0,B,c)
+  eebetas = matrix(0,B,c)
+  pivot = matrix(0,B,c)
+  for (i in 1:B){
+    indices = sample(1:n,n,T)
+    betas[i,] = lm(datos[indices,Y]~datos[indices,-Y])$coe
+    eebetas[i,] = summary(lm(datos[indices,Y]~datos[indices,-Y]))$coe[,2]
+    pivot[i,] = (betas[i,]-coefi)/eebetas[i,]
+  }
+  eebotbet = apply(betas,2,sd)
+  t1 = apply(pivot,2,quantile,alfa/2)
+  t2 = apply(pivot,2,quantile,1-alfa/2)
+  LI = coefi+t1*eebotbet
+  LS = coefi+t2*eebotbet
+  limites = cbind(LI,LS)
+  
+  return(list(limites=limites))
+}
+
+index_salida <- 2 # []
+nro_muestras_bootstrap <- 150
+nivel <- 97
+bootstrap_datos <- ic.me.boot.obser(women,nro_muestras_bootstrap,index_salida, nivel)
+bootstrap_datos$limites
+
+```
+### Empleando el método de estudentizados con Bootstrap con un nivel de significancia de 0.97, se tiene que:
+### El intervalo de confianza para el $\beta_0$ es entre [-112.531681, -39.704357]
+### El intervalo de confianza para el $\beta_1$ es entre [ 2.707321,   3.832888]
 
 # 2.-Hacer una función en R que estime los coeficientes de regresión usando el método Jacknife simple. Pruebe su función con los datos Women. 
 
+## ##########################################
+##  APLICACION DE ESTIMACION DE COEFICIENTE
+##  DE REGRESION LINEAL APLICANDO JACKNIFE SIMPLE
+## ##########################################
+```{r }
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+jns.boot.obser=function(datos,B,Y){
+  
+  datos = as.matrix(datos)  # datos tengan estructura de matriz
+  n=nrow(datos)             # obtiene cantidad de lineas  
+  c=ncol(datos)             # obtiene cantidad de columnas
+  betas = matrix(0,n,c)     # matriz de 0, para cada muestra de Jackknife que le va asignar una fila
+
+  for (i in 1:n){
+    betas[i,] = lm(datos[-i,Y]~datos[-i,-Y])$coe # es un vector donde estan los coeficientes
+  }
+  
+  bootbetas = apply(betas,2,mean)  # Promedio por columnas
+  eebotbet = apply(betas,2,sd)    # Desviacion estandar por columnas
+  
+  return (list(bootb=bootbetas,eebootb=eebotbet,datosbetas=betas))
+}
+
+index_salida <- 2 # 
+nro_muestras_bootstrap <- 150
+bootstrap_datos <- jns.boot.obser(women,nro_muestras_bootstrap,index_salida)
+
+bootstrap_datos$bootb
 ```
+### Empleando el método de Jackknife para el dataset women se tiene que los betas son
+### $\beta_0$ = -87.504663
+### $\beta_1$ =  3.449698
