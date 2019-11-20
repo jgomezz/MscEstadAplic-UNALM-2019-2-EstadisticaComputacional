@@ -57,8 +57,8 @@ bootstrap_datos <- ic.mp.boot.obser(women,nro_muestras_bootstrap,index_salida, n
 bootstrap_datos$limites
 ```
 ### Empleando el método de percentiles con Bootstrap con un nivel de significancia de 0.97, se tiene que:
-### El intervalo de confianza para el $\beta_0$ es entre [-105.96600, -73.176113]
-### El intervalo de confianza para el $\beta_1$ es entre [3.21458,   3.730327]
+### El intervalo de confianza para el $\beta_0$ es entre [`r bootstrap_datos$limites[1,1]` , `r bootstrap_datos$limites[1,2]`]
+### El intervalo de confianza para el $\beta_1$ es entre [`r bootstrap_datos$limites[2,1]` , `r bootstrap_datos$limites[2,2]`]
 
 ## ######################################################################
 ## INTERVALOS DE CONFIANZA PARA LOS BETAS DE BOOTSTRAP A LAS OBSERVACIONES
@@ -98,8 +98,8 @@ bootstrap_datos$limites
 
 ```
 ### Empleando el método de estudentizados con Bootstrap con un nivel de significancia de 0.97, se tiene que:
-### El intervalo de confianza para el $\beta_0$ es entre [-112.531681, -39.704357]
-### El intervalo de confianza para el $\beta_1$ es entre [ 2.707321,   3.832888]
+### El intervalo de confianza para el $\beta_0$ es entre [`r bootstrap_datos$limites[1,1]` , `r bootstrap_datos$limites[1,2]`]
+### El intervalo de confianza para el $\beta_1$ es entre [`r bootstrap_datos$limites[2,1]` , `r bootstrap_datos$limites[2,2]`]
 
 # 2.-Hacer una función en R que estime los coeficientes de regresión usando el método Jacknife simple. Pruebe su función con los datos Women. 
 
@@ -108,7 +108,6 @@ bootstrap_datos$limites
 ##  DE REGRESION LINEAL APLICANDO JACKNIFE SIMPLE
 ## ##########################################
 ```{r }
-
 jns.boot.obser=function(datos,B,Y){
   
   datos = as.matrix(datos)  # datos tengan estructura de matriz
@@ -133,5 +132,5 @@ bootstrap_datos <- jns.boot.obser(women,nro_muestras_bootstrap,index_salida)
 bootstrap_datos$bootb
 ```
 ### Empleando el método de Jackknife para el dataset women se tiene que los betas son
-### $\beta_0$ = -87.504663
-### $\beta_1$ =  3.449698
+### $\beta_0$ = `r bootstrap_datos$bootb[1]`
+### $\beta_1$ = `r bootstrap_datos$bootb[2]`
