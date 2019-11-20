@@ -1,0 +1,244 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+######################################
+#JACKKNIFE media
+######################################
+
+```{r}
+jack.mean <- function(datos){
+  n = length(datos)
+  esjack = rep(0,n)
+  for (i in 1:n)
+    esjack[i] = mean(datos[-i])
+  estimjack = mean(esjack) # la estimacion de JACKKNIFE de la media, desviacion estandard, mediana, ......
+  return(estimjack=estimjack)
+}
+
+primos <- c(2,3,5,7,11,13,17,19,23,29) # vector
+jack.mean(primos)
+```
+
+beta de regresion 
+correlacion
+covarianza
+
+continua
+--------
+
+
+frecuencias
+probabilidades
+
+
+
+unidimensional: media, mediana , desviacion estandard 
+
+bidimiensional: 
+
+multivariados: 
+
+
+######################################
+#JACKKNIFE , SESGO Y ERROR 
+######################################
+
+```{r}
+jack.gen.uni=function(datos,fun,...) {
+  n=length(datos)
+  esjack=rep(0,n)
+  ejackd=fun(datos,...)
+  for (i in 1:n)
+    esjack[i]=fun(datos[-i],...)
+  estimjack=mean(esjack)
+  sesgojack=(n-1)*(estimjack- ejackd)
+  eejack= ((n-1)/sqrt (n))*sd(esjack)
+  return(list(estimjack=estimjack, sesgo= sesgojack ,eejack=eejack))
+}
+
+jack.gen.uni(rock[,1],median)
+
+```
+```{r}
+primos <- c(1,2,3,5,7,11,13)
+jack.gen.uni(primos,quantile,0.25)
+
+```
+######################################
+#JACKKNIFE , CORRELACION
+######################################
+
+```{r}
+jack.cor=function(datos,x,y){
+  n=nrow(datos)
+  esjack=rep(0,n)
+  ecord=cor(datos[,x],datos[,y])
+  
+  for (i in 1:n)
+   esjack[i]=cor(datos[-i,x],datos[-i,y]) # Correlaciones
+  
+  estimjackcor=mean(esjack)
+  sesgojack=(n-1)*(estimjackcor- ecord)
+  eejack= ((n-1)/sqrt (n))*sd(esjack)
+  return(list(estimjackcor=estimjackcor, sesgo= sesgojack ,eejack=eejack))
+}
+```
+
+```{r}
+women
+```
+
+```{r}
+jack.cor(women,1,2)
+```
+######################################
+#JACKKNIFE GENERALIZADO
+######################################
+```{r}
+jack.gen.uni=function(datos,d,fun,...){
+  
+  n = length(datos)
+  nmp = choose(n,d) # funcion de combinaciones de n en d
+  esjack = rep(0,nmp)
+  ejackd = fun(datos,...)
+
+  for (i in 1:nmp)
+    esjack[i] = fun(datos[-sample(1:n,d,F)],...) # escoge aleatoriamente desde 1 a n sin reemplazo d datos
+  
+  estimjack = mean(esjack)
+  sesgojack = (nmp-1)*(estimjack - ejackd)
+  eejack = sqrt(((n-d)*(nmp-1))/(d*nmp))*sd(esjack)
+  return (list(estimjack=estimjack, sesgo= sesgojack ,eejack=eejack))
+
+}
+
+jack.gen.uni(rock[,1],d=1,median)
+
+```
+Donde entraria los intervalos de confianza?
+
+
+######################################
+# INTERVALOS DE CONFIANZA JACKKNIFE
+# METODO ESTANDAR
+######################################
+
+```{r}
+
+ic.jackk.me=function(datos,nivel,fun,...) {
+  alfa=1-0.01*nivel
+  n=length(datos)
+  estim=rep(0,n)
+  for (i in 1:n)
+    estim[i]=fun(datos[-i],...) # 
+
+  eejack=(n-1)*sd(estim)/sqrt(n)
+ 
+  # usa el metodo estandard
+  LI=fun(datos,...)-qnorm(1-alfa/2)*eejack
+  LS=fun(datos,...)+qnorm(1-alfa/2)*eejack
+  limites=c(LI,LS)
+  return(list(limites=limites))
+}
+
+ic.jackk.me(rock[,1],95,mean)
+
+```
+######################################
+# INTERVALOS DE CONFIANZA JACKKNIFE
+# METODO ESTUDENTIZADO
+######################################
+
+```{r}
+
+jackk.uni=function(datos,fun,...) {
+ n=length(datos)
+ estim=rep(0,n)
+ for (i in 1:n)
+   estim[i]=fun(datos[-i],...)
+ estjack=mean(estim)
+ eejack=(n-1)*sd(estim)/sqrt(n)
+ return(list(estjack=estjack,eejack=eejack))
+}
+
+ic.jack.es=function(datos,B,nivel,fun,...) {
+  alfa=1-0.01*nivel
+  n=length(datos)
+  estimjack=rep(0,B)
+  erjack=rep(0,B)
+  estimado=fun(datos,...)
+  for (i in 1:B) {
+    mboot = sample(datos,n,T) # toma una muestra bootstrap
+    estimjack[i] = jackk.uni(mboot,fun,...)$estjack
+    erjack[i] = jackk.uni(mboot,fun,...)$eejack
+  }
+  pivot=(estimjack-estimado)/erjack  #
+  #print(pivot)
+  ejack=jackk.uni(datos,fun,...)$eejack
+  LI = estimado + quantile(pivot,alfa/2) * ejack
+  LS = estimado + quantile(pivot,1-alfa/2) * ejack
+  limites=c(LI,LS)
+  
+  return(limites)
+}
+
+ic.jack.es(rock[,1],50,95,mean)
+
+```
+######################################
+# JACKKNIFE DESPUES BOOTSTRAP
+######################################
+
+```{r}
+bootstrap=function(datos,B,fun,...) {
+  n=length(datos)
+  estimac=rep(0,B)
+  for (i in 1:B)
+    estimac[i]=fun(sample(datos,n,T),...)
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+  return(list(estimador=estboot,eestandar=eeboot))
+}
+ 
+jdb=function(datos,B,fun,...) {
+  n=length(datos)
+  ee=rep(0,n)
+  eb=rep(0,n)
+  for (i in 1:n) {
+    ee[i]=bootstrap(datos[-i],B,fun,...)$eestandar # le quita el iesimo dato y aplica bootstrap
+    eb[i]=bootstrap(datos[-i],B,fun,...)$estimador # le quita el iesimo dato y   
+  }
+  resul=((n-1)^2/n)*var(ee)
+  eb_resul = mean(eb)
+  
+  return(list(resul=resul, eb_resul=eb_resul))
+}
+
+bootstrap(rock[,1],50,median)
+jdb(rock[,1],50,median)
+
+```
+# Jackkniffe funciona bien con poco datos pero luego al aumentar los datos no va bien.
+
+
+```{r}
+jdb2=function(datos,B,fun,...)
+{
+n=length(datos)
+estima=rep(0,n)
+for (i in 1:n)
+ {
+  estima[i]=bootstrap(datos[-i],B,fun,...)$estimador
+ }
+boot1=mean(estima)
+jackk1=jackk.uni(datos,fun,...)$estjack
+resul=c(boot1,jackk1)
+return(resul)
+}
+
+jdb2(rock[,1],50,median)
+
+```
+

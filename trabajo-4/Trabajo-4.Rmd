@@ -1,0 +1,50 @@
+---
+title: "Trabajo 4"
+output: word_document
+author: Jaime Gomez Marin
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1.- Calcular los intervalos de confianza para los coeficientes de regresión por el método percentiles y por el método Estudentizado para los datos Women ,al  97% de confianza. Use B =150. 
+
+
+#######################################
+#APLICACION DE BOOTSTRAP A LOS RESIDUOS
+#######################################
+
+```{r pressure, echo=FALSE}
+
+boot.res=function(datos,B,Y){
+
+  datos=as.matrix(datos)
+  
+  n=nrow(datos)
+  
+  c=ncol(datos)
+  
+  betas=matrix(0,B,c)
+  
+  resid=lm(datos[,Y]~datos[,-Y])$res
+  
+  for (i in 1:B) 
+  
+      betas[i,]=lm(datos[,Y]+sample(resid,n,T)~datos[,-Y])$coe
+  
+  bootbetas=apply(betas,2,mean)
+  
+  eebotbet=apply(betas,2,sd)
+  
+  return(list(bootb=bootbetas,eebootb=eebotbet,datosbetas=betas))
+
+}
+```
+
+# 2.-Hacer una función en R que estime los coeficientes de regresión usando el método Jacknife simple. Pruebe su función con los datos Women. 
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
