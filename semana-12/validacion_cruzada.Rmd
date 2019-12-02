@@ -1,0 +1,124 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#se toma el standar, el ape no hace distinto entre la de entrenamiento ni prueba
+APE=function(datos,y){
+
+  datos=as.matrix(datos)
+  n=dim(datos)[1]
+  resi=lm(datos[,y]~datos[,-y])$res
+  APE=sum(resi^2)/n
+  return(APE)
+}
+```
+
+```{r}
+APE(rock,1)
+```
+
+```{r}
+APE(women,2)
+```
+#PRESS
+  
+```{r}
+PRESS=function(datos,y){
+  
+  datos=as.matrix(datos)#convierte a matriz
+  n=dim(datos)[1]#num de filas
+  resi=rep(0,n)
+  for (i in 1:n){
+    estim=sum(lm(datos[-i,y]~datos[-i,-y])$coe*c(1,datos[i,-y]))#quita un dato y guardas coeficiente (betas)
+    resi[i]=datos[i,y]-estim
+  }
+  PRESS=sum(resi^2)/n
+  return(PRESS)
+}
+
+```
+
+```{r}
+PRESS(rock,1)
+```
+
+```{r}
+PRESS(women,2)
+```
+# Validacion Cruzada
+```{r}
+crossval=function(data,repet,K,y){
+  # repeticiones=repe
+  # k=particiones
+  data = as.matrix(data) # convertir en matriz a la data
+  n = dim(data)[1] #num filas de la matriz
+  p = dim(data)[2] #num de columnas de la matriz
+  
+  EVC = rep(0, repet) # vector de ceros segun repeticiones
+  
+  for (i in 1:repet) { # defnimos en el num repeticiones
+    
+    resid = matrix(0,1,K)             # vector de residuales de filas 1 y k columnas
+    indices = sample(1:n,n,replace=F) # n indices con reemplazo
+    azar = data[indices,]             # seleccionar muestra (busca aleatorizar)
+    subm = floor(n/K)                 # redondea hacia abajo piso 48/10=4
+    
+    for (j in 1:K) {
+      print(paste0("[i=",i,"][j=",j,"]"))
+      unid=((j-1)*subm + 1):(j*subm)
+      print(paste0("[unid=",unid,"]"))
+      if (j == K) {
+        unid=((j-1)*subm+1):n
+        print(paste0("[unid=====",unid,"]"))
+      }
+      datap = azar[unid,]
+      datae = azar[-unid,]
+      ye = datae[,y]
+      xe = datae[,-y]
+      betas = lm(ye~xe)$coef
+      unos = rep(1,dim(datap)[1])
+      data1 = cbind(unos,datap[,-y])
+      predict = data1%*%as.matrix(betas)    # multiplicas matrices
+      resid[j] = sum((predict-datap[,y])^2) # residuales promedio
+    }
+    
+    EVC[i]=sum(resid)/n
+  }
+  
+  EVCP=mean(EVC)   
+  
+  return (list(EVC=EVC, EVCP=EVCP))
+}
+
+```
+
+```{r}
+rock
+```
+
+```{r}
+rep = 6
+part = 10
+crossval(rock, rep, part, 4)
+```
+```{r}
+#repet=6
+#k=10
+datos = read.table(file.choose(),header=T)
+APE(rock,1)
+PRESS(datos,1)
+crossval(datos,20,4,1)
+crossval(datos,20,30,1)
+```
+
+
+```{r}
+floor(48/10)
+```
+
+```{r}
+3:10
+```
+

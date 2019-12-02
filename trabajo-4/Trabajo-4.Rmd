@@ -108,7 +108,7 @@ bootstrap_datos$limites
 ##  DE REGRESION LINEAL APLICANDO JACKNIFE SIMPLE
 ## ##########################################
 ```{r }
-jns.boot.obser=function(datos,B,Y){
+jns.boot.obser=function(datos,Y){
   
   datos = as.matrix(datos)  # datos tengan estructura de matriz
   n=nrow(datos)             # obtiene cantidad de lineas  
@@ -126,8 +126,7 @@ jns.boot.obser=function(datos,B,Y){
 }
 
 index_salida <- 2 # 
-nro_muestras_bootstrap <- 150
-bootstrap_datos <- jns.boot.obser(women,nro_muestras_bootstrap,index_salida)
+bootstrap_datos <- jns.boot.obser(women,index_salida)
 
 bootstrap_datos$bootb
 ```
