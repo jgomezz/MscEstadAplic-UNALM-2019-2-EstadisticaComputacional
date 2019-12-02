@@ -1,0 +1,302 @@
+---
+title: "Práctica 4 - Estadistica Computacional"
+author: "Jaime Gomez Marin"
+output:
+  pdf_document: default
+  html_notebook: default
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+
+## 2.- Calcular el error aparente, el error por validación cruzada 10 y el sesgo con sus interpretaciones para los datos Women (Y=2) 
+
+```{r}
+# numero de registros del dataset women
+dim(women)[1]
+```
+### Cálculo del error aparente 
+```{r}
+
+APE=function(datos,y){
+  datos=as.matrix(datos)
+  n=dim(datos)[1]
+  resi=lm(datos[,y]~datos[,-y])$res
+  APE=sum(resi^2)/n
+  return(APE)
+}
+
+pos_var_dependiente = 2  # Y 
+P = APE(women,pos_var_dependiente)
+P
+```
+### Cálculo del error por validación cruzada
+
+Segun condición del problema, nos pide realizar una validacion cruzada con k=10, pero en el dataset "women" tenemos 15 registros, por lo tanto nuestro folk solo sera de floor(15/10) , es decir 1, por lo tanto nuestro fragmentos sera de 1, por lo tanto estamos hablando del caso particula de PRESS
+
+```{r}
+# Calculo del tamaño de folk
+nro_reg = dim(women)[1]
+K = 10
+floor(nro_reg/K)
+```
+#### PRESS
+```{r}
+PRESS=function(datos,y) {
+  datos=as.matrix(datos)#convierte a matriz
+  n=dim(datos)[1]#num de filas
+  resi=rep(0,n)
+  for (i in 1:n) {
+    estim=sum(lm(datos[-i,y]~datos[-i,-y])$coe*c(1,datos[i,-y]))#quita un dato y guardas coeficiente (betas)
+    resi[i]=datos[i,y]-estim
+  }
+  PRESS=sum(resi^2)/n
+  return(PRESS)
+}
+
+PRESS(women,2)
+```
+#### VALIDACION CRUZADA 10
+
+Si deseamos usar validación cruzada, vamos a considerar que el tamaño del folk sea de 2 registros, por lo tanto K = 7 ( la mitad de la cantidad de registros del dataset women)
+
+```{r}
+# Calculo del tamaño de folk
+nro_reg = dim(women)[1]
+K = 7
+floor(nro_reg/K)
+```
+
+```{r}
+crossval = function(data,repet,K,y){
+  # repeticiones=repe
+  # k=particiones
+  data = as.matrix(data) # convertir en matriz a la data
+  n = dim(data)[1] #num filas de la matriz
+  p = dim(data)[2] #num de columnas de la matriz
+  
+  EVC = rep(0, repet) # vector de ceros segun repeticiones
+  
+  for (i in 1:repet) { # defnimos en el num repeticiones
+    
+    resid = matrix(0,1,K)             # vector de residuales de filas 1 y k columnas
+    indices = sample(1:n,n,replace=F) # n indices con reemplazo
+    azar = data[indices,]             # seleccionar muestra (busca aleatorizar)
+    subm = floor(n/K)                 # redondea hacia abajo piso 48/10=4
+    #print(subm)
+    for (j in 1:K) {
+      #print(paste0("[i=",i,"][j=",j,"]"))
+      unid=((j-1)*subm + 1):(j*subm)
+      #print(paste0("[unid=",unid,"]"))
+      #print(unid)
+      if (j == K) {
+        unid=((j-1)*subm+1):n
+        #print(paste0("[unid=====",unid,"]"))
+        #print(unid)
+      }
+      datap = azar[unid,]
+      datae = azar[-unid,]
+      ye = datae[,y]
+      xe = datae[,-y]
+      betas = lm(ye~xe)$coef
+      #print(datap)
+      #print(paste0("**********unos = ", dim(datap)))
+      unos = rep(1,dim(datap)[1])
+      #print(unos)
+      data1 = cbind(unos,datap[,-y])
+      predict = data1%*%as.matrix(betas)    # multiplicas matrices
+      resid[j] = sum((predict-datap[,y])^2) # residuales promedio
+    }
+    
+    EVC[i]=sum(resid)/n
+  }
+  
+  EVCP=mean(EVC)   
+  
+  return (list(EVC=EVC, EVCP=EVCP))
+}
+
+rep = 20
+K = 7
+pos_var_dependiente = 2  # Y 
+crossval(women, rep, K, pos_var_dependiente)$EVCP
+```
+### Cálculo del sesgo
+
+```{r}
+# Funcion para calcular el sesgo
+calc_sesgo = function(datos, repet, K, Y) {
+  P = APE(datos,Y)
+  EVCP = crossval(datos, repet, K, Y)$EVCP
+  return(EVCP-P)
+}
+# Calculo del sesgo
+pos_var_dep = 2  # Y 
+rep = 20
+Ks = c(2,3,4,5,6,7) # arreglo con todos los valor de K posibles
+
+for( K in Ks) {
+  sesgo = calc_sesgo(women, rep, K, pos_var_dep)
+  print(paste0("K = ",K," => sesgo = ",sesgo))
+}
+
+```
+Se puede observar que mayormente el sesgo se reduce conforme aumenta el valor de K
+
+## 3.- Calcular los intervalos de confianza para los coeficientes de regresión por el método percentiles y por el método Estudentizado para los datos Data1, al  95% de confianza. Use B =150. 
+
+### Lectura de datos del archivo excel
+```{r}
+#install.packages("xlsx")
+library(rJava)
+library(xlsx)
+library(xlsxjars)
+library(readxl)
+
+data.xls <- read.xlsx("Data1.xlsx", sheetIndex = 1,header=TRUE )
+str(data.xls)
+```
+```{r}
+modelo = lm(Y~X1+X2+X3+X4+X5+X6, data=data.xls)
+summary(modelo)
+```
+Se observa que el coef. de regresión para las variables independientes X2, X5 y X6 son significativas.
+
+### Definimos la función de bootstrap para calcular los coef.de regresión por el método de percentiles
+```{r}
+ic.mp.boot.obser = function(datos,B,Y,nivel){
+  datos = as.matrix(datos)
+  alfa = 1-0.01*nivel
+  n = dim(datos)[1]
+  c = ncol(datos)
+  betas = matrix(0,B,c)
+  for (i in 1:B){
+    indices = sample(1:n,n,T)
+    betas[i,] = lm(datos[indices,Y]~datos[indices,-Y])$coe
+  }
+  LI = apply(betas,2,quantile,alfa/2)
+  LS = apply(betas,2,quantile,1-alfa/2)
+  limites = cbind(LI,LS)
+  return(list(limites = limites))
+}
+
+index_salida <- 1             # Posicion de la variable dependiente "Y"
+nro_muestras_bootstrap <- 150 # Nro. de muestras bootstrap
+nivel <- 95                   # Nivel de confianza
+mp_boot_datos <- ic.mp.boot.obser(data.xls,nro_muestras_bootstrap,index_salida, nivel)
+mp_boot_datos$limites
+```
+#### Empleando el método de percentiles con Bootstrap con un nivel de significancia de 0.95, se tiene que:
+#### El intervalo de confianza para el $\beta_0$ es entre [`r mp_boot_datos$limites[1,1]` , `r mp_boot_datos$limites[1,2]`]
+#### El intervalo de confianza para el $\beta_1$ es entre [`r mp_boot_datos$limites[2,1]` , `r mp_boot_datos$limites[2,2]`]
+#### El intervalo de confianza para el $\beta_2$ es entre [`r mp_boot_datos$limites[3,1]` , `r mp_boot_datos$limites[3,2]`]
+#### El intervalo de confianza para el $\beta_3$ es entre [`r mp_boot_datos$limites[4,1]` , `r mp_boot_datos$limites[4,2]`]
+#### El intervalo de confianza para el $\beta_4$ es entre [`r mp_boot_datos$limites[5,1]` , `r mp_boot_datos$limites[5,2]`]
+#### El intervalo de confianza para el $\beta_5$ es entre [`r mp_boot_datos$limites[6,1]` , `r mp_boot_datos$limites[6,2]`]
+#### El intervalo de confianza para el $\beta_6$ es entre [`r mp_boot_datos$limites[7,1]` , `r mp_boot_datos$limites[7,2]`]
+
+
+### Definimos la función de bootstrap para calcular los coef.de regresión por el método de studentizados
+```{r, warning=FALSE}
+ic.me.boot.obser = function(datos,B,Y,nivel) {
+  datos = as.matrix(datos)
+  alfa = 1-0.01*nivel
+  n = dim(datos)[1]
+  c = ncol(datos)
+  coefi = lm(datos[,Y]~datos[,-Y])$coe
+  betas = matrix(0,B,c)
+  eebetas = matrix(0,B,c)
+  pivot = matrix(0,B,c)
+  for (i in 1:B){
+    indices = sample(1:n,n,T)
+    betas[i,] = lm(datos[indices,Y]~datos[indices,-Y])$coe
+    eebetas[i,] = summary(lm(datos[indices,Y]~datos[indices,-Y]))$coe[,2]
+    pivot[i,] = (betas[i,]-coefi)/eebetas[i,]
+  }
+  eebotbet = apply(betas,2,sd)
+  t1 = apply(pivot,2,quantile,alfa/2)
+  t2 = apply(pivot,2,quantile,1-alfa/2)
+  LI = coefi+t1*eebotbet
+  LS = coefi+t2*eebotbet
+  limites = cbind(LI,LS)
+  
+  return(list(limites=limites))
+}
+
+index_salida <- 1             # Posicion de la variable dependiente "Y"
+nro_muestras_bootstrap <- 150 # Nro. de muestras bootstrap
+nivel <- 95                   # Nivel de confianza
+bootstrap_datos <- ic.me.boot.obser(data.xls,nro_muestras_bootstrap,index_salida, nivel)
+bootstrap_datos$limites
+```
+#### Empleando el método de Estudentizados con Bootstrap con un nivel de significancia de 0.95, se tiene que:
+#### El intervalo de confianza para el $\beta_0$ es entre [`r bootstrap_datos$limites[1,1]` , `r bootstrap_datos$limites[1,2]`]
+#### El intervalo de confianza para el $\beta_1$ es entre [`r bootstrap_datos$limites[2,1]` , `r bootstrap_datos$limites[2,2]`]
+#### El intervalo de confianza para el $\beta_2$ es entre [`r bootstrap_datos$limites[3,1]` , `r bootstrap_datos$limites[3,2]`]
+#### El intervalo de confianza para el $\beta_3$ es entre [`r bootstrap_datos$limites[4,1]` , `r bootstrap_datos$limites[4,2]`]
+#### El intervalo de confianza para el $\beta_4$ es entre [`r bootstrap_datos$limites[5,1]` , `r bootstrap_datos$limites[5,2]`]
+#### El intervalo de confianza para el $\beta_5$ es entre [`r bootstrap_datos$limites[6,1]` , `r bootstrap_datos$limites[6,2]`]
+#### El intervalo de confianza para el $\beta_6$ es entre [`r bootstrap_datos$limites[7,1]` , `r bootstrap_datos$limites[7,2]`]
+
+## 4.- Hacer una función en R que estime los coeficientes de regresión usando el método VC8. Pruebe su función con los datos Data1.
+
+```{r}
+crossval_coef = function(data,repet,K,y){
+  # repeticiones=repe
+  # k=particiones
+  data = as.matrix(data) # convertir en matriz a la data
+  n = dim(data)[1] # num filas de la matriz
+  p = dim(data)[2] # num de columnas de la matriz
+  n_betas = p       # num de betas
+  EVC = matrix(0,rep,n_betas) # vector de ceros segun repeticiones
+  # print(EVC)
+  for (i in 1:repet) { # defnimos en el num repeticiones
+    
+    coef_folk = matrix(0,K,n_betas)      # vector de residuales de filas 1 y k columnas
+    indices = sample(1:n,n,replace=F) # n indices con reemplazo
+    azar = data[indices,]             # seleccionar muestra (busca aleatorizar)
+    subm = floor(n/K)                 # redondea hacia abajo piso 48/10=4
+    # print(subm)
+    # print(coef_folk)
+    for (j in 1:K) {
+      unid=((j-1)*subm + 1):(j*subm)
+      if (j == K) 
+        unid=((j-1)*subm+1):n
+      datap = azar[unid,]
+      datae = azar[-unid,]
+      ye = datae[,y]
+      xe = datae[,-y]
+      betas = lm(ye~xe)$coef
+      matriz_betas = as.matrix(betas)   
+      coef_folk[j,] = matriz_betas
+      # print(coef_folk)
+    }
+    EVC[i,]=apply(coef_folk,2,mean)
+    # print(coef_folk)
+    # print(EVC)
+
+  }
+  # print(coef_bootstrap)
+  
+  EVCP=apply(EVC,2,mean) 
+  
+  return (list(EVC=EVC, EVCP=EVCP))
+}
+
+
+rep = 20                  # num de repeticiones bootstrap
+K = 8                     # VC8              
+pos_var_dependiente = 1   # Posicion de la variable dependiente "Y"
+BETAS = crossval_coef(data.xls, rep, K, pos_var_dependiente)$EVCP
+BETAS
+```
+####  $\beta_0$ es [`r BETAS[1]`]
+####  $\beta_1$ es [`r BETAS[2]`]
+####  $\beta_2$ es [`r BETAS[3]`]
+####  $\beta_3$ es [`r BETAS[4]`]
+####  $\beta_4$ es [`r BETAS[5]`]
+####  $\beta_5$ es [`r BETAS[6]`]
+####  $\beta_6$ es [`r BETAS[7]`]
+
+
