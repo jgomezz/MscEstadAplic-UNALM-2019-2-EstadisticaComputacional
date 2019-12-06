@@ -1,0 +1,216 @@
+---
+title: "BootstrappingClasificadores"
+author: "LourdesGalarza - JaimeGomez"
+date: "27 de noviembre de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Introducción
+
+Recientemente en el área de la Inteligencia Artificial se propone apoyarse en la eficacia de una computador con el objetivo de mejorar el rendimiento de los clasificadores individuales. Esto ha permitido mostrar algunos paradigmas que solo eran posibles mediante el enfoque tradicional  de los métodos analíticos o de  repetitivos  y  tediosos  cálculos  manuales. Para  encontrar  distribuciones aproximadas de un estadístico se requiere generar una gran cantidad de muestras y es donde el método bootstrap entra a tallar.
+
+### Objetivo
+
+El  objetivo  de  este trabajo  es  presentar  el  Método  Bootstrap como  un  método útil certero y preciso en algoritmos clasificadores.
+
+### Marco teórico
+
+El método  Bootstrap fue propuesto por Bradley  Efron (5)  en 1979 como un método que  reemplaza  las  técnicas  complejas  de  análisis  estadístico  convencional  por cálculos intensivos sobre las muestras generadas por simulación de Monte Carlo.
+
+El Método Bootstrap es un mecanismo no paramétrico para el cálculo de estimaciones a través del muestreo de la muestra original (resampling).  Efron (1981) describe el Bootstrap  como  “un  método  simple  y  directo  para  calcular  sesgo,  desviaciones estándar, intervalos de confianza y otras cantidades de manera aproximada”.
+
+La técnica de bootstrapping permite inferir la distribución de una variable estadística a partir de un conjunto de muestras de una población cuya distribución no se conoce. En estadística, el término bootstrapping se refiere a cualquier método que hace uso de muestreo CON REPOSICIÓN. 
+
+Un proceso de muestreo con reposición es aquel en el que cada muestra tomada de la población de manera aleatoria es devuelta a dicha población, por lo que tendrá las mismas posibilidades de volver a ser elegida que el resto de muestras. La técnica de bootstrapping se suele utilizar para: 
+
+1- Dibujar histogramas. 
+
+2- Calcular desviaciones típicas y errores estándar. 
+
+3- Crear intervalos de confianza.
+
+![Modelo de Clasificación.](images/Captura4.png)
+
+El  método  resuelve  el  problema  de  estimación  y  distribución prescindiendo del supuesto de una función de densidad $f(x,$$\theta$$)$ para los $x_{i}$. Para  hacer  las estimaciones,  el Bootstrap  requiere  solamente  de  una  muestra  original  de  datos  y  de  un  gran conjunto  de  muestras  aleatorias  generadas  por  el  computador. 
+
+Supongamos que se ha observado una muestra $x=(x_{1},…,x_{n})$ de una población que tiene función de distribución $F$ (la cual es desconocida) y se desea estimar un parámetro de interés $\theta$$=t(F)$ basado en la muestra tomada. 
+Para esto hay que encontrar un estadístico $\theta$. Así mismo también se desea determinar que tan preciso es $\theta$ mediante la estimación de su error estándar.
+
+La principal ventaja que presenta esta técnica con respeto a tomar la variable estadística deseada directamente a partir de las muestras es que disminuye en gran medida la desviación típica, permitiendo unos intervalos de confianza mejores.
+
+### Bootstrapping en algoritmo de clasificación
+
+La clasificación supervisada es una de las tareas que más frecuentemente son llevadas a cabo por los denominados Sistemas Inteligentes. Por lo tanto, un gran número de paradigmas desarrollados bien por la Estadística (Regresión Logística, Análisis Discriminante) o bien por la Inteligencia Artificial (Redes Neuronales, Inducción de Reglas, Árboles de Decisión, Redes Bayesianas) son capaces de realizar las tareas propias de la clasificación. 
+
+En este contexto, la clasificación es aquella que tiene como objetivo predecir o estimar a qué categoría pertenece una determinada observación. Para ello, previamente se ha llevado a cabo un número de observaciones sobre un conjunto de muestras cuya clase se conoce a priori, con el objetivo de aprender las diferencias entre ellas. Una vez finalizadas estas observaciones, y en base a ellas, se intenta identificar a qué clase pertenece con una nueva muestra. Para llevar a cabo esta tarea, se desarrollan algoritmos de clasificación, también llamados clasificadores.
+
+A continuación se describe el proceso de desarrollo de un clasificador cualquiera:
+
+Se parte de dos conjuntos de muestras cuyas clases son conocidas. Uno de esos conjuntos –
+llamado set de entrenamiento - se utilizará para entrenar al clasificador, y el otro – set de validación - se utilizará para hacer predicciones y comprobar el grado de acierto del clasificador.
+
+El desarrollo de un clasificador se lleva a cabo en tres fases: 
+
+1. Fase de entrenamiento 
+
+2. Fase de validación 
+
+3. Fase de ajuste 
+
+
+![Modelo de Clasificación.](images/Captura3.png)
+
+En problemas de regresión y de clasificación estadística, se aplica técnicas de bootstrapping con el sentido de mejorar la estabilidad y la precisión del clasificador, disminuyendo también la varianza de los resultados y disminuyendo el riesgo de sobre-ajuste. Suele tener buenos resultados en métodos basados en árboles de decisión, motivo por el que se eligió dicho clasificador en primer lugar. 
+
+El objetivo de la combinación de clasificadores individuales es el ser más certeros, precisos y exactos. Los métodos multiclasificadores más conocidos son el Bagging (Breiman, 1966) y Boosting (Freund y Schapire, 1996).
+
+El método propuesto por Breinan (1996) intenta aunar las características del Boostrapping y la agregación incorporando los beneficios de ambos (Boostrap AGGregatiNG). La operativa del método es la siguiente:
+
+• Se generan muestras aleatorias que serán los conjuntos de entrenamiento. Las muestras se generan a través de un muestreo aleatorio con reemplazamiento. 
+
+• Cada subconjunto de entrenamiento aprende un modelo. 
+
+• Para clasificar un ejemplo se predice la clase de ese ejemplo para cada clasificador y se clasifica en la clase con mayor voto. 
+
+La técnica de Bagging sigue estos pasos:
+
+Divide el set de Entrenamiento en distintos sub set de datos, obteniendo como resultado diferentes muestras aleatorias con las siguientes características:
+Muestra uniforme (misma cantidad de individuos en cada set)
+
+Muestras con reemplazo (los individuos pueden repetirse en el mismo set de datos).
+
+El tamaño de la muestra es igual al tamaño del set de entrenamiento, pero no contiene a todos los individuos ya que algunos se repiten.
+
+Si se usan muestras sin reemplazo, suele elegirse el 50% de los datos como tamaño de muestra
+
+Luego se crea un modelo predictivo con cada set, obteniendo modelos diferentes
+
+Luego se construye o ensambla un único modelo predictivo, que es el promedio de todos los modelos.
+
+### Bagging
+
+Sobre el Bagging debemos de tener en cuenta que:
+
+• Disminuye la varianza de un data set al realizar remuestreo con reemplazo.
+
+• Si no existe varianza en el data set, la tecnica de Baggin no mejora significativamente el modelo.
+
+• Es recomendable en modelos de alta inestabilidad (data set con mucha varianza). Ejemplo de inestabilidad: el % de error de la predicción de fraudes de enero , es muy diferente al de febrero.
+
+• Mientras más inestable es un modelo, mejor será la predicción al usar Bagging.
+
+• Se reduce el overfetting o sobre entrenamiento de modelos. Esto porque los modelos no pueden sobreaprender o memorizar ya que ninguno tiene todos los datos de entrenamiento.
+
+• Mejora la predicción, ya que lo que no detecta un modelo lo detectan los otros.
+
+• Reduce el ruido de los outliers, ya los outliers no pueden estar presenten en todos los modelos.
+
+• No mejora significativamente las funciones lineales, ya que el ensamble de una función lineal da como resultado otra función linear.
+
+• Una técnica mejorada del Bagging es el Random Forest que ademas de elegir un grupo aleatorio de individuos, también elige un grupo aleatorio de variables.
+
+• Los diferentes modelos creados con la técnica Bagging pueden considerarse como algoritmos que buscan respuestas (o hipótesis) en un data set (o espacio h). Como cada algoritmo tiene un set de datos diferentes, cada uno creará una hipótesis diferentes sobre la realidad.
+
+
+### Aplicación de tecnica bootstrap en algoritmos de clasificacion
+
+Se aplicara las tecnicas de bootstrap en un modelo de clasificación para mostrar la eficiencia con respecto a la predicción. Para la presenta aplicación se utilizó el conjunto de datos de vino, disponible en el Machine Learning Repository.
+
+
+Se instalan las librerías:
+
+```{r, warning=FALSE}
+# Funcion para no reinstalar paquetes
+rpak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# los paquetes que necesitamos!
+packages <- c("kohonen","tidyverse","rpart","rpart.plot","caret","broom")
+rpak(packages)
+
+# install.packages("kohonen","tidyverse","rpart","rpart.plot","caret","broom")
+library(ISLR)
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+library(caret)
+library(broom)
+
+```
+
+Se descarga los datos de las 1070 compras que realizaron clientes en dos productos de bebidas citricas: Citrus Hill CH o Minute Maid Orange Juice MM. 
+```{r}
+data(OJ)
+head(OJ)
+dim(OJ)
+```
+
+Se registran una serie de características del cliente y del producto, entre las cuales tenemos:
+
+- Purchase: CH y MM que indica si el cliente compró Citrus Hill o Minute Maid Orange Juice.
+
+- WeekofPurchase: Semana de compra.
+
+- StoreID: ID de tienda.
+
+- PriceCH: precio cobrado por CH.
+
+- PriceMM: precio cobrado por MM.
+
+- DiscCH: descuento ofrecido por CH.
+
+- DiscMM: descuento ofrecido por MM.
+
+- SpecialCH: Indicador de especial en CH.
+
+- SpecialMM: Indicador de especial en MM.
+
+- LoyalCH: Fidelización de marca del cliente para CH.
+
+- VentaPrecioMM: Precio de venta para MM.
+
+- VentaPrecioCH: Precio de venta para CH.
+
+- PriceDiff: Precio de venta de MM menos precio de venta de CH.
+
+- Tienda7: Un factor con los niveles No y Sí que indica si la venta está en la Tienda 7.
+
+- PctDiscMM: Porcentaje de descuento para MM.
+
+- PctDiscCH: Porcentaje de descuento para CH.
+
+- ListPriceDiff: Precio de lista de MM menos precio de lista de CH.
+
+- Store: las 5 posibles tiendas donde tuvo lugar la venta.
+
+```{r}
+names(OJ)
+```
+
+
+# Distribución variable respuesta
+
+```{r}
+library(ggplot2)
+
+ggplot(data = OJ, aes(x = Purchase, y = ..count.., fill = Purchase)) +
+geom_bar() +
+labs(title = "Distribución Purchase") +
+scale_fill_manual(values = c("darkgreen", "orangered2"), 
+                  labels = c("Citrus Hill", "Orange Juice")) +
+theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
