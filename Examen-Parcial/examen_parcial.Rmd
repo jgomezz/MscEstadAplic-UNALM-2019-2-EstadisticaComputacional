@@ -1,0 +1,248 @@
+---
+title: "Examen Parcial de Estadistica Computacional"
+output: word_document
+author: "Jaime Gomez Marin"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Pregunta 2 : 
+
+
+a) Haga un programa que simule el experimento y muestreo 10 repeticiones
+```{r}
+
+# Primera cajaPilaA
+p1 <- 20/24
+q1 <-  4/24
+
+# Segunda cajaPilaB
+p2 <- 17/20
+q2 <-  3/20
+
+# Tercera cajaPilaC
+p3 <- 17/22
+q3 <-  5/22
+
+
+cajaPilaA <- c(rep("pila_buena",20), rep("pila_mala",4))
+cajaPilaB <- c(rep("pila_buena",17), rep("pila_mala",3))
+cajaPilaC <- c(rep("pila_buena",17), rep("pila_mala",5))
+
+experimentoCajaD <- function(cajaPilaA, cajaPilaB, cajaPilaC){
+  
+  m_cajaPilaA <- sample(cajaPilaA,4)
+
+  m_cajaPilaB <- sample(cajaPilaB,4)
+
+  m_cajaPilaC <- sample(cajaPilaC,4)
+
+  
+  cajaPilaD =  cbind(m_cajaPilaA,m_cajaPilaB,m_cajaPilaC) 
+ 
+  return(table(cajaPilaD))
+  
+}
+
+# 10 repeticiones
+for ( i in 1:10) { 
+  print(i)
+  print(experimentoCajaD(cajaPilaA, cajaPilaB, cajaPilaC))
+}
+
+
+```
+
+b) Estime la distribución de probabilidad de X
+```{r}
+
+N <- 100
+
+p <- c(rep(0,N))
+
+# N repeticiones
+for ( i in 1:N) { 
+  res =  experimentoCajaD(cajaPilaA, cajaPilaB, cajaPilaC)
+  p[i] = res["pila_mala"]
+}
+
+print(p)
+hist(p)
+
+
+```
+Se puede observar que la probabilidad de encontrar pilas defectuosas en la caja D siguen una  distribución exponencial 
+
+
+
+# Pregunta 2 : 
+
+
+a) Haga un programa que calcule el valor del estimador C:
+
+
+$$  C = \sqrt( \frac{n*(\sum(x_i-\bar{x})^3)^2}{\sum(x_i-\bar{x})^2)^3} + 0.5 ) $$
+
+```{r}
+
+datos = c(13.30, 13.10, 12.95, 13.45,
+          13.35, 13.15, 13.10, 13.50,
+          13.40, 13.20, 13.05, 13.55,
+          12.75, 13.25, 12.60, 13.60,
+          12.80, 12.84, 12.65, 13.65, 
+          12.85, 12.78, 12.70, 13.70,
+          12.90, 13.00, 12.90, 13.75) 
+
+
+
+# Funcion para calcular el estimador
+estimadorC <- function(datos) {
+
+  n  <- length(datos)
+  mu <- mean(datos)
+  
+  a <- n*sum((datos-mu)^3)^2
+  b <- sum((datos-mu)^2)^3
+  
+  ret <- sqrt(a/b +  0.5)
+
+  return (ret)
+}
+
+estimadorC(datos)
+
+```
+
+b) Estime el intervalo de confianza para el coeficiente C al 98% de confianza a traves de los métodos estandar , estudentizado y doblemenete estudentizado
+
+```{r}
+
+# Estimador bootstrap para el estimador C
+calc_bootstrap <- function(datos,B) {
+
+  n = length(datos)
+  estimac=rep(0,B)
+  
+  for (i in 1:B){
+    muestra = sample(datos,n,T)
+    estimac[i] = estimadorC(muestra)
+  }
+  
+  estboot=mean(estimac)
+  eeboot=sd(estimac)
+
+  return(list(estimador=estboot,eestandar=eeboot, vector=estimac))
+
+}
+```
+
+
+# Metodo estandar
+
+```{r}
+calc_ic_met_estandar <-function(datos, B, alpha ) {
+  
+  bstrap = calc_bootstrap(datos,B)
+  
+  media = bstrap$estimador
+  desvStd = bstrap$eestandar
+  
+  lis = media - qnorm(1-alpha/2)*desvStd
+  lss = media + qnorm(1-alpha/2)*desvStd
+  rango = lss - lis
+  
+  return(data.frame("metodo"="normal", lis, lss, rango))
+}
+```
+
+
+# Metodo estudentizado
+
+```{r}
+
+calc_ic_met_estudentizado <-function(datos, B, alpha ) {
+
+  bstrap = calc_bootstrap(datos,B)
+  
+  estCstd    = bstrap$eestandar
+  estCvector = bstrap$vector
+  estC       = estimadorC(estCvector)
+    
+  testud=rep(0,B)  # Inicializa el estudentizado
+  
+  testud = (estCvector-estC)/estCstd
+      
+  lis = estC + quantile(testud,alpha/2)*estCstd 
+  lss = estC + quantile(testud,1-alpha/2)*estCstd 
+  
+  rango = lss - lis
+  
+  return(data.frame("metodo"="estudentizado", lis, lss, rango))
+}
+
+
+
+```
+
+
+# Metodo doblemente estudentizado
+```{r}
+# Calcular IC usando el metodo de doble estudentizado
+calc_ic_met_doble_estudentizado <- function(datos,B1,B2,alpha) {
+
+  n = length(datos)
+  estimacB1 = rep(0,B1)
+  errorB1   = rep(0,B1)
+  
+  for (i in 1:B1){
+    muestraB1 = sample(datos,n,T)
+    estimacB1[i] = estimadorC(muestraB1)
+  
+    estimacB2 = rep(0,B2)
+    for (k in 1:B2) {
+      muestraB2 = sample(muestraB1,n,T) 
+      estimacB2[k] = estimadorC(muestraB2)
+    }
+    
+    errorB1[i] = sd(estimacB2)
+  }
+
+  testud = rep(0,B1)   # t estudentizado , se hace para cada unos de la p muestras boostrap
+  estimacBASE = estimadorC(datos)
+  
+  testud = (estimacB1-estimacBASE)/errorB1
+  
+  estCstd = sd(estimacB1)
+
+  lis = estimacBASE + quantile(testud,alpha/2)*estCstd  
+  lss = estimacBASE + quantile(testud,1-alpha/2)*estCstd 
+  
+  rango = lss - lis
+  
+  return(data.frame("metodo"="doble_estudentizado", lis, lss, rango))
+}
+```
+
+
+
+```{r}
+set.seed(1000)
+
+alpha <- 1-0.98
+B1 <- 100       
+B2 <- 50
+
+df = rbind(calc_ic_met_estandar(datos,B1,alpha),
+           calc_ic_met_estudentizado(datos,B1,alpha),
+           calc_ic_met_doble_estudentizado(datos,B1,B2,alpha))
+
+df
+```
+
+Se puede apreciar que el intervalo de confianza del metodo doblemente estudentizado tiene menor variabilidad.
