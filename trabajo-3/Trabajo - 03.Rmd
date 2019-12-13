@@ -329,8 +329,8 @@ calc_ic_met_estudentizado <-function(datos, B, alpha ) {
 calc_ic_met_doble_estudentizado <- function(datos,B1,B2,alpha) {
 
   n = length(datos)
-  estimacB1 = rep(0,B1)
   errorB1   = rep(0,B1)
+  estimacB1 = rep(0,B1)
   
   for (i in 1:B1){
     muestraB1 = sample(datos,n,T)
